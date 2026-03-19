@@ -1,0 +1,756 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage{amssymb}
+
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\textwidth}{16cm}
+
+
+\begin{document}
+	
+	\section{Deriving the Majorana Pfaffian from the Partition Function}
+	
+	Here, we derive the pfaffian formulation of the path integral. We roughly follow the derivation given in PFAFFIAN PAPER. Usually, after doing a Suzuki-Trotter approximation, which splits the exponential into $N_\tau = \beta / \Delta_\tau$ imaginary time slices and then performing a Hubbard-Stratanovich transformation of some sort for each factor, one ends up with a partition function of the form
+	
+	\begin{align}
+	Z \approx \int_{ }^{ } \mathcal{D}\left(\phi\right) e^{-S_B \left[ \phi \right]} \mathrm{Tr}  \left\{\prod_{t = 1}^{N_\tau} \mathrm{exp}\left(-\frac{1}{4}\boldsymbol{\gamma}^T A_t \boldsymbol{\gamma}\right) \right\}  = \int_{ }^{ } \mathcal{D}\left(\phi\right)W\left[ \phi \right],
+	\end{align}
+	
+
+	where $\boldsymbol{\gamma} = \left(\gamma_1,\gamma_2,...,\gamma_{2N}\right)^\mathrm{T}$ is a $2N$-dimensional vector of Majorana operators obeying the Clifford algebra $\left\{\gamma_i, \gamma_j \right\} = 2\delta_{i,j}$. $A_t$ are matrices, which in general depend on some auxiliary field $\phi$. This formulation is valid for a continuous auxiliary field. In the case of a discrete HS-transformation one can simply replace the path integral with a sum over all possible field configurations. We notice that the main complexity of the derivation lies in finding an analytical expression for the weight $W\left[ \phi \right]$.\\
+	It will turn out very convenient to calculate the trace in an enlarged Hilbert space. This is accomplished by replacing $\boldsymbol{\gamma} \rightarrow \boldsymbol{f^\dagger} + \boldsymbol{f}$, where $\boldsymbol{f}$ is the vector of Dirac fermion operators. These operators are simply a mathematical tool, and have nothing to do with any actual physical Dirac fermion. This substitution does not change the algebra since 
+	
+	\begin{align}
+		\left\{f^\dagger_i + f_i, f^\dagger_j + f_j\right\} = 2\delta_{i,j}.
+	\end{align}
+	
+	It does however change the dimension of the Hilbert space. Because each Majorana operator carries half a degree of freedom we started out with a Hilbert space dimension $d = 2^N$. Now we have $2N$ Dirac fermions, which span a Hilbert space of $d' = 2^{2N}$. So when we perform the trace in this larger Hilbert space we need to compensate the overcounting by a factor of $\frac{1}{2^N}$. We therefore find
+	
+	\begin{align}
+		W\left[ \phi \right] &= \frac{1}{2^N}\mathrm{Tr}\left\{\prod_{t = 1}^{N_\tau} \mathrm{exp}\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^T A_t \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right) \right\} \nonumber\\
+		&= \frac{1}{2^N} \sum_n \bra{n}\prod_{t = 1}^{N_\tau} \mathrm{exp}\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^T A_t \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)\ket{n},
+	\end{align}
+	
+	where $n$ runs over all possible states in the Fock basis. In each factor we then insert a completeness relation of coherent states:
+	
+	\begin{align}
+		\mathbb{I} = \int_{}^{ } \mathcal{D}\left({\psi}^t,\bar{\psi}^t\right) \ket{\psi^t} \bra{\psi^t} e^{-\left(\bar\psi^t\right)^\mathrm{T}   \psi^t},
+	\end{align}
+	where $\psi^t=\left(\psi^t_1, \psi^t_2, \dots, \psi^t_{2N}\right)^\mathrm{T}$ and $\mathcal{D}\left({\psi}^t, \bar{\psi}^t\right) = \prod_{x=1}^{2N}\mathrm{d} \psi^t_x \mathrm{d}  \bar{\psi}^t_x $. This leads to 
+	
+	\begin{align}
+		W\left[ \phi \right] &= \frac{1}{2^N}\int_{ }^{ } \mathcal{D}\left({\psi},\bar{\psi}\right)\sum_{n}^{ }\bra{n} \exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_1 \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^1} \bra{\psi^1}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_2 \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^2}...\nonumber\\
+		&\quad \quad \quad \quad \quad \quad\quad \quad \quad \quad...\bra{\psi^{N_{\tau-1}}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{N\tau} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{N_\tau}}\braket{\psi^{N_\tau}|n} \exp \left( - \sum_{t=1}^{N_\tau}(\bar{\psi}^t)^\mathrm{T}  \psi^t   \right) \nonumber \\
+		&= \frac{1}{2^N}\int_{ }^{ } \mathcal{D}\left({\psi},\bar{\psi}\right)\bra{-\psi ^{N_\tau}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_1 \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^1} \bra{\psi^1}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_2 \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^2}...\nonumber\\
+		&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad...\bra{\psi^{N_{\tau-1}}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{N\tau} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{N_\tau}} \exp \left( - \bar{\boldsymbol{\psi}}^\mathrm{T} \boldsymbol{\psi}\right),
+	\end{align}
+	
+	where we have used the completeness relation of Fock states $\mathbb{I} = \sum_{n}^{ }\ket{n} \bra{n}$ and the identity $\braket{n | \psi} \braket{\psi|n} = \braket{-\psi|n}\braket{n|\psi}$. We also introduced the vector $\boldsymbol{ \psi} = \left(\psi^1, \psi^2, ..., \psi^{N_\tau}\right)^\mathrm{T}$. Because the entries of this vector have $2N$ components this vector ends up being $2NN_{\tau}$-dimensional. Now we need to deal with the matrix elements $\bra{\psi^{t-1}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{t} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{t}}$. Because the operators $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ obey the Clifford algebra every expression involving these operators may be brought into canonical form. This means that in every term of the expansion, each $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ can at most appear once and the operators appear in a set sequence. In the canonical form each fermion operator $f_{i}$ ($f_{i}^{\dagger} $) acts on the coherent state on the right (left) and the resulting expression must be a function of $\bar{\psi}^{t-1} + \psi^t$:
+	
+	\begin{align}
+		\bra{\psi^{t-1}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{t} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{t}} = \bra{\psi^{t-1}}\omega\left(A_t, \bar{\psi}^{t-1} + \psi^t\right)\ket{\psi^t}.
+	\end{align}
+	
+	Substituting this leads to
+	
+	\begin{align}
+		W\left[ \phi \right] &= \frac{1}{2^N} \int_{ }^{} \mathcal{D}\left({\psi},\bar{\psi}\right) \omega \left(A_1, -\bar{\psi}^{N_\tau} + \psi^1\right)\omega \left(A_2, \bar{\psi}^1 + \psi^2\right)\omega \left(A_3, \bar{\psi}^2 + \psi ^3\right)...\omega \left(A_{N_\tau}, \bar{\psi}^{N_\tau - 1} + \psi^{N_\tau} \right) \nonumber\\ 
+		&\quad \quad\exp \left( -\bar{\psi}^{N_\tau} \psi^1 + \bar{\psi}^1 \psi^2 + \bar{\psi}^2 \psi^3 + ... + \bar{\psi}^{N_\tau - 1}\psi^{N_\tau}     \right)  \exp \left( \boldsymbol{-\bar{\psi}\boldsymbol{\psi} } \right)\nonumber \\ 
+		&= \frac{1}{2^N} \int_{ }^{ } \mathcal{D}\left({\psi},\bar{\psi}\right) \omega \left(A_1, -\bar{\psi}^{N_\tau} + \psi^1\right)\omega \left(A_2, \bar{\psi}^1 + \psi^2\right)\omega \left(A_3, \bar{\psi}^2 + \psi ^3\right)...\omega \left(A_{N_\tau}, \bar{\psi}^{N_\tau - 1} + \psi^{N_\tau} \right)  \exp \left( \boldsymbol{-\bar{\psi}\boldsymbol{M}\boldsymbol{\psi} } \right),
+	\end{align}
+	
+	where we used $\braket{\theta|\phi} = \exp \left( \bar{\theta}^\mathrm{T}   \phi \right)  $ and introduced the matrix
+	
+	\begin{align}
+		\boldsymbol{M} =
+		\left.
+		\begin{bmatrix}
+			\mathbb{I}_{2N} & -\mathbb{I}_{2N} & 0 & \cdots & 0 \\
+			0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \ddots & \vdots \\
+			\vdots & \ddots & \ddots & \ddots & 0\\
+			0 & \cdots & 0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N}\\
+			\mathbb{I}_{2N} & \cdots & \cdots & 0 & \mathbb{I}_{2N} &
+		\end{bmatrix}
+		\right\}
+		\begin{array}{c}
+			2N N_\tau
+		\end{array}.
+	\end{align}
+	
+	By using the anticommutation relations we can rewrite this as
+	
+
+\begin{align}
+	W\left[ \phi \right] &= \frac{1}{2^N}
+	\int \mathcal{D}\left({\psi},\bar{\psi}\right)\,
+	\omega\!\left(A_1, -\bar{\psi}^{N_\tau} + \psi^1\right)
+	\omega\!\left(A_2, \bar{\psi}^1 + \psi^2\right)
+	\omega\!\left(A_3, \bar{\psi}^2 + \psi^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \bar{\psi}^{N_\tau - 1} + \psi^{N_\tau}\right) \nonumber \\
+	&\quad \quad\times\exp\left(
+	-\frac{1}{2}
+	\begin{bmatrix}
+		\boldsymbol{\psi}^{\mathrm T} & \boldsymbol{\bar{\psi}}^{\mathrm T}
+	\end{bmatrix}
+	\begin{bmatrix}
+		0 & -\boldsymbol{M}^\mathrm{T}   \\ \boldsymbol{M} & 0
+	\end{bmatrix}
+	\begin{bmatrix}
+		\boldsymbol{\psi} \\ \boldsymbol{\bar{\psi}}
+	\end{bmatrix}
+	\right).
+\end{align}
+
+
+Because we initially enlarged the Hilbert space, we have doubled the degrees of freedom. We now want to integrate out all the uninvolved degrees of freedom. This is accomplished by a change of variables:
+
+\begin{align}
+	\theta^1 &= \psi^1 - \bar{\psi}^{N_\tau}
+	& \tilde{\theta}^1 &= \psi^1 + \bar{\psi}^{N_\tau} \nonumber \\
+	\theta^2 &= \psi^2 + \bar{\psi}^1
+	& \tilde{\theta}^2 &= \psi^2 - \bar{\psi}^1 \nonumber \\
+	\theta^3 &= \psi^3 + \bar{\psi}^2
+	& \tilde{\theta}^3 &= \psi^3 - \bar{\psi}^2 \nonumber \\
+	& \vdots &
+	& \vdots \nonumber \\
+	\theta^{N_\tau} &= \psi^{N_\tau} + \bar{\psi}^{N_\tau - 1}
+	& \tilde{\theta}^{N_\tau} &= \psi^{N_\tau} - \bar{\psi}^{N_\tau - 1},
+\end{align}
+
+
+
+which is encoded in the $2N 2N_\tau \times 2N 2N_\tau$ matrix $U$:
+
+\begin{align}
+	\begin{pmatrix}
+		\theta^1 \\
+		\theta^2 \\
+		\vdots \\
+		\theta^{N_\tau} \\
+		\tilde{\theta}^1 \\
+		\tilde{\theta}^2 \\
+		\vdots \\
+		\tilde{\theta}^{N_\tau}
+	\end{pmatrix}
+	=
+	\underbrace{
+		\left(
+		\begin{array}{cccc|cccc}
+			\mathbb{I}_{2N} & 0 & \cdots & 0 & 0 & \cdots & 0 & -\mathbb{I}_{2N} \\
+			0 & \mathbb{I}_{2N} & \cdots & 0 & \mathbb{I}_{2N} & 0 & \cdots & 0 \\
+			0 & 0 & \ddots & 0 & 0 & \mathbb{I}_{2N} & \ddots & 0 \\
+			\vdots & \vdots & & \mathbb{I}_{2N} & 0 & \cdots & \mathbb{I}_{2N} & 0 \\
+			\hline
+			\mathbb{I}_{2N} & 0 & \cdots & 0 & 0 & \cdots & 0 & \mathbb{I}_{2N} \\
+			0 & \mathbb{I}_{2N} & \cdots & 0 & -\mathbb{I}_{2N} & 0 & \cdots & 0 \\
+			0 & 0 & \ddots & 0 & 0 & -\mathbb{I}_{2N} & \ddots & 0 \\
+			\vdots & \vdots & & \mathbb{I}_{2N} & 0 & \cdots & -\mathbb{I}_{2N} & 0
+		\end{array}
+		\right)
+	}_{:= U}
+	\begin{pmatrix}
+		\psi^1 \\
+		\psi^2 \\
+		\vdots \\
+		\psi^{N_\tau} \\
+		\bar{\psi}^1 \\
+		\bar{\psi}^2 \\
+		\vdots \\
+		\bar{\psi}^{N_\tau}
+	\end{pmatrix}.
+\end{align}
+
+By performing this change of variables we find
+
+
+\begin{align}
+	W\left[ \phi \right] &= \frac{1}{2^N} \mathrm{det} \left(U\right) 
+	\int \mathcal{D}\left({\theta},\tilde{\theta}\right)\,
+	\omega\!\left(A_1, \theta^1\right)
+	\omega\!\left(A_2, \theta^2\right)
+	\omega\!\left(A_3, \theta^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \theta^{N_\tau}\right) \nonumber \\
+	&\quad \quad \quad \quad \quad \times \exp\left(
+	-\frac{1}{2}
+	\begin{bmatrix}
+		\boldsymbol{\theta}^{\mathrm T} & \boldsymbol{\tilde{\theta}}^{\mathrm T}
+	\end{bmatrix}\left(U^\mathrm{T}  \right)^{-1}
+	\begin{bmatrix}
+		0 & -\boldsymbol{M}^\mathrm{T}   \\ \boldsymbol{M} & 0
+	\end{bmatrix}U^{-1}
+	\begin{bmatrix}
+		\boldsymbol{\theta} \\ \boldsymbol{\tilde{\theta}}
+	\end{bmatrix}
+	\right) \\
+	&= \frac{1}{2^N}\mathrm{det} \left(U\right) 
+	\int \mathcal{D}\left({\theta},\tilde{\theta}\right)\,
+	\omega\!\left(A_1, \theta^1\right)
+	\omega\!\left(A_2, \theta^2\right)
+	\omega\!\left(A_3, \theta^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \theta^{N_\tau}\right) \nonumber \\
+	&\quad \quad \quad \quad \quad \times \exp\left(
+	-\frac{1}{2}
+	\begin{bmatrix}
+		\boldsymbol{\theta}^{\mathrm T} & \boldsymbol{\tilde{\theta}}^{\mathrm T}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\boldsymbol{Q} & -\boldsymbol{C}^\mathrm{T}   \\ \boldsymbol{C} & \boldsymbol{B}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\boldsymbol{\theta} \\ \boldsymbol{\tilde{\theta}}
+	\end{bmatrix}
+	\right).
+\end{align}
+
+The explicit forms of $\boldsymbol{Q}, \boldsymbol{C}$ and $ \boldsymbol{B}$ can be found in Appenix XXXXX. Next we expand the matrix product and split the path integral.
+
+\begin{align}
+	W\left[ \phi \right] &= \frac{1}{2^N} \det\!\left(U\right) 
+	\int \mathcal{D}\left({\theta},\tilde{\theta}\right)\,
+	\omega\!\left(A_1, \theta^1\right)
+	\omega\!\left(A_2, \theta^2\right)
+	\omega\!\left(A_3, \theta^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \theta^{N_\tau}\right) \nonumber \\
+	&\quad \times \exp\!\left[
+	-\frac{1}{2}
+	\left(
+	\boldsymbol{\theta}^\mathrm{T} \boldsymbol{Q} \boldsymbol{\theta}
+	- 2 \boldsymbol{\theta}^\mathrm{T}\boldsymbol{C}^\mathrm{T} \boldsymbol{\tilde{\theta}}
+	+ \boldsymbol{\tilde{\theta}}^\mathrm{T} \boldsymbol{B} \boldsymbol{\tilde{\theta}}
+	\right)
+	\right] \nonumber \\
+	&= 2^{\left(2N_\tau - 1\right)N}\left(-1\right)^{N N_\tau}
+	\int \mathcal{D}\left(\theta\right)\,
+	\omega\!\left(A_1, \theta^1\right)
+	\omega\!\left(A_2, \theta^2\right)
+	\omega\!\left(A_3, \theta^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \theta^{N_\tau}\right)
+	\exp\!\left(
+	-\frac{1}{2} \boldsymbol{\theta}^\mathrm{T} \boldsymbol{Q} \boldsymbol{\theta}
+	\right) \nonumber \\
+	&\quad \times \int \mathcal{D}\left(\tilde{\theta}\right)\,
+	\exp\!\left(
+	\frac{1}{2} \boldsymbol{\tilde{\theta}}^\mathrm{T} \left(-\boldsymbol{B}\right)\boldsymbol{\tilde{\theta}}
+	+ \left(\boldsymbol{\theta}^\mathrm{T}\boldsymbol{C}^\mathrm{T}\right)\boldsymbol{\tilde{\theta}}
+	\right) \nonumber \\
+	&= 2^{\left(2N_\tau - 1\right)N}\left(-1\right)^{N N_\tau}\mathrm{Pf} \left(-B\right) 
+	\int \mathcal{D}\left(\theta\right)\,
+	\omega\!\left(A_1, \theta^1\right)
+	\omega\!\left(A_2, \theta^2\right)
+	\omega\!\left(A_3, \theta^3\right)
+	\cdots
+	\omega\!\left(A_{N_\tau}, \theta^{N_\tau}\right) \nonumber\\
+	&\quad\times\exp\!\left(
+	-\frac{1}{2} \boldsymbol{\theta}^\mathrm{T} \left[ \boldsymbol{Q} + \boldsymbol{C}^\mathrm{T}\boldsymbol{B}^{-1}\boldsymbol{C}\right]\boldsymbol{\theta}
+	\right),
+\end{align}
+where $\mathrm{det}\left(U\right)  = 2^{2NN_\tau}$ was used. In the second equal sign we split the path integral, where we needed to commute the Grassmann differentials which yielded an alternating sign. In the following step we performed the Gaussian integral by using:
+
+\begin{align}
+	\int_{ }^{ } \mathcal{D}\left(\boldsymbol{\xi}\right) \exp \left( \frac{1}{2} \boldsymbol{\xi}^\mathrm{T} \boldsymbol{A} \boldsymbol{\xi} + \boldsymbol{\zeta}^T \boldsymbol{\xi}   \right) = \mathrm{Pf} \left(A\right) \exp \left( \frac{1}{2} \boldsymbol{\zeta}^\mathrm{T} \boldsymbol{A}^{-1} \boldsymbol{\zeta}  \right). 
+\end{align}
+
+In the following we assume $N_{\tau}$ to be even. For this case we calculate in Appendix XXXX $\mathrm{Pf} \left(-B\right) = \left(-1\right)^\frac{N N_\tau}{2}\frac{1}{2^{2N\left(N_\tau - 1\right) }}$ as well as
+
+\begin{align}
+	\boldsymbol{R} := -\left[ \boldsymbol{Q} + \boldsymbol{C}^\mathrm{T} \boldsymbol{B}^{-1} \boldsymbol{C} \right] = \begin{bmatrix}
+		0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots \\
+		-\mathbb{I}_{2N} & 0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & 0 & \mathbb{I}_{2N} & \cdots \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & 0 & \cdots \\
+		\vdots & \vdots & \vdots & \vdots & \ddots
+	\end{bmatrix}.
+\end{align}
+
+
+Next we need to find explicit expressions for $\omega(A^,\theta)$. In Appendix XX we show:
+
+\begin{align}
+	\omega \left(A, \theta\right) = \eta(A) \exp \left( -\frac{1}{2}\boldsymbol{\theta}^\mathrm{T} \boldsymbol{G}\boldsymbol{\theta}    \right),
+\end{align}
+with
+
+
+\begin{align}
+	\boldsymbol{G}
+	&= \frac{\mathbb{I} - \boldsymbol{K}}{\mathbb{I} + \boldsymbol{K}} = \mathrm{tanh} \left(\frac{\boldsymbol{K}}{2} \right) , \\[4pt]
+	\boldsymbol{K}
+	&= e^{\boldsymbol{A}}, \\[4pt]
+	\eta(\boldsymbol{A} )
+	&= (-1)^N \,\mathrm{Pf}\!\left(
+	\begin{bmatrix}
+		\sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A}}{4}\right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A}}{4}\right)
+	\end{bmatrix}
+	\right).
+\end{align}
+
+
+After plugging this in we find
+
+\begin{align}
+	W\left[ \phi \right]  &= 2^{N} (-1)^{\frac{N N_\tau}{2}}
+	\left(\prod_{t=1}^{N_\tau} \eta\left(A_t\right)\right) \int \mathcal{D}\!\left(\boldsymbol{\theta}\right)\,
+	\exp\!\left[
+	\frac{1}{2}\boldsymbol{\theta}^{\mathrm T}
+	\left(
+	\boldsymbol{R}
+	-
+	\operatorname{diag}\!\left(
+	\boldsymbol{G}_1,\boldsymbol{G}_2,\boldsymbol{G}_3,\cdots,\boldsymbol{G}_{N_\tau}
+	\right)
+	\right)
+	\boldsymbol{\theta}
+	\right]
+	\nonumber \\
+	&= 2^{N} (-1)^{\frac{N N_\tau}{2}}
+	\left(\prod_{t=1}^{N_\tau} \eta\left(A_t\right)\right) \int \mathcal{D}\!\left(\boldsymbol{\theta}\right)\,
+	\exp\!\left[
+	\frac{1}{2}\boldsymbol{\theta}^{\mathrm T}
+	\left(
+	\begin{bmatrix}
+		-\boldsymbol{G}_1 & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & -\boldsymbol{G}_2 & \mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & -\boldsymbol{G}_3 & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & -\boldsymbol{G}_{N_\tau-1} & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & -\mathbb{I}_{2N} & -\boldsymbol{G}_{N_\tau}
+	\end{bmatrix}
+	\right)
+	\boldsymbol{\theta}
+	\right],
+\end{align}
+
+
+
+where we notice that the integral again is of Gaussian form. The final step is to carry out this integration to find
+
+\begin{align}
+	W\left[ \phi \right] &= 2^{N} (-1)^{\frac{N N_\tau}{2}}
+	\left(\prod_{t=1}^{N_\tau} \mathrm{Pf}\!\left(
+	\begin{bmatrix}
+		\sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A_t}}{4}\right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A_t}}{4}\right)
+	\end{bmatrix}
+	\right)\right) \nonumber \\
+	&\quad\quad \times
+	\mathrm{Pf} \left(	
+	\begin{bmatrix}
+		\tanh\!\left(\frac{e^{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		\vdots & \vdots & \ddots & \vdots & \vdots \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau}}}{2}\right)
+	\end{bmatrix}
+	\right).
+\end{align}
+
+
+Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip the sign. Now that we have found an analytical closed form of $W\left[ \phi \right]$ we find for the partition function:
+
+
+\begin{align}
+	Z = \int_{ }^{ } \mathcal{D} \left(\phi\right) e^{-S_B\left[ \phi \right] } W \left[ \phi \right] &= \int_{ }^{ } \mathcal{D} e^{-S_B\left[ \phi \right] } \left(\phi\right) 2^{N} (-1)^{\frac{N N_\tau}{2}}
+	\left(\prod_{t=1}^{N_\tau} \mathrm{Pf}\!\left(
+	\begin{bmatrix}
+		\sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A_t}}{4}\right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A_t}}{4}\right)
+	\end{bmatrix}
+	\right)\right) \nonumber \\
+	&\quad\quad \times
+	\mathrm{Pf} \left(	
+	\begin{bmatrix}
+		\tanh\!\left(\frac{e^{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		\vdots & \vdots & \ddots & \vdots & \vdots \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau}}}{2}\right)
+	\end{bmatrix}
+	\right)
+\end{align}
+
+
+
+\section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
+
+	In this section we apply the above presented method to a Hubbard Hamiltonian with a superconduction nearest neighbor term. The Hamiltonian takes the from:
+	
+	\begin{align}
+	H = -\sum_{\braket{i,j},\sigma}^{ } \left(t a_{i\sigma}^\dagger a_{j \sigma} + \Delta a^\dagger_{i \sigma}a^\dagger_{j \sigma} + \mathrm{H.c.}  \right) + U \sum_{x}^{ }\left(n_{x\uparrow} - \frac{1}{2} \right)\left(n_{x\downarrow} - \frac{1}{2} \right) 
+	\end{align}
+	
+	
+	Then we split each Dirac fermion into two Majorana fermions by using:
+	
+	\begin{align}
+		a_{i\sigma} &= \eta_{i\sigma} + i \gamma_{i\sigma}\\
+		a_{i\sigma}^\dagger &= \eta_{i\sigma} + i \gamma_{i \sigma}
+	\end{align}
+	
+	We assume a biparte lattice and gauge transform one sublattice by $a_{i\sigma} \rightarrow ia_{i\sigma}$. Then we substitute the Majorana represenation and find:
+	
+	\begin{align}
+		H = -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +4 U \sum_{x}^{ }\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
+	\end{align}
+	
+	We need to rewrite the quartic term in a way more suitable for our purposes. To do so we look at
+	
+	\begin{align}
+		\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 = \left(\eta_{x\uparrow} \eta_{x\downarrow}\right)^2 + \left(\gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
+	\end{align}
+	
+	Which leads to
+	
+	\begin{align}
+		\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 - \frac{1}{4}= -\frac{1}{2}\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2  + \frac{1}{4}  
+	\end{align}
+	Substituting this and dropping the constant leads to
+	
+	\begin{align}
+		H &= -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2\\
+		&= -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 := H_K + H_U
+	\end{align}
+	
+	After having brought the Hamiltonian into this convenient form we are interested in the partition function
+	
+	
+	\begin{align}
+		Z &= \mathrm{Tr}\left\{e^{-\beta H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} e^{-\Delta_\tau H_U}\right\} + \mathcal{O}\left(\Delta_\tau^2\right)\nonumber \\
+		&=  \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \exp\left({-\Delta_\tau 2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right) \nonumber \\
+		&= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x}^{ }  \exp\left({-\Delta_\tau 2 U \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right)
+	\end{align}
+	
+	Then we perform a Hubbard Stratanovich transformation in each quartic factor:
+	
+	\begin{align}
+		Z &= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x} \int_{ }^{ } \mathrm{d}\phi_{tx} e^{-\frac{\phi^2_{tx}}{4U\Delta_\tau}}\exp \left( \mp i \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)    \right\} \nonumber \\
+		&= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi_{tx}}{4U\Delta_\tau}  \right) \underbrace{\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\Delta_\tau H_K \right) \exp \left( \mp i \sum_{x}^{ } \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)  \right\} }_{:= W[\phi]}
+	\end{align}
+	
+	
+	
+	Now we need to rewrite $W[\phi]$ in terms of bilinear matrix expressions. We define the $4N$-dimensional Majorana operator vector
+	
+	\begin{align}
+	\boldsymbol{\xi} = \left(\eta_{1\uparrow}, \eta_{2\uparrow}, \dots,\eta_{N\uparrow},\eta_{1\downarrow}, \eta_{2\downarrow},\dots, \eta_{N\downarrow}, \gamma_{1\uparrow}, \gamma_{2\uparrow},\dots, \gamma_{N,\uparrow}, \gamma_{1\downarrow}, \gamma_{2\downarrow}, \dots, \gamma_{N\downarrow}\right)^\mathrm{T}   
+	\end{align}
+	
+	Then we can rewrite the weight as
+	
+	\begin{align}
+		W[\phi] = \mathrm{Tr}  \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\boldsymbol{\xi}^\mathrm{T} \boldsymbol{A}\boldsymbol{\xi}  \right) \exp \left( -\frac{1}{4} \boldsymbol{\xi}^\mathrm{T} \boldsymbol{B^{(t)}}\boldsymbol{\xi}  \right)\right\}, 
+	\end{align}
+	
+	
+	where we defined
+	
+	\begin{align}
+	A &= -i4\Delta_\tau
+	\begin{pmatrix}
+		\left(t - \Delta\right)\boldsymbol{T} & 0 & 0 & 0\\
+		0 & \left(t - \Delta\right)\boldsymbol{T} & 0 & 0\\
+		0 & 0 & \left(t + \Delta\right)\boldsymbol{T} & 0\\
+		0 & 0 & 0 & \left(t + \Delta\right)\boldsymbol{T}
+	\end{pmatrix},
+	\hspace{1.0cm}
+	\boldsymbol{B}^{(t)} = \mp 2 i
+	\begin{pmatrix}
+		0 & \boldsymbol{B}_\phi^{(t)} & 0 & 0\\
+		-\boldsymbol{B}_\phi^{(t)} & 0 & 0 & 0\\
+		0 & 0 & 0 & \boldsymbol{B}_\phi^{(t)}\\
+		0 & 0 & -\boldsymbol{B}_\phi^{(t)} & 0
+	\end{pmatrix}
+	\end{align}
+	
+	
+
+	with
+	
+	\begin{align}
+	\boldsymbol{T}_{ij} &=
+	\begin{cases}
+		+1, & \text{if } i<j \text{ and } i,j\,\mathrm{n.n.},\\
+		-1, & \text{if } i>j \text{ and } i,j\,\mathrm{n.n.},\\
+		0, & \text{otherwise},
+	\end{cases}
+	\qquad
+	\boldsymbol{B}_\phi^{(t)} = \operatorname{diag}\left(\phi_1^{(t)}, \phi_2^{(t)}, \dots, \phi_N^{(t)}\right).
+	\end{align}
+	
+	
+	Now $W[\phi]$ is in the form that we require and we can rewrite the partition function as
+	
+	\begin{align}
+		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi^2}{4\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
+		 &\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
+		\begin{bmatrix}
+			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
+			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right)
+		\end{bmatrix}
+		 \right)  
+		 \mathrm{Pf} \left(
+		 \begin{bmatrix}
+		 	\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B}^{(t)} }}{4}\right) & -\mathbb{I}\\
+		 	\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B}^{(t)} }}{4}\right)
+		 \end{bmatrix}
+		 \right) \nonumber \\
+		 &\quad\quad \times 
+		 \mathrm{Pf} \left(
+		 	\begin{bmatrix}
+		 		\mathrm{tanh}\left(\frac{e^{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
+		 		\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
+		 		-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
+		 		\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(2)}} }{2} \right) &   &  \vdots \\
+		 		\vdots &   &   &   & \ddots & \vdots \\
+		 		\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}}}{2} \right) \\
+		 	\end{bmatrix}
+		 \right) 
+	\end{align}
+	
+	Had we chosen the other representation for $\eta_{\uparrow \sigma}\eta_{\downarrow \sigma}\gamma_{\uparrow \sigma}\gamma_{\downarrow\sigma}$ the derivation would have been equivalent, leading to:
+	
+	
+	\begin{align}
+		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( +\frac{\phi^2}{4\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
+		&\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
+		\begin{bmatrix}
+			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
+			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right)
+		\end{bmatrix}
+		\right)  
+		\mathrm{Pf} \left(
+		\begin{bmatrix}
+			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B'}^{(t)} }}{4}\right) & -\mathbb{I}\\
+			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B'}^{(t)} }}{4}\right)
+		\end{bmatrix}
+		\right) \nonumber \\
+		&\quad\quad \times 
+		\mathrm{Pf} \left(
+		\begin{bmatrix}
+			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
+			-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
+			\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(2)}} }{2} \right) &   &  \vdots \\
+			\vdots &   &   &   & \ddots & \vdots \\
+			\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(N_\tau)}}}{2} \right) \\
+		\end{bmatrix}
+		\right) ,
+	\end{align}
+	
+	where 
+	
+	\begin{align}
+	\boldsymbol{B'} = \mp 2 i
+	\begin{pmatrix}
+		0 & \boldsymbol{B}_\phi^{(t)} & 0 & 0\\
+		-\boldsymbol{B}_\phi^{(t)} & 0 & 0 & 0\\
+		0 & 0 & 0 & -\boldsymbol{B}_\phi^{(t)}\\
+		0 & 0 & \boldsymbol{B}_\phi^{(t)} & 0
+	\end{pmatrix}
+	\end{align}
+	
+	We se that the matrices $\boldsymbol{A}$ and $\boldsymbol{B}^(t)$ are block diagonal with
+	
+	\begin{align}
+	\boldsymbol{A} = \begin{bmatrix}
+		\boldsymbol{A}_{\eta}& 0 \\
+		0 & \boldsymbol{A}_{\gamma}  
+	\end{bmatrix} \quad\quad\quad \boldsymbol{B}^{(t)}= \begin{bmatrix}
+		\boldsymbol{B}^{(t)}_{\eta}& 0 \\
+		0 & \boldsymbol{B}^{(t)}_{\gamma} 
+	\end{bmatrix}
+	\end{align}
+	
+	
+	In Appendix XXXX we derive that in this case the result can be factorized. Applying this we find
+	
+	\begin{align}
+		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi^2}{4U\Delta_{\tau} }\right)2^{2N}\left(-1\right)^{NN_{\tau} }\nonumber \\
+		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\eta} \right)\eta\left(\boldsymbol{B}_{\eta}^{(t)} \right)\right)\mathrm{Pf} \left(
+		\begin{bmatrix}
+			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\eta}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}_{\eta} } }{2} \right) &   &  \vdots \\
+			\vdots &   &   \ddots & \vdots \\
+			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}_{\eta} }}{2} \right) \\
+		\end{bmatrix}
+		\right) \nonumber \\
+		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\gamma} \right)\eta\left(\boldsymbol{B}_{\gamma}^{(t)} \right)\right)\mathrm{Pf} \left(
+		\begin{bmatrix}
+			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\gamma}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
+			\vdots &   &   \ddots & \vdots \\
+			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
+		\end{bmatrix}
+		\right)
+	\end{align}
+	
+	Should we have chosen the other expression for the quartic we find the same expression, except the sign in the auxiliary field and changing the matrices accordingly. 
+	
+	
+	
+	
+	
+	
+	
+\appendix
+	
+\section{Factorization of the expression for Block Diagonal matrices}
+
+If we have 2-block$\times$2-block diagonal matrices of the form
+
+\begin{align}
+	\boldsymbol{A}^{(t)} = \begin{bmatrix}
+		\boldsymbol{B}^(t) & 0 \\
+		0 & \boldsymbol{\bar{B}^{(t)} } 
+	\end{bmatrix}
+\end{align}in the weight we can write
+
+\begin{align}
+	W[\phi]= \mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}
+	\exp \left( -\frac{1}{4}\boldsymbol{\xi}^\mathrm{T} \boldsymbol{A}^{(t)} \boldsymbol{\xi}    \right)  \right\}
+	=\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\boldsymbol{\gamma}^\mathrm{T} \boldsymbol{B}^{(t)}\boldsymbol{\gamma}  \right) 
+	\exp \left( -\frac{1}{4}\boldsymbol{\eta}^\mathrm{T} \bar{\boldsymbol{B}}^{(t)}\boldsymbol{\eta}  \right)  \right\} ,
+\end{align}
+	
+where we defined the $4N$-dimensional vector $\boldsymbol{\xi} = \begin{bmatrix} \boldsymbol{\gamma} & \boldsymbol{§} \end{bmatrix}^\mathrm{T}$. Continuing as before we enlarge the Hilbert space to find
+
+\begin{align}
+	W[\phi] &=\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\boldsymbol{\left(f^\dagger + f\right)}^\mathrm{T} \boldsymbol{B}^{(t)}\boldsymbol{\left(f^\dagger + f\right)}  \right) 
+	\exp \left( -\frac{1}{4}\boldsymbol{\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right) }^\mathrm{T} \bar{\boldsymbol{B}}^{(t)}\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right)  \right)  \right\} \nonumber \\
+	&= \frac{1}{2^{2N}}\int_{ }^{ } \mathcal{D}\left(\psi,\bar{\psi},\phi, \bar{\phi} \right) \nonumber \\
+	&\quad\quad \times\bra{-\psi^{N_\tau},-\phi^{N_\tau}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  \boldsymbol{B}^{(1)}  \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)  \exp \left( -\frac{1}{4}\left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)^\mathrm{T}  \bar{\boldsymbol{B}}^{(1)}  \left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)\right)\ket{\psi^1,\phi^1} \nonumber \\
+	&\quad\quad\times \bra{-\psi^1,-\phi^1} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  \boldsymbol{B}^{(2)}  \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)  \exp \left( -\frac{1}{4}\left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)^\mathrm{T}  \bar{\boldsymbol{B}}^{(2)}  \left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)\right)\ket{\psi^2,\phi^2}\nonumber \\
+	&\quad\quad\quad\vdots \nonumber \\
+	&\quad\quad\times \bra{-\psi^{N_\tau-1},-\phi^{N_\tau-1}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  \boldsymbol{B}^{(N_\tau)}  \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)  \exp \left( -\frac{1}{4}\left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)^\mathrm{T}  \bar{\boldsymbol{B}}^{(N_\tau)}  \left(\boldsymbol{g}^\dagger + \boldsymbol{g}\right)\right)\ket{\psi^{N_\tau},\phi^{N_\tau}}
+	\nonumber \\
+	&\quad\quad\times\exp \left( -\bar{\boldsymbol{\psi} }^\mathrm{T} \boldsymbol{\psi}  \right) \exp \left( -\bar{\boldsymbol{\phi} }^\mathrm{T} \boldsymbol{\phi}\right)  
+\end{align}
+
+where $\ket{\psi,\phi} = \ket{\psi} \otimes\ket{\phi}$. The operator $\boldsymbol{f}$ ($\boldsymbol{g}$) only acts on $\ket{\psi}$ ($\ket{\phi}$). Using this we can factorize the above expression to
+
+\begin{align}
+W[\phi] &= \frac{1}{2^N}\int_{ }^{ } \mathcal{D}\left(\psi,\bar{\psi} \right)\bra{-\psi^{N_\tau}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)^\mathrm{T} \boldsymbol{B^{(1)}}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)  \right) \ket{\psi^1} \nonumber \\
+&\quad\quad \bra{-\psi^{1}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)^\mathrm{T} \boldsymbol{B^{(2)}}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)  \right) \ket{\psi^2}\nonumber \\
+&\quad\quad \vdots \nonumber \\
+&\quad\quad \bra{\psi^{N_\tau-1}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)^\mathrm{T} \boldsymbol{B^{(N_\tau)}}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)  \right) \ket{\psi^{N_\tau}} \exp \left( - \bar{\boldsymbol{\psi} }^\mathrm{T} \boldsymbol{\psi}  \right) \nonumber \\
+&\times \frac{1}{2^N}\int_{ }^{ } \mathcal{D}\left(\psi,\bar{\psi} \right)\bra{-\psi^{N_\tau}} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)^\mathrm{T} \boldsymbol{B^{(1)}}\left(\boldsymbol{f}^\dagger + \boldsymbol{f} \right)  \right) \ket{\psi^1} \nonumber \\
+&\quad\quad \bra{-\phi^{1}} \exp \left( -\frac{1}{4}\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right)^\mathrm{T} \boldsymbol{\bar{B}^{(2)}}\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right)  \right) \ket{\phi^2}\nonumber \\
+&\quad\quad \vdots \nonumber \\
+&\quad\quad \bra{\phi^{N_\tau-1}} \exp \left( -\frac{1}{4}\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right)^\mathrm{T} \boldsymbol{\bar{B}^{(N_\tau)}}\left(\boldsymbol{g}^\dagger + \boldsymbol{g} \right)  \right) \ket{\phi^{N_\tau}} \exp \left( - \bar{\boldsymbol{\phi} }^\mathrm{T} \boldsymbol{\phi}  \right)
+\end{align}
+
+From here each path integral can be computed as presented in the main text. 
+
+\begin{align}
+W[\phi] = W_1[\phi]W_2[\phi]
+\end{align}
+Therefore, if the matrices in the string of exponentials are block diagonal, the entire expression can be factorized into a product over multiple weights. However, the two weights always share the same auxiliary field configuration. This factorization is sometimes useful to reduce the sign problem.
+
+
+
+\section{Integrating out the non-interacting part of the Hamiltonian}
+
+Here, we will attempt to analytically integrate out the factors in the operator string which do not depend on some auxiliary field. Let us assume the Hamiltonian after some Hubbard-Stratanovich transformation can be written as
+
+\begin{align}
+	H = H_0 + H_{\mathrm{int}}[\phi],
+\end{align}
+
+then after a Suzuki-Trotter approximation the weight can be written as
+
+\begin{align}
+	W[\phi] \approx \mathrm{Tr} \left\{\prod_{t=0}^{N_\tau} \exp \left( -\frac{1}{4}\boldsymbol{\gamma}^\mathrm{T}\boldsymbol{A} \boldsymbol{\gamma}    \right)   \exp \left( -\frac{1}{4}\boldsymbol{\gamma}^\mathrm{T}\boldsymbol{B}^{(t)} \boldsymbol{\gamma}    \right)   \right\} 
+\end{align}
+
+Most of the calculation is very similar to the main text, therefore we will go through some of the calculations much quicker.
+We proceed again by enlargening the Hilbert space. Then we insert $2N_\tau$ completeness relations for the coherent basis - one between each exponential factor. Then by using the same identities as before we can again integrate out the non-physical degrees of freedom. Eventually we end up with
+
+\begin{align}
+	W[\phi] &= 2^N \left(-1\right)^{NN_\tau} \int_{ }^{ } \mathcal{D}\left(\theta\right)
+	\omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )  \nonumber \\
+	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\times\exp \left( \frac{1}{2}\boldsymbol{\theta}^\mathrm{T} \boldsymbol{R}\boldsymbol{\theta}  \right)  .
+\end{align}
+
+We notice that all the odd numbered Grassmann variables belong to expressions independent of the auxiliary field. We therefore expand the product in the exponent and split the path integral.
+
+
+\begin{align}
+	W[\phi] &= \left(-1\right)^{NN_\tau} 2^N \int_{ }^{ } \mathcal{D} \left(\theta^\mathrm{even}, \theta^\mathrm{odd}   \right) \omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )\nonumber \\
+	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\times\exp \left( \frac{1}{2}
+	\begin{bmatrix}
+		\boldsymbol{\theta}^\mathrm{odd} & \boldsymbol{\theta}^\mathrm{even}
+	\end{bmatrix}
+	\boldsymbol{R'}
+	\begin{bmatrix}
+		\boldsymbol{\theta}^\mathrm{odd} \\ \boldsymbol{\theta}^\mathrm{even}
+	\end{bmatrix}
+	 \right)  \nonumber \\
+	 &= \left(-1\right)^{NN_\tau} 2^N \int_{ }^{ } \mathcal{D}\left(\theta^\mathrm{even}  \right) 
+	 \omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )
+	 \exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^\mathrm{even}\right)^\mathrm{T}    \boldsymbol{R}_{22} \boldsymbol{\theta}^{even} \right)\nonumber \\
+	 &\quad\quad\quad\quad\quad\quad\quad\times\int_{ }^{ } \mathcal{D}\left( \boldsymbol{\theta}^{odd} \right)
+	 \omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^{\mathrm{odd}}\right)^\mathrm{T}   \boldsymbol{R'}_{11} \boldsymbol{\theta}^{\mathrm{odd}  }+\left(\boldsymbol{\theta}^{\mathrm{even}} \right)^\mathrm{T} \boldsymbol{R'}_{21}\boldsymbol{\theta}^{\mathrm{odd}  }     \right)  ,
+\end{align}
+
+
+where we have permuted the basis vectors so that all the odd once appear first and then the even ones follow. This change of basis of course also changes the matrix $\boldsymbol{R}$ to $\boldsymbol{R'}$. Written out this leads to
+
+\begin{align}
+	\boldsymbol{R'}_{11} = 
+	\begin{bmatrix}
+		0 & -\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \dots & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} &  & \vdots \\
+		\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & \ddots & \vdots \\
+		\vdots &  & \ddots & \ddots & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & \dots & \dots & \mathbb{I}_{2N} & 0 \\
+	\end{bmatrix}
+	=\boldsymbol{R'}_{22} 
+\end{align}
+
+and 
+
+\begin{align}
+	\boldsymbol{R'}_{21} = 
+	\begin{bmatrix}
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \mathbb{I}_{2N} & \dots & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} &  & \vdots \\
+		-\mathbb{I}_{2N} & -\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \ddots & \vdots \\
+		\vdots &  & \ddots & \ddots & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & \dots & \dots & -\mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+	\end{bmatrix}
+	= -\boldsymbol{R'}_{21}^{\mathrm{T}  } 
+\end{align}
+
+Now we substitute the expression for $\omega(A, \theta^{2t-1} )$, which leads to another Gaussian integral:
+
+\begin{align}
+	W[\phi]&= \left(-1\right)^{NN_\tau} 2^N \left(\eta\left(\boldsymbol{A} \right)\right) ^{N_{\tau} }    \int_{ }^{ } \mathcal{D}\left(\theta^\mathrm{even}  \right) 
+	\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )
+	\exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^\mathrm{even}\right)^\mathrm{T}    \boldsymbol{R}_{22} \boldsymbol{\theta}^{even} \right)\nonumber \\
+	&\quad\times\int_{ }^{ } \mathcal{D}\left( \boldsymbol{\theta}^{odd} \right)
+	\omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^{\mathrm{odd}}\right)^\mathrm{T}   \underbrace{\left[\boldsymbol{R'}_{11} - \left(\mathbb{I}_{N_\tau} \otimes\boldsymbol{A}\right) \right]}_{:=\boldsymbol{K} }  \boldsymbol{\theta}^{\mathrm{odd}  }+\left(\boldsymbol{\theta}^{\mathrm{even}} \right)^\mathrm{T} \boldsymbol{R'}_{21}\boldsymbol{\theta}^{\mathrm{odd}  }     \right)\nonumber \\
+	&= \left(-1\right)^{NN_\tau} 2^N \left(\eta\left(\boldsymbol{A} \right)\right) ^{N_{\tau} } \mathrm{Pf} \left(\boldsymbol{K} \right)     \int_{ }^{ } \mathcal{D}\left(\theta^\mathrm{even}  \right) 
+	\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )
+	\nonumber \\
+	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\times\exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^\mathrm{even}\right)^\mathrm{T}  \left[ \boldsymbol{R}_{22} + \boldsymbol{R'}_{21} \boldsymbol{K}^{-1} \boldsymbol{R'}_{21}^{\mathrm{T}  }     \right]\boldsymbol{\theta}^{\mathrm{even}} \right).
+\end{align}
+
+Substituting the expressions for $\omega(\boldsymbol{B}^{(t)}, \theta^{(2t)})$ and carrying out the integration leads to
+
+\begin{align}
+	W[\phi] &= \left(-1\right)^{NN_\tau} 2^N \left(\eta\left(\boldsymbol{A} \right)\right) ^{N_{\tau} } \mathrm{Pf} \left(\boldsymbol{K} \right) \left(\prod_{t = 1}^{N_{\tau} }\eta\left(\boldsymbol{B}^{(t)} \right)\right)
+	\mathrm{Pf} \left(\boldsymbol{R'}_{22}+ \boldsymbol{R'_{21}\boldsymbol{K}^{-1}\boldsymbol{R'}_{21}^{\mathrm{T}  } } - \mathrm{diag} \left(\boldsymbol{G}_{1},\boldsymbol{G}_{2},\dots,\boldsymbol{G}_{N_{\tau} } \right) \right) 
+\end{align}
+
+This result seems quite nice, however the argument of the pfaffian seems quite complicated. As of right now I was unable to find a nice closed form solution for this matrix. Perhaps this must be handled by the computer later on. It does not seem like the matrix needs to be calculated often.
+	
+	
+\end{document}
