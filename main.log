@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/MacPorts 2026.78235_0) (preloaded format=pdflatex 2026.3.12)  19 MAR 2026 11:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/MacPorts 2026.78235_0) (preloaded format=pdflatex 2026.3.12)  23 MAR 2026 12:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -167,114 +167,90 @@ Overfull \hbox (1.99475pt too wide) detected at line 378
  []
 
 [5] [6]
-Overfull \hbox (34.0413pt too wide) detected at line 471
+Overfull \hbox (29.04129pt too wide) detected at line 472
 []
  []
 
-[7] [8] [9]
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx10!
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx10!
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx10!
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx10!
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx7!
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-
-LaTeX Warning: Command \textsection invalid in math mode on input line 623.
-
-Missing character: There is no § in font cmbx5!
-
-Overfull \hbox (61.26389pt too wide) detected at line 635
+[7] [8]
+Overfull \hbox (61.26389pt too wide) detected at line 599
 []
  []
 
-[10] [11]
-Overfull \hbox (66.21507pt too wide) detected at line 701
+[9] [10]
+Overfull \hbox (64.41075pt too wide) detected at line 665
 []
  []
 
-[12]
-Overfull \hbox (67.89783pt too wide) detected at line 744
+[11]
+Overfull \hbox (67.89783pt too wide) detected at line 708
 []
  []
 
 
-Overfull \hbox (14.83458pt too wide) detected at line 751
+Overfull \hbox (14.83458pt too wide) detected at line 715
 []
  []
 
-[13] (./main.aux)
+[12] [13] [14] [15]
+Overfull \hbox (25.70076pt too wide) detected at line 908
+[]
+ []
+
+
+Overfull \hbox (15.8518pt too wide) detected at line 922
+[]
+ []
+
+
+Overfull \hbox (4.29274pt too wide) detected at line 960
+[]
+ []
+
+[16]
+Overfull \hbox (28.93106pt too wide) detected at line 1024
+[]
+ []
+
+[17] [18] [19] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 1742 strings out of 467525
- 24292 string characters out of 5421074
+ 1745 strings out of 467525
+ 24302 string characters out of 5421074
  475756 words of memory out of 5000000
- 30681 multiletter control sequences out of 15000+600000
- 633117 words of font info for 60 fonts, out of 8000000 for 9000
+ 30685 multiletter control sequences out of 15000+600000
+ 632782 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,23n,65p,1263b,253s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 56i,26n,65p,1347b,274s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/thomashauschild/Library/texlive/2026/texmf-var/fonts/pk/ljfour/publi
-c/amsfonts/cmextra/cmbsy5.600pk> </Users/thomashauschild/Library/texlive/2026/t
-exmf-var/fonts/pk/ljfour/public/cm/cmbx7.600pk> </Users/thomashauschild/Library
-/texlive/2026/texmf-var/fonts/pk/ljfour/public/amsfonts/cmextra/cmmib5.600pk> <
-/Users/thomashauschild/Library/texlive/2026/texmf-var/fonts/pk/ljfour/public/am
-sfonts/cmextra/cmmib7.600pk> </opt/local/share/texmf-texlive/fonts/pk/ljfour/pu
-blic/cm/dpi600/cmbx10.pk> </Users/thomashauschild/Library/texlive/2026/texmf-va
-r/fonts/pk/ljfour/public/cm/cmbsy10.600pk> </Users/thomashauschild/Library/texl
-ive/2026/texmf-var/fonts/pk/ljfour/public/cm/cmsy5.600pk> </Users/thomashauschi
-ld/Library/texlive/2026/texmf-var/fonts/pk/ljfour/public/cm/cmr5.600pk> </Users
+c/cm/cmbx7.600pk> </Users/thomashauschild/Library/texlive/2026/texmf-var/fonts/
+pk/ljfour/public/amsfonts/cmextra/cmmib5.600pk> </Users/thomashauschild/Library
+/texlive/2026/texmf-var/fonts/pk/ljfour/public/amsfonts/cmextra/cmmib7.600pk> <
+/opt/local/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmbx10.pk> </Us
+ers/thomashauschild/Library/texlive/2026/texmf-var/fonts/pk/ljfour/public/cm/cm
+bsy10.600pk> </Users/thomashauschild/Library/texlive/2026/texmf-var/fonts/pk/lj
+four/public/cm/cmsy5.600pk> </Users/thomashauschild/Library/texlive/2026/texmf-
+var/fonts/pk/ljfour/public/cm/cmr5.600pk> </Users/thomashauschild/Library/texli
+ve/2026/texmf-var/fonts/pk/ljfour/public/amsfonts/symbols/msbm10.600pk> </Users
 /thomashauschild/Library/texlive/2026/texmf-var/fonts/pk/ljfour/public/amsfonts
-/symbols/msbm10.600pk> </Users/thomashauschild/Library/texlive/2026/texmf-var/f
-onts/pk/ljfour/public/amsfonts/cmextra/cmbsy7.600pk> </Users/thomashauschild/Li
-brary/texlive/2026/texmf-var/fonts/pk/ljfour/public/cm/cmmib10.600pk> </opt/loc
-al/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmr7.pk> </Users/thomas
-hauschild/Library/texlive/2026/texmf-var/fonts/pk/ljfour/public/cm/cmmi5.600pk>
- </opt/local/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmsy7.pk> </o
-pt/local/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmex10.pk> </opt/
-local/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmsy10.pk> </opt/loc
-al/share/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmmi7.pk> </opt/local/s
-hare/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmmi10.pk> </opt/local/shar
-e/texmf-texlive/fonts/pk/ljfour/public/cm/dpi600/cmr10.pk> </Users/thomashausch
-ild/.texlive2026/texmf-var/fonts/pk/ljfour/public/cm/cmbx12.720pk>
-Output written on main.pdf (13 pages, 131618 bytes).
+/cmextra/cmbsy7.600pk> </Users/thomashauschild/Library/texlive/2026/texmf-var/f
+onts/pk/ljfour/public/cm/cmmib10.600pk> </opt/local/share/texmf-texlive/fonts/p
+k/ljfour/public/cm/dpi600/cmr7.pk> </Users/thomashauschild/Library/texlive/2026
+/texmf-var/fonts/pk/ljfour/public/cm/cmmi5.600pk> </opt/local/share/texmf-texli
+ve/fonts/pk/ljfour/public/cm/dpi600/cmsy7.pk> </opt/local/share/texmf-texlive/f
+onts/pk/ljfour/public/cm/dpi600/cmex10.pk> </opt/local/share/texmf-texlive/font
+s/pk/ljfour/public/cm/dpi600/cmsy10.pk> </opt/local/share/texmf-texlive/fonts/p
+k/ljfour/public/cm/dpi600/cmmi7.pk> </opt/local/share/texmf-texlive/fonts/pk/lj
+four/public/cm/dpi600/cmmi10.pk> </opt/local/share/texmf-texlive/fonts/pk/ljfou
+r/public/cm/dpi600/cmr10.pk> </Users/thomashauschild/.texlive2026/texmf-var/fon
+ts/pk/ljfour/public/cm/cmbx12.720pk>
+Output written on main.pdf (19 pages, 152105 bytes).
 PDF statistics:
- 441 PDF objects out of 1000 (max. 8388607)
- 111 compressed objects within 2 object streams
+ 472 PDF objects out of 1000 (max. 8388607)
+ 120 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

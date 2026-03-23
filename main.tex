@@ -16,7 +16,7 @@
 	Here, we derive the pfaffian formulation of the path integral. We roughly follow the derivation given in PFAFFIAN PAPER. Usually, after doing a Suzuki-Trotter approximation, which splits the exponential into $N_\tau = \beta / \Delta_\tau$ imaginary time slices and then performing a Hubbard-Stratanovich transformation of some sort for each factor, one ends up with a partition function of the form
 	
 	\begin{align}
-	Z \approx \int_{ }^{ } \mathcal{D}\left(\phi\right) e^{-S_B \left[ \phi \right]} \mathrm{Tr}  \left\{\prod_{t = 1}^{N_\tau} \mathrm{exp}\left(-\frac{1}{4}\boldsymbol{\gamma}^T A_t \boldsymbol{\gamma}\right) \right\}  = \int_{ }^{ } \mathcal{D}\left(\phi\right)W\left[ \phi \right],
+	Z \approx \int_{ }^{ } \mathcal{D}\left(\phi\right) e^{-S_B \left[ \phi \right]} \mathrm{Tr}  \left\{\prod_{t = 1}^{N_\tau} \mathrm{exp}\left(-\frac{1}{4}\boldsymbol{\gamma}^T A_t \boldsymbol{\gamma}\right) \right\}  = \int_{ }^{ } \mathcal{D}\left(\phi\right)e^{-S_B \left[ \phi \right]}W\left[ \phi \right],
 	\end{align}
 	
 
@@ -24,7 +24,7 @@
 	It will turn out very convenient to calculate the trace in an enlarged Hilbert space. This is accomplished by replacing $\boldsymbol{\gamma} \rightarrow \boldsymbol{f^\dagger} + \boldsymbol{f}$, where $\boldsymbol{f}$ is the vector of Dirac fermion operators. These operators are simply a mathematical tool, and have nothing to do with any actual physical Dirac fermion. This substitution does not change the algebra since 
 	
 	\begin{align}
-		\left\{f^\dagger_i + f_i, f^\dagger_j + f_j\right\} = 2\delta_{i,j}.
+		\left\{f^\dagger_i + f_i, f^\dagger_j + f_j\right\} = 2\delta_{ij}.
 	\end{align}
 	
 	It does however change the dimension of the Hilbert space. Because each Majorana operator carries half a degree of freedom we started out with a Hilbert space dimension $d = 2^N$. Now we have $2N$ Dirac fermions, which span a Hilbert space of $d' = 2^{2N}$. So when we perform the trace in this larger Hilbert space we need to compensate the overcounting by a factor of $\frac{1}{2^N}$. We therefore find
@@ -48,7 +48,7 @@
 		&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad...\bra{\psi^{N_{\tau-1}}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{N\tau} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{N_\tau}} \exp \left( - \bar{\boldsymbol{\psi}}^\mathrm{T} \boldsymbol{\psi}\right),
 	\end{align}
 	
-	where we have used the completeness relation of Fock states $\mathbb{I} = \sum_{n}^{ }\ket{n} \bra{n}$ and the identity $\braket{n | \psi} \braket{\psi|n} = \braket{-\psi|n}\braket{n|\psi}$. We also introduced the vector $\boldsymbol{ \psi} = \left(\psi^1, \psi^2, ..., \psi^{N_\tau}\right)^\mathrm{T}$. Because the entries of this vector have $2N$ components this vector ends up being $2NN_{\tau}$-dimensional. Now we need to deal with the matrix elements $\bra{\psi^{t-1}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{t} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{t}}$. Because the operators $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ obey the Clifford algebra every expression involving these operators may be brought into canonical form. This means that in every term of the expansion, each $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ can at most appear once and the operators appear in a set sequence. In the canonical form each fermion operator $f_{i}$ ($f_{i}^{\dagger} $) acts on the coherent state on the right (left) and the resulting expression must be a function of $\bar{\psi}^{t-1} + \psi^t$:
+	where we have used the completeness relation of Fock states $\mathbb{I} = \sum_{n}^{ }\ket{n} \bra{n}$ and the identity $\braket{n | \psi} \braket{\psi|n} = \braket{-\psi|n}\braket{n|\psi}$. We also introduced the vector $\boldsymbol{ \psi} = \left(\psi^1, \psi^2, ..., \psi^{N_\tau}\right)^\mathrm{T}$. Because the entries of this vector have $2N$ components this vector ends up being $2NN_{\tau}$-dimensional. Now we need to deal with the matrix elements $\bra{\psi^{t-1}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{t} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{t}}$. Because the operators $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ obey the Clifford algebra every expression involving these operators may be brought into canonical form. This means that in every term of the expansion, each $\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)_i$ can at most appear once and the operators appear in a set sequence (e.g. each operator string only has rising indices from left to right). In the canonical form each fermion operator $f_{i}$ ($f_{i}^{\dagger} $) can act on the coherent state on the right (left) and the resulting expression can be written as a function of $\bar{\psi}^{t-1} + \psi^t$:
 	
 	\begin{align}
 		\bra{\psi^{t-1}}\exp{\left(-\frac{1}{4}\left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)^\mathrm{T}  A_{t} \left(\boldsymbol{f}^\dagger + \boldsymbol{f}\right)\right)}\ket{\psi^{t}} = \bra{\psi^{t-1}}\omega\left(A_t, \bar{\psi}^{t-1} + \psi^t\right)\ket{\psi^t}.
@@ -258,7 +258,7 @@ where $\mathrm{det}\left(U\right)  = 2^{2NN_\tau}$ was used. In the second equal
 	\int_{ }^{ } \mathcal{D}\left(\boldsymbol{\xi}\right) \exp \left( \frac{1}{2} \boldsymbol{\xi}^\mathrm{T} \boldsymbol{A} \boldsymbol{\xi} + \boldsymbol{\zeta}^T \boldsymbol{\xi}   \right) = \mathrm{Pf} \left(A\right) \exp \left( \frac{1}{2} \boldsymbol{\zeta}^\mathrm{T} \boldsymbol{A}^{-1} \boldsymbol{\zeta}  \right). 
 \end{align}
 
-In the following we assume $N_{\tau}$ to be even. For this case we calculate in Appendix XXXX $\mathrm{Pf} \left(-B\right) = \left(-1\right)^\frac{N N_\tau}{2}\frac{1}{2^{2N\left(N_\tau - 1\right) }}$ as well as
+In the following we assume $N_{\tau}$ to be even. For this case we use $\mathrm{Pf} \left(-B\right) = \left(-1\right)^\frac{N N_\tau}{2}\frac{1}{2^{2N\left(N_\tau - 1\right) }}$ as well as
 
 \begin{align}
 	\boldsymbol{R} := -\left[ \boldsymbol{Q} + \boldsymbol{C}^\mathrm{T} \boldsymbol{B}^{-1} \boldsymbol{C} \right] = \begin{bmatrix}
@@ -271,7 +271,7 @@ In the following we assume $N_{\tau}$ to be even. For this case we calculate in 
 \end{align}
 
 
-Next we need to find explicit expressions for $\omega(A^,\theta)$. In Appendix XX we show:
+Next we need to find explicit expressions for $\omega(A,\theta)$. In appendix \ref{gaussian} we show:
 
 \begin{align}
 	\omega \left(A, \theta\right) = \eta(A) \exp \left( -\frac{1}{2}\boldsymbol{\theta}^\mathrm{T} \boldsymbol{G}\boldsymbol{\theta}    \right),
@@ -298,7 +298,7 @@ After plugging this in we find
 
 \begin{align}
 	W\left[ \phi \right]  &= 2^{N} (-1)^{\frac{N N_\tau}{2}}
-	\left(\prod_{t=1}^{N_\tau} \eta\left(A_t\right)\right) \int \mathcal{D}\!\left(\boldsymbol{\theta}\right)\,
+	\left(\prod_{t=1}^{N_\tau} \eta\left(\boldsymbol{A}_t\right)\right) \int \mathcal{D}\!\left(\boldsymbol{\theta}\right)\,
 	\exp\!\left[
 	\frac{1}{2}\boldsymbol{\theta}^{\mathrm T}
 	\left(
@@ -378,6 +378,8 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 \end{align}
 
 
+In this derivation we treated the non-interacting part of the Hamiltonian the same as as the interacting part. This is formally correct, however it is also quite inefficient. In appendix \ref{nonint} we analytically integrate out the non-interacting part of the system. 
+
 
 \section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
 
@@ -391,32 +393,32 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	Then we split each Dirac fermion into two Majorana fermions by using:
 	
 	\begin{align}
-		a_{i\sigma} &= \eta_{i\sigma} + i \gamma_{i\sigma}\\
-		a_{i\sigma}^\dagger &= \eta_{i\sigma} + i \gamma_{i \sigma}
+		a_{i\sigma} &= \frac{1}{2} \left(\eta_{i\sigma} + i \gamma_{i\sigma}\right)\\
+		a_{i\sigma}^\dagger &= \frac{1}{2} \left(\eta_{i\sigma} + i \gamma_{i \sigma}\right)
 	\end{align}
 	
-	We assume a biparte lattice and gauge transform one sublattice by $a_{i\sigma} \rightarrow ia_{i\sigma}$. Then we substitute the Majorana represenation and find:
+	(Note that this definition is slightly different from the paper from which I took the Hamiltonian. The prefactors are different so the new operators obey the Clifford algebra.) We assume a biparte lattice and gauge transform one sublattice by $a_{i\sigma} \rightarrow ia_{i\sigma}$. Then we substitute the Majorana basis and find:
 	
 	\begin{align}
-		H = -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +4 U \sum_{x}^{ }\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
+		H = -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -\frac{U}{4}  \sum_{x}^{ }\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
 	\end{align}
 	
 	We need to rewrite the quartic term in a way more suitable for our purposes. To do so we look at
 	
 	\begin{align}
-		\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 = \left(\eta_{x\uparrow} \eta_{x\downarrow}\right)^2 + \left(\gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
+		\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 = \left(\eta_{x\uparrow} \eta_{x\downarrow}\right)^2 + \left(\gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = 2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
 	\end{align}
 	
 	Which leads to
 	
 	\begin{align}
-		\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 - \frac{1}{4}= -\frac{1}{2}\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2  + \frac{1}{4}  
+		\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 - 1= -\frac{1}{2}\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2  + 1  
 	\end{align}
 	Substituting this and dropping the constant leads to
 	
 	\begin{align}
-		H &= -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2\\
-		&= -2i \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 := H_K + H_U
+		H &= -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -\frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2\\
+		&= -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +\frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 := H_K + H_U
 	\end{align}
 	
 	After having brought the Hamiltonian into this convenient form we are interested in the partition function
@@ -424,15 +426,14 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	
 	\begin{align}
 		Z &= \mathrm{Tr}\left\{e^{-\beta H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} e^{-\Delta_\tau H_U}\right\} + \mathcal{O}\left(\Delta_\tau^2\right)\nonumber \\
-		&=  \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \exp\left({-\Delta_\tau 2 U \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right) \nonumber \\
-		&= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x}^{ }  \exp\left({-\Delta_\tau 2 U \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right)
+		&=  \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \exp\left({\pm\Delta_\tau \frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right)
 	\end{align}
 	
-	Then we perform a Hubbard Stratanovich transformation in each quartic factor:
+	Then we perform a Hubbard Stratonovich transformation in each quartic factor:
 	
 	\begin{align}
-		Z &= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x} \int_{ }^{ } \mathrm{d}\phi_{tx} e^{-\frac{\phi^2_{tx}}{4U\Delta_\tau}}\exp \left( \mp i \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)    \right\} \nonumber \\
-		&= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi_{tx}}{4U\Delta_\tau}  \right) \underbrace{\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\Delta_\tau H_K \right) \exp \left( \mp i \sum_{x}^{ } \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)  \right\} }_{:= W[\phi]}
+		Z &= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x} \int_{ }^{ } \mathrm{d}\phi_{tx} e^{\pm\frac{\phi^2_{tx}}{U\Delta_\tau}}\exp \left( - i \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)    \right\} \nonumber \\
+		&= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi_{tx}}{U\Delta_\tau}  \right) \underbrace{\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\Delta_\tau H_K \right) \exp \left( - i \sum_{x}^{ } \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)  \right\} }_{:= W[\phi]}
 	\end{align}
 	
 	
@@ -453,7 +454,7 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	where we defined
 	
 	\begin{align}
-	A &= -i4\Delta_\tau
+	A &= -i\Delta_{\tau}
 	\begin{pmatrix}
 		\left(t - \Delta\right)\boldsymbol{T} & 0 & 0 & 0\\
 		0 & \left(t - \Delta\right)\boldsymbol{T} & 0 & 0\\
@@ -461,12 +462,12 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 		0 & 0 & 0 & \left(t + \Delta\right)\boldsymbol{T}
 	\end{pmatrix},
 	\hspace{1.0cm}
-	\boldsymbol{B}^{(t)} = \mp 2 i
+	\boldsymbol{B}^{(t)} =  2 i
 	\begin{pmatrix}
 		0 & \boldsymbol{B}_\phi^{(t)} & 0 & 0\\
 		-\boldsymbol{B}_\phi^{(t)} & 0 & 0 & 0\\
-		0 & 0 & 0 & \boldsymbol{B}_\phi^{(t)}\\
-		0 & 0 & -\boldsymbol{B}_\phi^{(t)} & 0
+		0 & 0 & 0 & \pm\boldsymbol{B}_\phi^{(t)}\\
+		0 & 0 & \mp\boldsymbol{B}_\phi^{(t)} & 0
 	\end{pmatrix}
 	\end{align}
 	
@@ -489,7 +490,7 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	Now $W[\phi]$ is in the form that we require and we can rewrite the partition function as
 	
 	\begin{align}
-		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi^2}{4\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
+		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi^2}{\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
 		 &\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
 		\begin{bmatrix}
 			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
@@ -512,52 +513,14 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 		 		\vdots &   &   &   & \ddots & \vdots \\
 		 		\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}}}{2} \right) \\
 		 	\end{bmatrix}
-		 \right) 
+		 \right),
 	\end{align}
 	
-	Had we chosen the other representation for $\eta_{\uparrow \sigma}\eta_{\downarrow \sigma}\gamma_{\uparrow \sigma}\gamma_{\downarrow\sigma}$ the derivation would have been equivalent, leading to:
+	
+	Which branch you choose depends on the sign of $U$.
 	
 	
-	\begin{align}
-		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( +\frac{\phi^2}{4\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
-		&\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
-		\begin{bmatrix}
-			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
-			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right)
-		\end{bmatrix}
-		\right)  
-		\mathrm{Pf} \left(
-		\begin{bmatrix}
-			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B'}^{(t)} }}{4}\right) & -\mathbb{I}\\
-			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B'}^{(t)} }}{4}\right)
-		\end{bmatrix}
-		\right) \nonumber \\
-		&\quad\quad \times 
-		\mathrm{Pf} \left(
-		\begin{bmatrix}
-			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
-			-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
-			\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(2)}} }{2} \right) &   &  \vdots \\
-			\vdots &   &   &   & \ddots & \vdots \\
-			\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B'}^{(N_\tau)}}}{2} \right) \\
-		\end{bmatrix}
-		\right) ,
-	\end{align}
-	
-	where 
-	
-	\begin{align}
-	\boldsymbol{B'} = \mp 2 i
-	\begin{pmatrix}
-		0 & \boldsymbol{B}_\phi^{(t)} & 0 & 0\\
-		-\boldsymbol{B}_\phi^{(t)} & 0 & 0 & 0\\
-		0 & 0 & 0 & -\boldsymbol{B}_\phi^{(t)}\\
-		0 & 0 & \boldsymbol{B}_\phi^{(t)} & 0
-	\end{pmatrix}
-	\end{align}
-	
-	We se that the matrices $\boldsymbol{A}$ and $\boldsymbol{B}^(t)$ are block diagonal with
+	We se that the matrices $\boldsymbol{A}$ and $\boldsymbol{B}^{(t)}$ are block diagonal with
 	
 	\begin{align}
 	\boldsymbol{A} = \begin{bmatrix}
@@ -570,10 +533,10 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	\end{align}
 	
 	
-	In Appendix XXXX we derive that in this case the result can be factorized. Applying this we find
+	In appendix \ref{blocks} we derive that in this case the result can be factorized. Applying this we find
 	
 	\begin{align}
-		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( -\frac{\phi^2}{4U\Delta_{\tau} }\right)2^{2N}\left(-1\right)^{NN_{\tau} }\nonumber \\
+		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi^2}{4U\Delta_{\tau} }\right)2^{2N}\left(-1\right)^{NN_{\tau} }\nonumber \\
 		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\eta} \right)\eta\left(\boldsymbol{B}_{\eta}^{(t)} \right)\right)\mathrm{Pf} \left(
 		\begin{bmatrix}
 			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\eta}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
@@ -582,17 +545,17 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}_{\eta} }}{2} \right) \\
 		\end{bmatrix}
 		\right) \nonumber \\
-		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\gamma} \right)\eta\left(\boldsymbol{B}_{\gamma}^{(t)} \right)\right)\mathrm{Pf} \left(
+		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\gamma} \right)\eta\left(\pm\boldsymbol{B}_{\gamma}^{(t)} \right)\right)\mathrm{Pf} \left(
 		\begin{bmatrix}
 			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\gamma}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\pm\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
 			\vdots &   &   \ddots & \vdots \\
-			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
+			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\pm\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
 		\end{bmatrix}
-		\right)
+		\right),
 	\end{align}
 	
-	Should we have chosen the other expression for the quartic we find the same expression, except the sign in the auxiliary field and changing the matrices accordingly. 
+	where the signs are again correlated. One should notice that here unfortunately the notations slightly clash, as the Majorana operators and the coefficient of the Gaussian are both labeled by $\eta$. It is noted, that whenever $\eta$ is written with an argument, we mean the coefficient of the Gaussian.
 	
 	
 	
@@ -602,14 +565,15 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	
 \appendix
 	
-\section{Factorization of the expression for Block Diagonal matrices}
+\section{Factorization of the expression for Block Diagonal matrices \label{blocks}}
+
 
 If we have 2-block$\times$2-block diagonal matrices of the form
 
 \begin{align}
 	\boldsymbol{A}^{(t)} = \begin{bmatrix}
-		\boldsymbol{B}^(t) & 0 \\
-		0 & \boldsymbol{\bar{B}^{(t)} } 
+		\boldsymbol{B}^{(t)} & 0 \\
+		0 & \boldsymbol{\bar{B}}^{(t)}  
 	\end{bmatrix}
 \end{align}in the weight we can write
 
@@ -620,7 +584,7 @@ If we have 2-block$\times$2-block diagonal matrices of the form
 	\exp \left( -\frac{1}{4}\boldsymbol{\eta}^\mathrm{T} \bar{\boldsymbol{B}}^{(t)}\boldsymbol{\eta}  \right)  \right\} ,
 \end{align}
 	
-where we defined the $4N$-dimensional vector $\boldsymbol{\xi} = \begin{bmatrix} \boldsymbol{\gamma} & \boldsymbol{§} \end{bmatrix}^\mathrm{T}$. Continuing as before we enlarge the Hilbert space to find
+where we defined the $4N$-dimensional vector $\boldsymbol{\xi} = \begin{bmatrix} \boldsymbol{\gamma} & \boldsymbol{\eta} \end{bmatrix}^\mathrm{T}$. Continuing as before we enlarge the Hilbert space to find
 
 \begin{align}
 	W[\phi] &=\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\boldsymbol{\left(f^\dagger + f\right)}^\mathrm{T} \boldsymbol{B}^{(t)}\boldsymbol{\left(f^\dagger + f\right)}  \right) 
@@ -656,7 +620,7 @@ Therefore, if the matrices in the string of exponentials are block diagonal, the
 
 
 
-\section{Integrating out the non-interacting part of the Hamiltonian}
+\section{Integrating out the non-interacting part of the Hamiltonian \label{nonint}}
 
 Here, we will attempt to analytically integrate out the factors in the operator string which do not depend on some auxiliary field. Let us assume the Hamiltonian after some Hubbard-Stratanovich transformation can be written as
 
@@ -675,7 +639,7 @@ We proceed again by enlargening the Hilbert space. Then we insert $2N_\tau$ comp
 
 \begin{align}
 	W[\phi] &= 2^N \left(-1\right)^{NN_\tau} \int_{ }^{ } \mathcal{D}\left(\theta\right)
-	\omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )  \nonumber \\
+	\omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(2)},\theta^4)\dots \omega(\boldsymbol{B}^{(N_\tau)}, \theta^{2N_\tau} )  \nonumber \\
 	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\times\exp \left( \frac{1}{2}\boldsymbol{\theta}^\mathrm{T} \boldsymbol{R}\boldsymbol{\theta}  \right)  .
 \end{align}
 
@@ -683,7 +647,7 @@ We notice that all the odd numbered Grassmann variables belong to expressions in
 
 
 \begin{align}
-	W[\phi] &= \left(-1\right)^{NN_\tau} 2^N \int_{ }^{ } \mathcal{D} \left(\theta^\mathrm{even}, \theta^\mathrm{odd}   \right) \omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )\nonumber \\
+	W[\phi] &= \left(-1\right)^{NN_\tau} 2^N \int_{ }^{ } \mathcal{D} \left(\theta^\mathrm{even}, \theta^\mathrm{odd}   \right) \omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(2)},\theta^4)\dots \omega(\boldsymbol{B}^{(N_\tau)}, \theta^{2N_\tau} )\nonumber \\
 	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\times\exp \left( \frac{1}{2}
 	\begin{bmatrix}
 		\boldsymbol{\theta}^\mathrm{odd} & \boldsymbol{\theta}^\mathrm{even}
@@ -694,9 +658,9 @@ We notice that all the odd numbered Grassmann variables belong to expressions in
 	\end{bmatrix}
 	 \right)  \nonumber \\
 	 &= \left(-1\right)^{NN_\tau} 2^N \int_{ }^{ } \mathcal{D}\left(\theta^\mathrm{even}  \right) 
-	 \omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(4)},\theta^4)\dots \omega(\boldsymbol{B}^{(2N_\tau)}, \theta^{2N_\tau} )
-	 \exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^\mathrm{even}\right)^\mathrm{T}    \boldsymbol{R}_{22} \boldsymbol{\theta}^{even} \right)\nonumber \\
-	 &\quad\quad\quad\quad\quad\quad\quad\times\int_{ }^{ } \mathcal{D}\left( \boldsymbol{\theta}^{odd} \right)
+	 \omega(\boldsymbol{B}^{(1)},\theta^2)\omega(\boldsymbol{B}^{(2)},\theta^4)\dots \omega(\boldsymbol{B}^{(N_\tau)}, \theta^{2N_\tau} )
+	 \exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^\mathrm{even}\right)^\mathrm{T}    \boldsymbol{R}_{22} \boldsymbol{\theta}^{\boldsymbol{even}} \right)\nonumber \\
+	 &\quad\quad\quad\quad\quad\quad\quad\times\int_{ }^{ } \mathcal{D}\left(\theta^{\boldsymbol{odd}  } \right)
 	 \omega (\boldsymbol{A}, \theta^1)\omega(\boldsymbol{A} ,\theta^3)\dots\omega(\boldsymbol{A},\theta^{2N_\tau-1})\exp \left( \frac{1}{2}\left(\boldsymbol{\theta}^{\mathrm{odd}}\right)^\mathrm{T}   \boldsymbol{R'}_{11} \boldsymbol{\theta}^{\mathrm{odd}  }+\left(\boldsymbol{\theta}^{\mathrm{even}} \right)^\mathrm{T} \boldsymbol{R'}_{21}\boldsymbol{\theta}^{\mathrm{odd}  }     \right)  ,
 \end{align}
 
@@ -751,6 +715,421 @@ Substituting the expressions for $\omega(\boldsymbol{B}^{(t)}, \theta^{(2t)})$ a
 \end{align}
 
 This result seems quite nice, however the argument of the pfaffian seems quite complicated. As of right now I was unable to find a nice closed form solution for this matrix. Perhaps this must be handled by the computer later on. It does not seem like the matrix needs to be calculated often.
+
+
+
+
+\section{Calculation of large matrices \label{matrices}}
+
+
+In this section we will show which matrices appear in the derivations. First we list some of the matrices that were defined and write some of them in a more convenient form:
+
+
+\begin{align}
+	\boldsymbol{M}:=\begin{bmatrix}
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & 0 & \cdots & 0 \\
+		0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \ddots & \vdots \\
+		\vdots & \ddots & \ddots & \ddots & 0\\
+		0 & \cdots & 0 & \mathbb{I}_{2N} & -\mathbb{I}_{2N}\\
+		\mathbb{I}_{2N} & \cdots & \cdots & 0 & \mathbb{I}_{2N} &
+	\end{bmatrix}
+\end{align}
+
+\begin{align}
+	\boldsymbol{U}  = \left[
+		\begin{array}{cccc|cccc}
+			\mathbb{I}_{2N} & 0 & \cdots & 0 & 0 & \cdots & 0 & -\mathbb{I}_{2N} \\
+			0 & \mathbb{I}_{2N} & \cdots & 0 & \mathbb{I}_{2N} & 0 & \cdots & 0 \\
+			0 & 0 & \ddots & 0 & 0 & \mathbb{I}_{2N} & \ddots & 0 \\
+			\vdots & \vdots & & \mathbb{I}_{2N} & 0 & \cdots & \mathbb{I}_{2N} & 0 \\
+			\hline
+			\mathbb{I}_{2N} & 0 & \cdots & 0 & 0 & \cdots & 0 & \mathbb{I}_{2N} \\
+			0 & \mathbb{I}_{2N} & \cdots & 0 & -\mathbb{I}_{2N} & 0 & \cdots & 0 \\
+			0 & 0 & \ddots & 0 & 0 & -\mathbb{I}_{2N} & \ddots & 0 \\
+			\vdots & \vdots & & \mathbb{I}_{2N} & 0 & \cdots & -\mathbb{I}_{2N} & 0
+		\end{array}
+	\right]:= \begin{bmatrix}
+		\mathbb{I} & \boldsymbol{\rho}  \\
+		\mathbb{I} & -\boldsymbol{\rho} 
+	\end{bmatrix}.
+\end{align}
+
+One immediately sees
+
+\begin{align}
+	\boldsymbol{U} ^{-1} = \frac{1}{2} \boldsymbol{U} ^{\mathrm{T}  },\quad\quad\text{ and }\quad\quad  \left(\boldsymbol{U}^{\mathrm{T}  }\right)^{-1}= \frac{1}{2}\boldsymbol{U}  .
+\end{align}
+
+
+To calculate the determinant of $\boldsymbol{U}$ we use
+
+\begin{align}
+	\mathrm{det} \left(\boldsymbol{U} \right) = \mathrm{det} \left(\mathbb{I}\right)\mathrm{det} \left(-\boldsymbol{\rho} - \mathbb{I} \mathbb{I}^{-1}\boldsymbol{\rho}\right)=\mathrm{det} \left(2\boldsymbol{\rho}\right) = 2^{2NN_\tau} .
+\end{align}
+
+In the text we used
+
+\begin{align}
+	\begin{bmatrix}
+		\boldsymbol{Q}&-\boldsymbol{C}^{\mathrm{T}  }\\
+		\boldsymbol{C}& \boldsymbol{B} 
+	\end{bmatrix} = 
+	\left(\boldsymbol{U}^{\mathrm{T}  } \right)^{-1}\begin{bmatrix}
+		0 & -\boldsymbol{M}^{\mathrm{T}  }\\
+		\boldsymbol{M}& 0 
+	\end{bmatrix}
+	\boldsymbol{U}^{-1}.
+\end{align}
+
+Then
+
+\begin{align}
+	\boldsymbol{Q}=\frac{1}{4} \begin{bmatrix}
+		0& -\mathbb{I}_{2N} & & & -\mathbb{I}_{2N}\\
+		\mathbb{I}_{2N}& 0 &-\mathbb{I}_{2N} & & \\
+		 & \mathbb{I}_{2N} & 0 & \ddots & \\
+		 &  & \ddots&\ddots & -\mathbb{I}_{2N}\\
+		 \mathbb{I}_{2N}&  & & \mathbb{I}_{2N} & 0
+	\end{bmatrix} = -\boldsymbol{B} 
+\end{align}
+
+\begin{align}
+	\boldsymbol{C}=\frac{1}{4}
+	\begin{bmatrix}
+		2\mathbb{I}_{2N} & -\mathbb{I}_{2N} & & &\mathbb{I}_{2N}\\
+		-\mathbb{I}_{2N} & 2\mathbb{I}_{2N}&-\mathbb{I}_{2N} \\
+		 & -\mathbb{I}_{2N}&2\mathbb{I}_{2N}& \ddots &\\
+		 & & \ddots & \ddots & -\mathbb{I}_{2N}\\
+		 \mathbb{I}_{2N}&&&-\mathbb{I}_{2N}&2\mathbb{I}_{2N}
+	\end{bmatrix}
+\end{align}
+
+ must hold. It turns out that
+
+\begin{align}
+	\boldsymbol{B}^{-1}= 2
+	\begin{bmatrix}
+		0				&-\mathbb{I}_{2N}	&0&-\mathbb{I}_{2N} & 0 &-\mathbb{I}_{2N} & \dots & -\mathbb{I}_{2N}\\
+		\mathbb{I}_{2N} & 0 			 	& -\mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & 0 &  \ddots & 0\\
+		0 				& \mathbb{I}_{2N}	& 0 & -\mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & \ddots & -\mathbb{I}_{2N}\\
+		\mathbb{I}_{2N} & 0					 & \mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & 0 &  \ddots & 0\\
+		0				&\mathbb{I}_{2N}	&0&\mathbb{I}_{2N} & 0 &-\mathbb{I}_{2N} & \ddots & -\mathbb{I}_{2N}\\
+		\mathbb{I}_{2N} & 0 				& \mathbb{I}_{2N} & 0 & \mathbb{I}_{2N} & 0 &  \ddots & 0\\
+		\vdots 			& \ddots			 & \ddots & \ddots & \ddots & \ddots & \ddots & \vdots \\
+		\mathbb{I}_{2N} & 0 				& \mathbb{I}_{2N} & 0 & \mathbb{I}_{2N} & 0 &\dots & 0 
+	\end{bmatrix}.
+\end{align}
+
+
+Next we find
+
+\begin{align}
+	\boldsymbol{B}^{-1}\boldsymbol{C} = \begin{bmatrix}
+		0 & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \dots & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & \mathbb{I}_{2N} &-\mathbb{I}_{2N} & \ddots & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \ddots & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & \ddots & \mathbb{I}_{2N} \\
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & \ddots & -\mathbb{I}_{2N} \\
+		\vdots &\ddots & \ddots &\ddots & \ddots & \ddots & \vdots \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \dots & 0 \\
+	\end{bmatrix}
+\end{align}
+
+and
+
+\begin{align}
+	\boldsymbol{C}^{\mathrm{T}  }\boldsymbol{B}^{-1}\boldsymbol{C} = \frac{1}{4}\begin{bmatrix}
+		0 & -3\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & \dots & \-3\mathbb{I}_{2N}\\
+		3\mathbb{I}_{2N} & 0 & -3\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & \ddots & 4\mathbb{I}_{2N}\\
+		-4\mathbb{I}_{2N} & 3\mathbb{I}_{2N} & 0 & -3\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & \ddots & -4\mathbb{I}_{2N}\\
+		4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 3\mathbb{I}_{2N} & 0 & -3\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & \ddots & 4\mathbb{I}_{2N}\\
+		-4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 3\mathbb{I}_{2N} & 0 & -3\mathbb{I}_{2N} & \ddots & -4\mathbb{I}_{2N}\\
+		4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 3\mathbb{I}_{2N} & 0 & \ddots & 4\mathbb{I}_{2N}\\
+		    \vdots      & \ddots           & \ddots            & \ddots          & \ddots             & \ddots           & \ddots & \vdots\\
+		3\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & 4\mathbb{I}_{2N} & -4\mathbb{I}_{2N} & \dots & 0\\
+	\end{bmatrix}.
+\end{align}
+
+
+And finally we obtain
+
+\begin{align}
+	\boldsymbol{R}=-\left(\boldsymbol{Q + \boldsymbol{C}^{\mathrm{T}  }}\boldsymbol{B}^{-1}\boldsymbol{C}  \right)= 
+		\begin{bmatrix}
+			 0 & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} &\dots & -\mathbb{I}_{2N} \\
+			 \mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & \ddots & \mathbb{I}_{2N} \\
+			 -\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & -\mathbb{I}_{2N} &\ddots & -\mathbb{I}_{2N} \\
+			 \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & 0 & \ddots & \mathbb{I}_{2N} \\
+			 \vdots &\ddots & \ddots &\ddots & \ddots & \vdots \\
+			 \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \mathbb{I}_{2N} & -\mathbb{I}_{2N} & \dots & 0 \\
+		\end{bmatrix}.
+\end{align}
+
+
+
+
+
+\section{Deriving the Gaussian Form of the Matrix elements \label{gaussian}}
+
+
+We are aiming to derive
+
+
+
+
+\begin{align}
+	\omega \left(A, \theta\right) = \eta(A) \exp \left( -\frac{1}{2}\boldsymbol{\theta}^\mathrm{T} \boldsymbol{G}\boldsymbol{\theta}    \right),
+\end{align}
+with
+
+
+\begin{align}
+	\boldsymbol{G}
+	&= \frac{\mathbb{I} - \boldsymbol{K}}{\mathbb{I} + \boldsymbol{K}} = \mathrm{tanh} \left(\frac{\boldsymbol{K}}{2} \right) , \\[4pt]
+	\boldsymbol{K}
+	&= e^{\boldsymbol{A}}, \\[4pt]
+	\eta(\boldsymbol{A} )
+	&= (-1)^N \,\mathrm{Pf}\!\left(
+	\begin{bmatrix}
+		\sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A}}{4}\right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt{2}\,\sinh\!\left(\frac{\boldsymbol{A}}{4}\right)
+	\end{bmatrix}
+	\right).
+	\label{krel}
+\end{align}
+
+To do so, we will use the following strategy. First we show that for very small exponents the relation holds. Then we show, that if the relation holds for some matrices $A_1$ and $A_2$, it must also hold for the product of their exponentials. We see how $\boldsymbol{G}$ and $\eta$ behave under this multiplication and can then derive a set of differential equations to find the form of these quantities. This is equivalent to looking at how a string of products of exponentials with small arguments behaves.\\
+We look at
+
+
+\begin{align}
+	\bra{\theta} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^{\dagger}+\boldsymbol{f} \right)\Delta_{x}\boldsymbol{A}\left( \boldsymbol{f}^{\dagger}+\boldsymbol{f}\right)  \right)\ket{\psi} &= \bra{\theta}\left( 1 - \frac{\Delta_{x} }{4} \sum_{ij}^{ }\left(f^{\dagger}_i+ f_i\right)A_{ij}\left(f^{\dagger}_{j} + f_{j}  \right)\right) \ket{\psi} + \mathcal{O}\left(\Delta_{x}^{2} \right)   \nonumber \\
+	&= \braket{\theta|\psi} - \frac{\Delta_{x} }{4}\bra{\theta}\sum_{ij}^{ }\left(f_{i}^{\dagger}f_{j}^{\dagger} + f_{i}^{\dagger}f_{j} + f_{i}f_{j}^{\dagger} + f_{i}f_{j}  \right)A_{ij} \ket{\psi} + \mathcal{O} \left(\Delta_{x}^{2} \right) 
+\end{align} 
+
+Due to the anti commutation relations for Majorana fermions only the anti symmetric part of $\boldsymbol{A}$ gives a contribution (the diagonal parts technically also give a contribution but only as a constant shift in the hamiltonian which is equivalent to a constant energy shift, which is irrelevant for the weight as well as the physics). We can therefore assume $\boldsymbol{A}$ to be anti symmetric without loss of generality. We can therefore write
+
+\begin{align}
+	\sum_{ij}^{ } f_{i}f_{j}^{\dagger}A_{ij}= \sum_{ij}^{ } -f_{j}^{\dagger}f_{i}A_{ij}=-\sum_{ij}^{ } f_{i}^{\dagger}f_{j}A_{ji}=\sum_{ij}^{ } f_{i}^{\dagger}f_{j}A_{ij}.
+\end{align}
+
+Substituting this leads to
+
+\begin{align}
+	\bra{\theta} \exp \left( -\frac{1}{4}\left(\boldsymbol{f}^{\dagger}+\boldsymbol{f} \right)\Delta_{x}\boldsymbol{A}\left( \boldsymbol{f}^{\dagger}+\boldsymbol{f}\right)  \right)\ket{\psi} &= \braket{\theta|\psi} -\frac{\Delta_{x}}{4}\bra{\theta} \sum_{ij }^{ } \left(f_{i}^{\dagger}f_{j}^{\dagger} + 2f_{i}^{\dagger}f_{j} + f_{i}f_{j} A_{ij}  \right)\boldsymbol{A}_{ij} \ket{\psi}+ \mathcal{O} \left(\Delta_{x}^{2} \right) \nonumber \\
+	&= \braket{\theta|\psi} - \frac{\Delta_{x} }{4} \bra{\theta}\sum_{ij}^{ } \left(\bar{\theta_{i} } + \psi_{i} \right)\boldsymbol{A}_{ij}\left(\bar{\theta}_{j}+ \psi_{j} \right)\ket{\psi}+ \mathcal{O} \left(\Delta_{x}^{2} \right) \nonumber \\
+	&= \exp \left( -\frac{1}{2}\left(\bar{\boldsymbol{\theta} } + \boldsymbol{\psi} \right)^{\mathrm{T}  } \frac{\Delta_{x} \boldsymbol{A}}{2} \left(\bar{\boldsymbol{\theta} } + \boldsymbol{\psi} \right)   \right)   + \mathcal{O} \left(\Delta_{x}^{2} \right) 
+\end{align}
+
+So up to $\mathcal{O} \left(\Delta_{x}^{2} \right)$ the relation holds with $\boldsymbol{G}\left(\Delta_{x} \right)= \frac{\Delta_{x}\boldsymbol{A} }{2}+ \mathcal{O} \left(\Delta_{x}^{2} \right)$ and $\eta\left(\Delta_{x} \right)= 1 + \mathcal{O} \left(\Delta_{x}^{2} \right)$. Next we assume the relation holds for the matrices $\boldsymbol{A}_{1}$ and $\boldsymbol{A}_{2}$ and look at the product of their exponentials:
+
+
+\begin{align}
+	\bra{\xi} &\exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{1} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{2} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\psi} \nonumber \\&=
+	\int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta \bra{\xi} \exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{1} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\theta}\bra{\theta}\exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{2} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\psi} \exp \left( -\bar{\theta}\theta \right)   \nonumber\\
+	&= \int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta \bra{\xi} \omega\left(\boldsymbol{A}_{1}, \bar{\xi} + \theta\right)\ket{\theta}\bra{\theta} \omega \left(\boldsymbol{A_{2}}, \bar{\theta} + \psi\right)\ket{\psi} \exp \left( -\bar{\theta}\theta \right)  \nonumber \\
+	&= \int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta \,\,\omega\left(\boldsymbol{A}_{1}, \bar{\xi} + \theta\right)\omega \left(\boldsymbol{A_{2}}, \bar{\theta} + \psi\right) \exp \left( -\bar{\theta}\theta + \bar{\xi}\theta + \bar{\theta}\psi  \right) \nonumber \\
+	&=  \eta_1 \eta_2 \int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta\,\, \exp \left( -\frac{1}{2}\left[ \left(\bar{\xi} + \theta\right) \boldsymbol{G}_{1} \left(\bar{\xi} + \theta\right) + \left(\bar{\theta} + \psi\right)  \boldsymbol{G}_{2}\left(\bar{\theta} + \psi\right)    \right]  \right)\nonumber \\
+	&\quad\quad \quad\quad\quad\quad\quad\quad\quad\quad\quad\times   \exp \left( -\bar{\theta}\theta + \bar{\xi}\theta + \bar{\theta}\psi  \right) \nonumber \\
+	&=\eta_1\eta_2\int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta \quad \exp \left(-\frac{1}{2}\begin{bmatrix}
+		\bar{\xi}&\psi
+	\end{bmatrix}
+	\begin{bmatrix}
+		\boldsymbol{G}_{1} & 0 \\
+		0 & \boldsymbol{G}_{2} 
+	\end{bmatrix} 
+	\begin{bmatrix}
+		\bar{\xi}\\ \psi
+	\end{bmatrix} \right) \nonumber \\
+	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\times \exp \left(-\frac{1}{2}\begin{bmatrix}
+		{\theta}&\bar{\theta}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\boldsymbol{G}_{1} & -\mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{2} 
+	\end{bmatrix} 
+	\begin{bmatrix}
+		{\theta}\\ \bar{\theta} 
+	\end{bmatrix} \right) \nonumber \\
+	&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\times
+	\exp \left( -\begin{bmatrix}
+		\bar{\xi}\left(\boldsymbol{G}_{1} - \mathbb{I}\right) & \psi \left(\boldsymbol{G}_{2} + \mathbb{I}  \right) 
+	\end{bmatrix} \begin{bmatrix}
+	\theta \\ \bar{\theta} 
+	\end{bmatrix}  \right)  
+\end{align}
+
+	
+	
+	We inserted a completeness relation for $\theta$, used our assumption that the relation holds for $\boldsymbol{A}_{1,2}$ and rewrote the arguments of the exponentials in vector form. We note that this is of Gaussian form. Performing the integration leads to 
+	
+	\begin{align}
+		\bra{\xi} &\exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{1} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{2} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\psi} \nonumber \\
+		&=\left(-1\right)^{N}\eta_1\eta_2\mathrm{Pf} \left(\begin{bmatrix}
+			\boldsymbol{G}_{1} & -\mathbb{I} \\
+			\mathbb{I} & \boldsymbol{G}_{2} 
+		\end{bmatrix} \right) \int_{ }^{ } \mathrm{d}\bar{\theta}\mathrm{d} \theta \quad \exp \left(-\frac{1}{2}\begin{bmatrix}
+			\bar{\xi}&\psi
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{G}_{1} & 0 \\
+			0 & \boldsymbol{G}_{2} 
+		\end{bmatrix} 
+		\begin{bmatrix}
+			\bar{\xi}\\ \psi
+		\end{bmatrix} \right) \nonumber \\
+		&\quad\quad\quad\quad\quad\quad \times \exp \left( \frac{1}{2}\begin{bmatrix}
+			\bar{\xi}\left(\boldsymbol{G}_{1} - \mathbb{I}\right)& \psi \left( \boldsymbol{G}_{2}+\mathbb{I}\right) 
+		\end{bmatrix} \underbrace{\begin{bmatrix}
+		\boldsymbol{G}_{1}& -\mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{2} 
+		\end{bmatrix}^{-1}}_{:=\boldsymbol{F}^{-1} }\begin{bmatrix}
+		\left(\boldsymbol{G}_{1} + \mathbb{I}\right)\bar{\xi} \\
+				\left(\boldsymbol{G}_{2} - \mathbb{I}\right) \psi
+		\end{bmatrix}   \right)  
+	\end{align}
+	
+	
+	
+	The alternating sign factor at the beginning emerges because we pulled out an overall sign from the pfaffian. The signs of the identities on the right vector have changed because we absorbed the sign from the matrix and then used the skew symmetry of $\boldsymbol{G}_{1,2}$. The matrix can be inverted by
+	
+	\begin{align}
+		\boldsymbol{F}^{-1} =
+		\begin{bmatrix}
+			\boldsymbol{G}_{2}\left(\mathbb{I} + \boldsymbol{G}_{1}\boldsymbol{G}_{2} \right)^{-1} & \left(\mathbb{I} + \boldsymbol{G}_{2}\boldsymbol{G}_{1}^{-1} \right)\\
+			-\left(\mathbb{I} + \boldsymbol{G}_{1}\boldsymbol{G}_{2} \right)^{-1} & \boldsymbol{G}_{1}\left(\mathbb{I} + \boldsymbol{G}_{2}\boldsymbol{G}_{1}^{-1} \right) 
+		\end{bmatrix} .
+	\end{align}
+	
+	With this, the previous expression can be rewritten as
+	
+	\begin{align}
+		\bra{\xi} &\exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{1} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{2} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\psi} \nonumber \\
+		&=\left(-1\right)^{N}\eta_{1}\eta_2\mathrm{Pf} \left(\begin{bmatrix}
+			\boldsymbol{G}_{1} & -\mathbb{I} \\
+			\mathbb{I} & \boldsymbol{G}_{2} 
+		\end{bmatrix} \right) \nonumber \\
+		&\quad\quad\times \exp \left( -\frac{1}{2}\begin{bmatrix}
+			\bar{\xi}& \psi
+		\end{bmatrix}  
+		\begin{bmatrix}
+			\boldsymbol{G}_{1}  - \left( \boldsymbol{G}_{1} - \mathbb{I}\right)\boldsymbol{G}_{2}\left(\mathbb{I} + \boldsymbol{G}_{1}\boldsymbol{G}_{2}\right)^{-1} 
+			& -\left(\boldsymbol{G}_{1} - \mathbb{I}\right)\left(\mathbb{I} + \boldsymbol{G}_{2} \boldsymbol{G}_{1}\right)^{-1} \\
+			\left(\boldsymbol{G}_{2} + \mathbb{I}\right)\left(\mathbb{I} + \boldsymbol{G}_{1}\boldsymbol{G}_{2}\right)^{-1}\left(\boldsymbol{G}_{1} + \mathbb{I}\right) 
+			& \boldsymbol{G}_{2} - \left(\boldsymbol{G}_{2} + \mathbb{I}\right)\boldsymbol{G}_{1}\left(\mathbb{I}+\boldsymbol{G}_{2}\boldsymbol{G}_{1}\right)^{-1}\left(\boldsymbol{G}_{2} - \mathbb{I}\right) 
+		\end{bmatrix}
+		\begin{bmatrix}
+			\bar{\xi}\\ \psi
+		\end{bmatrix}  \right) 
+	\end{align}
+	
+	By using the identity
+	
+	\begin{align}
+		\left(\mathbb{I} + \boldsymbol{G}_{1}\boldsymbol{G}_{2}\right)^{-1} =  \frac{1}{2}\left(\mathbb{I} + \boldsymbol{K}_{2}\left(\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_{2} \right)^{-1}\left(\mathbb{I} + \boldsymbol{K}_{1} \right) \right) 
+	\end{align}
+	
+	with some tedious calculations one can show that the expression reduces to
+	
+	
+	
+	\begin{align}
+		\bra{\xi} &\exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{1} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \exp \left( -\frac{1}{4}\left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \boldsymbol{A}_{2} \left( \boldsymbol{f}^\dagger + \boldsymbol{f} \right) \right) \ket{\psi} \nonumber \\
+		&=\left(-1\right)^{N}\eta_1\eta_2\mathrm{Pf} \left(\begin{bmatrix}
+			-\boldsymbol{G}_{1} & \mathbb{I} \\
+			-\mathbb{I} & \boldsymbol{G}_{2} 
+		\end{bmatrix} \right) \nonumber \\
+		&\quad\quad\times \exp \left( -\frac{1}{2}\left(\bar{\xi} + \psi \right) \frac{\mathbb{I} - \boldsymbol{K}_{1}\boldsymbol{K}_{2} }{\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_{2} } \left(\bar{\xi} + \psi\right)   \right) \exp \left( \bar{\xi}\psi \right) \nonumber \\
+		&= \bra{\xi}  \eta_1\eta_2\mathrm{Pf} \left(\begin{bmatrix}
+			-\boldsymbol{G}_{1} & \mathbb{I} \\
+			-\mathbb{I} & \boldsymbol{G}_{2} 
+		\end{bmatrix} \right) \exp \left( -\frac{1}{2}\left(\bar{\xi} + \psi \right) \frac{\mathbb{I} - \boldsymbol{K}_{1}\boldsymbol{K}_{2} }{\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_{2} } \left(\bar{\xi} + \psi\right)   \right) \ket{\psi}
+	\end{align}
+	
+	Here we notice that this expression is also of Gaussian form and we can identify
+	
+	\begin{align}
+		\boldsymbol{K}_{3} = \boldsymbol{K}_{1}\boldsymbol{K}_{2}\quad\quad \text{and} \quad \eta_{3} = \left(-1\right)^{N} \eta_{1}\eta_{2}\mathrm{Pf} \left(\begin{bmatrix}
+			\boldsymbol{G}_{1} & -\mathbb{I} \\
+			\mathbb{I} & \boldsymbol{G}_{2}
+		\end{bmatrix} \right) 
+	\end{align}
+	
+	
+	So we know the product of two expressions for which the relation we want to prove holds will again be an expression for which the relation holds. We also now how a product of such expressions combines. And lastly we know that for small exponents the relation holds. What we could do now is look at a long string of exponentials with small arguments. This is equivlaent of solving a differential equation. We know
+	
+	\begin{align}
+		\boldsymbol{K}\left(x + \Delta_{x} \right)= \boldsymbol{K}\left(x\right)\boldsymbol{K}\left(\Delta_{x} \right)
+		\label{Keq}
+	\end{align}
+	
+	From eq.(\ref{krel}) we can show
+	
+	\begin{align}
+		\boldsymbol{K}\left(\Delta_{x} \right)= \frac{\mathbb{I} - \frac{\Delta_{x}\boldsymbol{A} }{2} }{\mathbb{I} + \frac{\Delta_{x} \boldsymbol{A} }{2} }  = \mathbb{I} - \Delta_{x}\boldsymbol{A} + \mathcal{O}\left(\Delta_{x}^{2} \right)   
+	\end{align}
+	
+	
+	
+	Therefore eq.(\ref{Keq}) can be reformulated as
+	
+	\begin{align}
+		\boldsymbol{K}\left(x + \Delta_{x} \right) = \boldsymbol{K}\left(x\right)\left(\mathbb{I} - \Delta_{x}\boldsymbol{A} \right), 
+	\end{align}
+	
+	from which we find the differential equation
+	
+	\begin{align}
+		\frac{\mathrm{d}\boldsymbol{K} }{\mathrm{d}x} = -\boldsymbol{A} \boldsymbol{K} 
+	\end{align}
+	
+	
+	with the initial condition $\boldsymbol{K}\left(0\right) = 1$. This is solved by
+	
+	\begin{align}
+		\boldsymbol{K}\left(1\right) = \boldsymbol{K} = e^{\boldsymbol{A} }.
+	\end{align}
+	
+	From this one easily finds
+	
+	\begin{align}
+		\boldsymbol{G} = \mathrm{tanh} \left(\frac{\boldsymbol{A} }{2} \right) 
+	\end{align}
+	
+	For $\eta$ we can continue similarly:
+	
+	\begin{align}
+		\eta\left(x + \Delta_{x} \right) = \left(-1\right)^{N}\eta\left(x\right)\eta\left(\Delta_{x} \right)\mathrm{Pf}\left( \begin{bmatrix}
+			\boldsymbol{G}\left(\Delta_{x} \right)  & -\mathbb{I} \\ \mathbb{I} & \boldsymbol{G}\left(x\right)
+		\end{bmatrix}  \right) =
+		\left(-1\right)^{N}\eta\left(x\right)\mathrm{Pf}\left( \begin{bmatrix}
+			\Delta_{x}\frac{\boldsymbol{A} }{2}   & -\mathbb{I} \\ \mathbb{I} & \mathrm{tanh} \left(x\frac{\boldsymbol{A}}{2} \right) 
+		\end{bmatrix}  \right) 
+	\end{align}
+	
+	Here one can also find a differential equation:
+	
+	\begin{align}
+		\frac{\mathrm{d}\eta}{\mathrm{d}x} = \frac{1}{4}\mathrm{Tr} \left\{\boldsymbol{A}\,\mathrm{tanh} \left(x\frac{\boldsymbol{A} }{2} \right) \right\} \eta\left(x\right),
+	\end{align}
+	
+	with $\eta\left(0\right) = 1$. The solution of this is given by
+	
+	\begin{align}
+		\eta\left(1\right) = \eta = \left(-1\right)^{N}\mathrm{Pf}\left(\begin{bmatrix}
+			 \sqrt{2} \mathrm{sinh} \left(\frac{\boldsymbol{A} }{4} \right)  & -\mathbb{I} \\
+			 \mathbb{I} & \sqrt{2} \mathrm{sinh} \left(\frac{\boldsymbol{A} }{4} \right)  
+		\end{bmatrix} \right) 
+	\end{align}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 \end{document}
