@@ -487,9 +487,9 @@ Plugging this into the weight we find the \textit{caterpillar}:
 	\end{bmatrix} \right) \right) \nonumber \\
 	& = \left(-1\right)^{\left(N_\tau + 1\right)N}2^{N}\left(\prod_{t=1}^{N_\tau}(-1)^{N} \mathrm{Pf} \left(\begin{bmatrix}
 		\sqrt{2}
- \mathrm{sinh}\left(\frac{\boldsymbol{A}_{1} }{4} \right) & - \mathbb{I} \\
+ \mathrm{sinh}\left(\frac{\boldsymbol{A}_{t} }{4} \right) & - \mathbb{I} \\
  \mathbb{I} &   \sqrt{2}
- \mathrm{sinh}\left(\frac{\boldsymbol{A}_{1} }{4} \right)	\end{bmatrix} \right)  \right)
+ \mathrm{sinh}\left(\frac{\boldsymbol{A}_{t} }{4} \right)	\end{bmatrix} \right)  \right)
  \left(\prod_{t=1}^{N_\tau - 1 } \mathrm{Pf} \left(\begin{bmatrix}
  	\frac{\mathbb{I} - e^{-\boldsymbol{A}_{1} }e^{-\boldsymbol{A}_{2}}\dots e^{-\boldsymbol{A}_{t} }}{ \mathbb{I} + e^{-\boldsymbol{A}_{1} }e^{-\boldsymbol{A}_{2}}\dots e^{-\boldsymbol{A}_{t} }} & - \mathbb{I} \\
  	\mathbb{I} & \frac{\mathbb{I} - e^{-\boldsymbol{A}_{t+1}} }{\mathbb{I} + e^{-\boldsymbol{A}_{t+1} }} 
@@ -533,12 +533,216 @@ Substituting this we find
 	- \Delta \left(a_{i,\sigma}^\dagger a_{j,\sigma}^\dagger - a_{j,\sigma} a_{i,\sigma} \right)
 	\right)
 	- \mu \sum_{x,\sigma} n_{x,\sigma}
-	- U \sum_x
+	+ U \sum_x
 	\left(n_{x,\uparrow}-\frac{1}{2}\right)
 	\left(n_{x,\downarrow}-\frac{1}{2}\right),
 \end{align}
 
-Now
+Now we split each fermion into two Majroana fermions:
+
+\begin{align}
+	a_i = \frac{1}{2}\left(\eta_i + i \gamma_i\right), \quad \quad a_i^\dagger = \frac{1}{2}\left(\eta_i -i \gamma_i\right)
+\end{align}
+The corresponding commutation relations are those of the Clifford algebra:
+
+\begin{align}
+	\left\{\eta_i, \eta_j\right\} = \left\{\gamma_i, \gamma_j\right\} = \delta_{i,j},\quad\quad \left\{\eta_i,\gamma_j\right\}= 0
+\end{align}
+After dropping constant terms this leads to
+
+\begin{align}
+	H = -\frac{i}{2}\sum_{<i,j>,\sigma}^{ } \left[\left(t - \Delta\right)  \left(\eta_{i,\sigma}\eta_{j,\sigma} \right)  + \left(t + \Delta\right)  \left(\gamma_{i,\sigma}\gamma_{j,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma} - \frac{U}{4}\sum_{i}^{ } \eta_{i,\uparrow}\gamma_{i,\uparrow}\eta_{i,\downarrow}\gamma_{i,\downarrow} 
+\end{align}
+
+Now we have multiple choices of how to rewrite and therefore decouple the modes. Namely:
+
+\begin{align}
+	\eta_{\uparrow}\gamma_{\uparrow}\eta_{\downarrow}\gamma_{\downarrow}   &=  =1 + \frac{1}{2} \left(\eta_{\uparrow}\gamma_{\uparrow} + \eta_{\downarrow}\gamma_{\downarrow} \right)^2 \\
+	\eta_{\uparrow}\gamma_{\uparrow}\eta_{\downarrow}\gamma_{\downarrow}   &= -1 - \frac{1}{2} \left(\eta_{\uparrow}\gamma_{\uparrow} - \eta_{\downarrow}\gamma_{\downarrow} \right)^2 \\
+	\eta_{\uparrow}\gamma_{\uparrow}\eta_{\downarrow}\gamma_{\downarrow}   &= -1 - \frac{1}{2} \left(\eta_\uparrow\eta_{\downarrow} +\gamma_{\uparrow}\gamma_\downarrow \right) ^2 \\
+	\eta_{\uparrow}\gamma_{\uparrow}\eta_{\downarrow}\gamma_{\downarrow}   &= +1 + \frac{1}{2} \left(\eta_\uparrow\eta_{\downarrow} -\gamma_{\uparrow}\gamma_\downarrow \right) ^2 \\
+\end{align}
+
+Technically there are even more splittings but they are all nonsensical. Even in the above equations, the last two lines decouple the fermion modes, however if there is a finite chemical potential the non interacting Hamiltonian will always couple these two sectors. Here, we focus on the first two equations. Our Hamiltonian then takes the form
+
+\begin{align}
+		H = \underbrace{-\frac{i}{2}\sum_{<i,j>,\sigma}^{ } \left[\left(t - \Delta\right)  \left(\eta_{i,\sigma}\eta_{j,\sigma} \right)  + \left(t + \Delta\right)  \left(\gamma_{i,\sigma}\gamma_{j,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma}}_{:= H_0} \underbrace{\mp \frac{U}{8}\sum_{i}^{ } \frac{1}{2} \left(\eta_{i,\uparrow}\gamma_{i,\uparrow} \pm \eta_{i,\downarrow}\gamma_{i,\downarrow} \right)^2.}_{:=H_1}
+\end{align}
+
+Now we turn to the corresponding partition function and trotterize:
+
+\begin{align}
+	Z &= \mathrm{Tr}\left\{e^{-\beta H} \right\} \approx \mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}e^{-\Delta_\tau \hat H_0} e^{-\Delta_\tau \hat H_1}  \right\}\\
+	&= \mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}e^{-\Delta_\tau \hat H_0}e^{ \mp \Delta_\tau \frac{U}{8}\sum_{i}^{ } \left(\eta_{i,\uparrow}\gamma_{i,\uparrow} \pm \eta_{i,\downarrow}\gamma_{i,\downarrow} \right)^2 }\right\}  \\
+	&= \int_{ }^{ } \mathcal{D}\left(\phi\right)e^{-\frac{2\phi^{2} }{\Delta_\tau U}} \mathrm{Tr} \left\{\prod_{t=1}^{N_\tau} \exp \left( -\Delta_\tau \hat H_0 \right) \exp \left( -\xi \sum_{i}^{ }\phi^{t}_{i} \left(\eta_{i\uparrow}\gamma_{i\uparrow} + \xi^2\eta_{i\downarrow}\gamma_{i\downarrow} \right)  \right)   \right\},
+\end{align}
+
+where in the last line we performed a HS transform, which we kept generic by defining $\xi = 1$ for a real HS transformation and $\xi = i$ for an imaginary HS transformation. What remains is to bring this into a form where we can use the derivations shown in the first section. We therefore define the operator vector:
+
+\begin{align}
+	\theta^{t} := \left(\eta_{\uparrow,1}^{t}, ...,\eta_{\uparrow,N}^{t}, \gamma_{\uparrow,1}^{t} ,...,\gamma_{\uparrow,N}^{t} ,\eta_{\downarrow,1}^{t}, ...,\eta_{\downarrow,N}^{t}, \gamma_{\downarrow,1}^{t} ,...,\gamma_{\downarrow,N}^{t} , \right)^T 
+\end{align}
+
+With this we can write
+
+\begin{align}
+	Z = \int_{ }^{ } \mathcal{D}\left(\phi\right)e^{-\frac{2\phi^{2} }{\Delta_\tau U}} \mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\Delta_\tau \left( \theta^{t} \right)^T H_0 \theta^{t}   \right) \exp \left(  -\frac{1}{2}\xi   \left(\theta^{t} \right)^T H_{\mathrm{HS}  }\left[ \phi^{t}  \right]  \theta^{t} \right)  \right\},
+\end{align}
+
+where we define
+
+\begin{align}
+	H_{\mathrm{HS}  }\left[ \phi^{t}  \right] = \begin{bmatrix}
+		0 & h^{t} & 0  & 0 \\
+		-h^{t}& 0 & 0  & 0 \\
+		0 & 0 & 0 & \xi ^{2}h^{t}\\
+		0 & 0 & -\xi^2 h^{t} & 0
+	\end{bmatrix}, \quad\quad h^{t} = \mathrm{diag} \left(\phi^{t}_1,...,\phi^{t}_N\right) .
+\end{align}
+
+For the non-interacting Hamiltonian we can find
+
+\begin{align}
+	 H_0 &=\begin{bmatrix}
+	 	H_0^{\uparrow\uparrow} & 0  \\
+	 	0 & H_0^{\downarrow\downarrow}  
+	 \end{bmatrix} \\ H_0^{\uparrow\uparrow}&=H_0^{\downarrow\downarrow} =  -\frac{i}{4}{\renewcommand{\arraystretch}{1.2}
+	 \setlength{\arraycolsep}{5pt}
+	 \left[
+	 \begin{array}{*{5}{c}|*{5}{c}}
+	 	0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  &  \\
+	 	-\Delta^{-} & 0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  \\
+	 	& -\Delta^{-} & 0 & \ddots &  &  &  & \mu &  &  \\
+	 	&  & \ddots & \ddots & \phantom{-}\Delta^{-} &  &  &  & \mu &  \\
+	 	&  &  & -\Delta^{-} & 0 &  &  &  &  & \mu \\
+	 	\hline
+	 	\mu &  &  &  &  & 0 & \phantom{-}\Delta^{+} &  &  &  \\
+	 	& \mu &  &  &  & -\Delta^{+} & 0 & \phantom{-}\Delta^{+} &  &  \\
+	 	&  & \mu &  &  &  & -\Delta^{+} & 0 & \ddots &  \\
+	 	&  &  & \mu &  &  &  & \ddots & \ddots & \phantom{-}\Delta^{+} \\
+	 	&  &  &  & \mu &  &  &  & -\Delta^{+} & 0
+	 \end{array}
+	 \right]},
+\end{align}
+
+
+where we set $\Delta^{\mp} = \left(t \mp \Delta \right)$. We notice that both the non-interaction Hamiltonian as well as the interaction part are block diagonal. The coupling between the two different spin parts has been removed. Therefore as shown in the appendix, the partition function can be rewritten as
+
+\begin{align}
+	Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right) \exp \left( {-\frac{2\phi^{2} }{\Delta_\tau U } }  \right) &\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\left(\theta_{t}^{\uparrow}\right)^{T}A^{\uparrow\uparrow}_{2t-1}\theta_{t}^{\uparrow}   \right)\exp \left( -\frac{1}{4}\left(\theta_{t}^{\uparrow}\right)^{T}A^{\uparrow\uparrow}_{2t}\theta_{t}^{\uparrow}   \right)   \right\}\nonumber \\
+	\times &\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\left(\theta_{t}^{\downarrow}\right)^{T}A^{\downarrow\downarrow}_{2t-1}\theta_{t}^{\downarrow}   \right)\exp \left( -\frac{1}{4}\left(\theta_{t}^{\downarrow}\right)^{T}A^{\downarrow\downarrow}_{2t}\theta_{t}^{\downarrow}   \right)   \right\} \\
+	& = \int_{ }^{ } \mathcal{D}\left(\phi\right) \exp \left( {-\frac{2\phi^{2} }{\Delta_\tau U } }  \right) W^{\uparrow} \left[ \phi \right]  W^{\downarrow}\left[ \phi \right]   
+\end{align}
+
+where we identify
+
+\begin{align}
+	A_{2t-1}^{\uparrow\uparrow} &= A^{\downarrow\downarrow}_{2t-1} = 4\Delta_\tau H_0^{\uparrow\uparrow}\\ 
+	&= -i\Delta_\tau  {\renewcommand{\arraystretch}{1.2}
+		\setlength{\arraycolsep}{5pt}
+		\left[
+		\begin{array}{*{5}{c}|*{5}{c}}
+			0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  &  \\
+			-\Delta^{-} & 0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  \\
+			& -\Delta^{-} & 0 & \ddots &  &  &  & \mu &  &  \\
+			&  & \ddots & \ddots & \phantom{-}\Delta^{-} &  &  &  & \mu &  \\
+			&  &  & -\Delta^{-} & 0 &  &  &  &  & \mu \\
+			\hline
+			\mu &  &  &  &  & 0 & \phantom{-}\Delta^{+} &  &  &  \\
+			& \mu &  &  &  & -\Delta^{+} & 0 & \phantom{-}\Delta^{+} &  &  \\
+			&  & \mu &  &  &  & -\Delta^{+} & 0 & \ddots &  \\
+			&  &  & \mu &  &  &  & \ddots & \ddots & \phantom{-}\Delta^{+} \\
+			&  &  &  & \mu &  &  &  & -\Delta^{+} & 0
+		\end{array}
+		\right]}
+\end{align}
+
+and
+
+\begin{align}
+	A_{2t}^{\uparrow\uparrow}&=\xi^2A_{2t}^{\downarrow\downarrow} = 2 \xi H_\mathrm{HS} \left[ \phi^{t}  \right]  \\
+	&= 2\xi \begin{bmatrix}
+		0 & \operatorname{diag}\!\left(\phi^{t}_{1}, \ldots, \phi^{t}_{N}\right) \\
+		-\operatorname{diag}\!\left(\phi^{t}_{1}, \ldots, \phi^{t}_{N}\right) & 0
+	\end{bmatrix} 
+\end{align}
+This is exactly of the form we used in the derivation of the pfaffian weights. By using the results of the main derivation we find
+
+\begin{align}
+	W^{\sigma}\left[ \phi \right] &= (-1)^{\left(N_{\tau}+1\right)N}2^{N} \left(\prod_{t=1}^{N_\tau} \eta_t\right)\left(\prod_{t=1}^{N_\tau - 1} \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1\dots t}^{\sigma}  & - \mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{t + 1}^{\sigma}  
+	\end{bmatrix} \right) \right) \nonumber \\
+	& = \left(-1\right)^{\left(N_\tau + 1\right)N}2^{N}\left(\prod_{t=1}^{N_\tau}(-1)^{N} \mathrm{Pf} \left(\begin{bmatrix}
+		\sqrt{2}
+		\mathrm{sinh}\left(\frac{\boldsymbol{A}_{t}^{\sigma}  }{4} \right) & - \mathbb{I} \\
+		\mathbb{I} &   \sqrt{2}
+		\mathrm{sinh}\left(\frac{\boldsymbol{A}_{t}^{\sigma}  }{4} \right)	\end{bmatrix} \right)  \right)
+	\left(\prod_{t=1}^{N_\tau - 1 } \mathrm{Pf} \left(\begin{bmatrix}
+		\frac{\mathbb{I} - e^{-\boldsymbol{A}_{1}^{\sigma}  }e^{-\boldsymbol{A}_{2}^{\sigma} }\dots e^{-\boldsymbol{A}_{t}^{\sigma}  }}{ \mathbb{I} + e^{-\boldsymbol{A}_{1}^{\sigma}  }e^{-\boldsymbol{A}_{2}^{\sigma} }\dots e^{-\boldsymbol{A}_{t}^{\sigma}  }} & - \mathbb{I} \\
+		\mathbb{I} & \frac{\mathbb{I} - e^{-\boldsymbol{A}_{t+1}^{\sigma} } }{\mathbb{I} + e^{-\boldsymbol{A}_{t+1}^{\sigma}  }} 
+	\end{bmatrix} \right) \right) . 
+\end{align}
+
+To simplify this we look at the exponentials of $c\cdot A_t^{\sigma}$, where $c$ is some complex number. We can rewrite $A^{\sigma}_{2t}$ as
+
+\begin{align}
+	A^{\sigma}_{2t}= 2\xi\underbrace{\begin{bmatrix}
+			0 & 1 \\ -1 & 0 
+	\end{bmatrix} }_{:= J} \otimes \underbrace{\mathrm{diag}\left(\phi^{t}_{1},...,\phi^{t}_{N} \right) }_{:= D\left(\phi^{t} \right) }, \quad\quad\mathrm{with} \quad J^{2}= \mathbb{I}_2.
+\end{align} 
+
+Then we find
+
+\begin{align}
+	\exp \left( c\cdot A_{2t}^{\sigma}   \right) &= \sum_{n=0}^{ }\frac{1}{n!}\left(cA^{\sigma}_{2t} \right)^{n} = \sum_{n}^{ }\frac{1}{n!}\left(J \otimes D\left( 2\xi c \phi^{t} \right)\right) ^{n} =\sum_{n}^{ }\frac{1}{n!}J^{n}  \otimes D^{n} \left( 2\xi c \phi^{t} \right)\\
+	&= \mathbb{I} \otimes \sum_{n}^{ }  \frac{1}{(2n)!} D^{2n}\left(2c\xi\phi^{t} \right) + J \otimes \sum_{n}^{ }\frac{1}{(2n + 1)} D^{2n+1}\left(2c\xi \phi^{t} \right) = \mathbb{I}\otimes D\left(\mathrm{cos}\left(2c\xi\phi^t\right)   \right) + J \otimes D\left(\mathrm{sin} \left(2c\xi \phi^t\right) \right).
+\end{align}
+
+For latter use we look at 
+
+\begin{align}
+	\mathrm{sinh} \left(\frac{A_{2t} }{4} \right) = 2J\otimes D\left(\mathrm{sin\left(\frac{1}{2}\xi \phi^{t} \right) }  \right) ,
+\end{align}
+
+which we can use for
+
+\begin{align}
+	\eta_{2t}&= \mathrm{Pf} \left(\begin{bmatrix}
+		\sqrt 2 \mathrm{sinh} \left(\frac{A_{2t} }{4} \right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt 2 \mathrm{sinh} \left(\frac{A_{2t} }{4} \right)
+	\end{bmatrix} \right) = \mathrm{Pf} \left(\begin{bmatrix}
+	\sqrt 2 J \otimes D\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right) & - \mathbb{I} \\
+	\mathbb{I} & \sqrt 2 J \otimes D\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right)
+	\end{bmatrix} \right).
+\end{align}
+
+We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permuting basis vectors the expression can be rewritten as
+
+\begin{align}
+	\eta_{2t} &= \mathrm{Pf} \left(\bigoplus_{i=1}^{N} \begin{bmatrix}
+		0 & \sqrt 2 s_i & -1 & 0 \\
+		-\sqrt 2 s_i & 0 & 0 & -1 \\
+		+1 & 0 & 0 & \sqrt 2 s_i \\
+		0 & +1 & -\sqrt 2 s_i & 0
+	\end{bmatrix} \right)  = \prod_{i= 1}^{N} \mathrm{Pf} \left( \begin{bmatrix}
+	0 & \sqrt 2 s_i & -1 & 0 \\
+	-\sqrt 2 s_i & 0 & 0 & -1 \\
+	+1 & 0 & 0 & \sqrt 2 s_i \\
+	0 & +1 & -\sqrt 2 s_i & 0
+	\end{bmatrix} \right)  \\&= \prod_{i=1}^{N}\left(2\mathrm{sin}^{2}  \left(\frac{1}{2}\xi \phi^{t}_i\right) - 1\right) 
+	= \prod_{i=1}^{N} \left(-1\right) \mathrm{cos} \left(\xi \phi_i^{t} \right) ,
+\end{align}
+ which yields an analytic expression for the first factor in the weight. Next we would like to find an analytic expression for $\boldsymbol{G}_{2t}$. By using similar steps we find
+ 
+ \begin{align}
+ 	\boldsymbol{G}_{2t}&= \mathrm{tanh} \left(\frac{A_{2t} }{2} \right) = \left[ J \otimes D\left(\mathrm{sin} \left(\xi\phi^{t} \right) \right)  \right]\left[ \mathbb{I} \otimes D\left(\mathrm{cos} \left(\xi \phi^{t} \right) \right)  \right]^{-1} \\
+ 	& = \left(J\cdot \mathbb{I}^{-1} \right) \otimes D\left(\mathrm{sin} \left(\xi \phi^{t} \right)\right)\cdot D\left(\frac{1}{\mathrm{cos} \left(\xi \phi^{t} \right) } \right) \\
+ 	&= J \otimes D\left(\mathrm{tan} \left(\xi \phi^{t} \right) \right) .
+ \end{align} 
+ 
+
+
 
 
 \section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
