@@ -11,7 +11,9 @@
 
 \begin{document}
 	
-	\section{Deriving the Majorana Pfaffian from the Partition Function}
+	\tableofcontents
+	
+\section{Deriving the Majorana Pfaffian from the Partition Function}
 	
 	Here, we derive the pfaffian formulation of the path integral. We roughly follow the derivation given in PFAFFIAN PAPER. Usually, after doing a Suzuki-Trotter approximation, which splits the exponential into $N_\tau = \beta / \Delta_\tau$ imaginary time slices and then performing a Hubbard-Stratanovich transformation of some sort for each factor, one ends up with a partition function of the form
 	
@@ -281,9 +283,9 @@ with
 
 \begin{align}
 	\boldsymbol{G}
-	&= \frac{\mathbb{I} - \boldsymbol{K}}{\mathbb{I} + \boldsymbol{K}} = \mathrm{tanh} \left(\frac{\boldsymbol{K}}{2} \right) , \\[4pt]
+	&= \frac{\mathbb{I} - \boldsymbol{K}}{\mathbb{I} + \boldsymbol{K}} = \mathrm{tanh} \left(\frac{\boldsymbol{A}}{2} \right) , \\[4pt]
 	\boldsymbol{K}
-	&= e^{\boldsymbol{A}}, \\[4pt]
+	&= e^{-\boldsymbol{A}}, \\[4pt]
 	\eta(\boldsymbol{A} )
 	&= (-1)^N \,\mathrm{Pf}\!\left(
 	\begin{bmatrix}
@@ -344,11 +346,11 @@ where we notice that the integral again is of Gaussian form. The final step is t
 	&\quad\quad \times
 	\mathrm{Pf} \left(	
 	\begin{bmatrix}
-		\tanh\!\left(\frac{e^{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
-		\mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		\tanh\!\left(\frac{{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & \tanh\!\left(\frac{{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
 		\vdots & \vdots & \ddots & \vdots & \vdots \\
-		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
-		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau}}}{2}\right)
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{{\boldsymbol{A}_{N_\tau}}}{2}\right)
 	\end{bmatrix}
 	\right).
 \end{align}
@@ -368,17 +370,173 @@ Here we used that for even $N_{\tau}$ the pfaffian does not change if we flip th
 	&\quad\quad \times
 	\mathrm{Pf} \left(	
 	\begin{bmatrix}
-		\tanh\!\left(\frac{e^{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
-		\mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
+		\tanh\!\left(\frac{{\boldsymbol{A}_1}}{2}\right) & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & \tanh\!\left(\frac{{\boldsymbol{A}_2}}{2}\right) & \cdots & -\mathbb{I}_{2N} & \mathbb{I}_{2N} \\
 		\vdots & \vdots & \ddots & \vdots & \vdots \\
-		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
-		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{e^{\boldsymbol{A}_{N_\tau}}}{2}\right)
+		-\mathbb{I}_{2N} & \mathbb{I}_{2N} & \cdots & \tanh\!\left(\frac{{\boldsymbol{A}_{N_\tau-1}}}{2}\right) & -\mathbb{I}_{2N} \\
+		\mathbb{I}_{2N} & -\mathbb{I}_{2N} & \cdots & \mathbb{I}_{2N} & \tanh\!\left(\frac{{\boldsymbol{A}_{N_\tau}}}{2}\right)
 	\end{bmatrix}
 	\right)
 \end{align}
 
 
-In this derivation we treated the non-interacting part of the Hamiltonian the same as as the interacting part. This is formally correct, however it is also quite inefficient. In appendix \ref{nonint} we analytically integrate out the non-interacting part of the system. 
+In this derivation we treated the non-interacting part of the Hamiltonian the same as as the interacting part. This is formally correct, however it is also quite inefficient. In appendix \ref{nonint} we analytically integrate out the non-interacting part of the system.
+\subsection{Reducing time complexity with the caterpillar}
+The above expression is of time complexity $\mathcal{O}\left( N^3N_\tau^3 \right)$, which is quite inefficient. There is a different formulation of the weight, with a better time complexity. This is in complete analogy to the \textit{sausage} for the determinant. For the pfaffian weight we will refer to it as the \textit{caterpillar}. To see that these two concepts are in complete analogy to one another we actually start out with a quick proof of the \textit{sausage} and then see that the derivation maps over to the pfaffian case in complete analogy. In the determinant case with Dirac fermions we know:
+
+\begin{align}
+		\bra{\theta} e^{\boldsymbol{c}^\dagger \boldsymbol{A}\boldsymbol{c} }\ket{\psi} = e^{\bar{\boldsymbol{\theta}}^\mathrm{T} e^{\boldsymbol{A}}\boldsymbol{\psi}} 
+\end{align}
+
+For a product we observe:
+
+\begin{align}
+	\bra{\theta} e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{1}\boldsymbol{c} } e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{2}\boldsymbol{c} }\ket{\psi} &= 
+	\int_{ }^{ } \mathrm{d}\xi\mathrm{d} \bar{\xi} \bra{\theta}\exp \left( \boldsymbol{c}^{\dagger} \boldsymbol{A}_{1}\boldsymbol{c}  \right)  \ket{\xi}\bra{\xi}\exp \left( \boldsymbol{c}^{\dagger} \boldsymbol{A}_{2}\boldsymbol{c}  \right)\ket{\psi}e^{-\bar{\boldsymbol{\xi} }^{\mathrm{T}  }\boldsymbol{\xi}} \nonumber \\
+	&= \int_{ }^{ } \mathrm{d} \xi \mathrm{d} \bar{\xi} \exp \left( \bar{\boldsymbol{\theta} }^{\mathrm{T}  }e^{\boldsymbol{A}_{1}}\boldsymbol{\xi} \right)
+	\exp \left( \bar{\boldsymbol{\xi} }^{\mathrm{T}  }e^{\boldsymbol{A}_{1}}\boldsymbol{\psi} \right)  e^{-\bar{\boldsymbol{\xi} }^{\mathrm{T}  }\boldsymbol{\xi}}\nonumber \\
+	&= \int_{ }^{ } \mathrm{d}\xi \mathrm{d} \bar{\xi} \exp \left( -\bar{\boldsymbol{\xi} }\mathbb{I}\boldsymbol{\xi} + \left(\bar{\boldsymbol{\theta} }e^{\boldsymbol{A}_{1} } \right) \boldsymbol{\xi} + \bar{\boldsymbol{\xi} }^{\mathrm{T}} \left(e^{\boldsymbol{A}_{2} } \right)\boldsymbol{\psi}    \right)  \nonumber \\
+	&= \exp \left(  \bar{\boldsymbol{\theta} }^{\mathrm{T}}e^{\boldsymbol{A}_{1} }e^{\boldsymbol{A}_{2} } \boldsymbol{\psi}  \right),   
+\end{align}
+
+where we used Gaussian integration in the last equality. This obviously generalizes to longer products. Now we will evaluate the trace:
+
+\begin{align}
+	\mathrm{Tr} \left\{ e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{1}\boldsymbol{c} } e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{2}\boldsymbol{c} }\dots e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{N_\tau}\boldsymbol{c} }\right\} &= \int_{ }^{ } \mathrm{d}\xi \mathrm{d}\bar{\xi}\,\, \bra{-\xi} e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{1}\boldsymbol{c} } e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{2}\boldsymbol{c} }\dots e^{\boldsymbol{c}^{\dagger}\boldsymbol{A}_{N_\tau}\boldsymbol{c} }\ket{\xi}e^{-\bar{\boldsymbol{\xi} }^{\mathrm{T}  }\boldsymbol{\xi} } \nonumber \\
+	&=\int_{ }^{ } \mathrm{d}\xi \mathrm{d} \bar{\xi} \exp \left( -\bar{\boldsymbol{\xi} }^{\mathrm{T}  }e^{\boldsymbol{A_{2} } } e^{\boldsymbol{A_{1} } } \dots e^{\boldsymbol{A_{N_\tau}}  }\boldsymbol{\xi}   \right)  e^{-\bar{\boldsymbol{\xi} }^{\mathrm{T}  }\boldsymbol{\xi} } \nonumber \\
+	&= \int_{ }^{ } \mathrm{d}\xi \mathrm{d} \bar{\xi} \exp \left( -\bar{\boldsymbol{\xi} }^{\mathrm{T}  }\left(\mathbb{I} + e^{\boldsymbol{A_{2} } } e^{\boldsymbol{A_{1} } } \dots e^{\boldsymbol{A_{N_\tau}}}\right)\boldsymbol{\xi}   \right)\nonumber \\
+	&= \mathrm{det} \left(\mathbb{I} + e^{\boldsymbol{A_{2} } } e^{\boldsymbol{A_{1} } } \dots e^{\boldsymbol{A_{N_\tau}}}\right),
+\end{align}
+
+
+which is exactly the \textit{sausage}. This procedure can be repeated in complete equivalence for the pfaffian case, with the only difference that the product turns out a more complicated. In appendix \ref{gaussian} we find
+
+\begin{align}
+	\bra{\theta} e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A} \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \ket{\psi} = \eta \exp \left( -\frac{1}{2}\left(\bar{\boldsymbol{\theta}}+ \boldsymbol{\psi}\right)^{\mathrm{T}}\boldsymbol{G} \left(\bar{\boldsymbol{\theta}}+ \boldsymbol{\psi}\right)  \right),
+\end{align}
+
+with
+
+\begin{align}
+	\eta = \left(-1\right)^{N} \mathrm{Pf} \left(\begin{bmatrix}
+		\sqrt{2} \,\mathrm{sinh} \left(\frac{\boldsymbol{A} }{2}\right) & -\mathbb{I} \\
+		\mathbb{I} & \sqrt{2} \,\mathrm{sinh} \left(\frac{\boldsymbol{A} }{2} \right) 
+	\end{bmatrix} \right), \quad\quad\quad \boldsymbol{K}=e^{-\boldsymbol{A} }, \quad\quad \quad \boldsymbol{G} = \frac{\mathbb{I} - \boldsymbol{K} }{\mathbb{I} + \boldsymbol{K} } 
+\end{align}
+
+In the appendix we also derive
+
+\begin{align}
+	\bra{\theta} e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }&e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \ket{\psi}\\ &= \left(-1\right)^{N}\eta_{1}\eta_{2}\mathrm{Pf} \begin{bmatrix}
+		\boldsymbol{G}_{1} & -\mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{2}  
+	\end{bmatrix}  
+	\exp \left( -\frac{1}{2}\left(\bar{\boldsymbol{\theta} }^{\mathrm{T}  } + \boldsymbol{\psi}^{\mathrm{T}  } \right) \frac{\mathbb{I} - \boldsymbol{K}_{1}\boldsymbol{K}_{2}  }{\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_{2} } \left(\bar{\boldsymbol{\theta} }^{\mathrm{T}} + \boldsymbol{\psi}  \right)  \right) e^{\bar{\boldsymbol{\theta} }^{\mathrm{T}  }\boldsymbol{\psi}} \nonumber \\
+\end{align}
+
+The product of two operator exponentials yields another operator exponential with
+
+\begin{align}
+	\eta _{12} = \left(-1\right)^{N}\eta_{1}\eta_2 \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1} & -\mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{2} 
+	\end{bmatrix} \right) \quad\quad\quad \boldsymbol{K}_{12}=\boldsymbol{K}_1 \boldsymbol{K}_2 \quad\quad\quad \boldsymbol{G}_{12}=\frac{\mathbb{I} - \boldsymbol{K}_{12} }{\mathbb{I} + \boldsymbol{K}_{12} }
+\end{align}
+
+For a longer product this generalizes to
+
+\begin{align}
+	\bra{\theta} &e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }\dots e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{N_{\tau} }  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \ket{\psi} 
+	\nonumber \\ &
+	= (-1)^{\left(N_{\tau}-1\right)N}\left(\prod_{t=1}^{N_\tau} \eta_t\right)\left(\prod_{t=1}^{N_\tau - 1} \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1\dots t} & - \mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{t + 1} 
+	\end{bmatrix} \right) \right) \exp \left( -\frac{1}{2}\left(\bar{\boldsymbol{\theta} }^{\mathrm{T}  } + \bar{\boldsymbol{\psi}}^{\mathrm{T}}\right) \frac{\mathbb{I} - \boldsymbol{K}_{1}\boldsymbol{K}_2\dots \boldsymbol{K}_{N_\tau} }{\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_2\dots \boldsymbol{K}_{N_\tau}  }\left(\boldsymbol{\theta} + \boldsymbol{\psi}\right) \right)  e^{\bar{\boldsymbol{\theta} }^{\mathrm{T}  }\boldsymbol{\psi} }.
+\end{align}
+
+Now we evaluate the trace:
+
+\begin{align}
+	&\mathrm{Tr} \left\{e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }\dots e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{N_{\tau} }  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \right\}\\ 
+	&= \int_{ }^{ } \mathrm{d}\xi \mathrm{d} \bar{\xi}\,\,\bra{-\xi} e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }\dots e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{N_{\tau} }  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \ket{\xi}e^{-\bar{\boldsymbol{\xi}}^{\mathrm{T}  }\boldsymbol{\xi} } \nonumber \\
+	&= \int_{ }^{ } \mathrm{d}\xi\mathrm{d}\bar{\xi}\,\,  (-1)^{\left(N_{\tau}-1\right)N}\left(\prod_{t=1}^{N_\tau} \eta_t\right)\left(\prod_{t=1}^{N_\tau - 1} \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1\dots t} & - \mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{t + 1} 
+	\end{bmatrix} \right) \right) \nonumber \\
+	&\quad\quad\quad\times\exp \left( -\frac{1}{2}\left(-\bar{\boldsymbol{\xi} }^{\mathrm{T}  } + \bar{\boldsymbol{\xi}}^{\mathrm{T}  } \right) \frac{\mathbb{I} - \boldsymbol{K}_{1}\boldsymbol{K}_2\dots \boldsymbol{K}_{N_\tau} }{\mathbb{I} + \boldsymbol{K}_{1}\boldsymbol{K}_2\dots \boldsymbol{K}_{N_\tau}  }\left(-{\boldsymbol{\xi} } + \boldsymbol{\xi}\right) \right)
+	e^{-2\bar{\boldsymbol{\xi}}^{\mathrm{T}  }\boldsymbol{\xi} }.
+\end{align}
+
+The first exponential obviously vanishes and the rest can be evaluated trivially. We find
+
+\begin{align}
+	\mathrm{Tr}& \left\{e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }\dots e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{N_{\tau} }  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \right\} 
+	\\&= (-1)^{\left(N_{\tau}+1\right)N}2^{2N} \left(\prod_{t=1}^{N_\tau} \eta_t\right)\left(\prod_{t=1}^{N_\tau - 1} \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1\dots t} & - \mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{t + 1} 
+	\end{bmatrix} \right) \right).
+\end{align}
+
+Plugging this into the weight we find the \textit{caterpillar}:
+
+\begin{align}
+	W\left[ \phi \right]&=\frac{1}{2^{N}} \mathrm{Tr} \left\{e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{1}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{2}  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) }\dots e^{-\frac{1}{4}\left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right)^{\mathrm{T}} \boldsymbol{A}_{N_{\tau} }  \left(\boldsymbol{f}^{\dagger} + \boldsymbol{f} \right) } \right\} \nonumber \\
+	&= (-1)^{\left(N_{\tau}+1\right)N}2^{N} \left(\prod_{t=1}^{N_\tau} \eta_t\right)\left(\prod_{t=1}^{N_\tau - 1} \mathrm{Pf} \left(\begin{bmatrix}
+		\boldsymbol{G}_{1\dots t} & - \mathbb{I} \\
+		\mathbb{I} & \boldsymbol{G}_{t + 1} 
+	\end{bmatrix} \right) \right) \nonumber \\
+	& = \left(-1\right)^{\left(N_\tau + 1\right)N}2^{N}\left(\prod_{t=1}^{N_\tau}(-1)^{N} \mathrm{Pf} \left(\begin{bmatrix}
+		\sqrt{2}
+ \mathrm{sinh}\left(\frac{\boldsymbol{A}_{1} }{4} \right) & - \mathbb{I} \\
+ \mathbb{I} &   \sqrt{2}
+ \mathrm{sinh}\left(\frac{\boldsymbol{A}_{1} }{4} \right)	\end{bmatrix} \right)  \right)
+ \left(\prod_{t=1}^{N_\tau - 1 } \mathrm{Pf} \left(\begin{bmatrix}
+ 	\frac{\mathbb{I} - e^{-\boldsymbol{A}_{1} }e^{-\boldsymbol{A}_{2}}\dots e^{-\boldsymbol{A}_{t} }}{ \mathbb{I} + e^{-\boldsymbol{A}_{1} }e^{-\boldsymbol{A}_{2}}\dots e^{-\boldsymbol{A}_{t} }} & - \mathbb{I} \\
+ 	\mathbb{I} & \frac{\mathbb{I} - e^{-\boldsymbol{A}_{t+1}} }{\mathbb{I} + e^{-\boldsymbol{A}_{t+1} }} 
+ \end{bmatrix} \right) \right)   
+\end{align}
+
+This expression is only of time complexity $\mathcal{O}\left(N_\tau N^3\right)$ and is therefore an improvement to the previous expression. However, it should be noted, that this expression is unstable if calculated numerically, while the other formula does not show this instability.
+
+
+\section{pfQMC for the spin-1/2 Kitaev chain}
+
+In this section we will apply the previous work to the spin-1/2 Kitaev chain and derive all the quantities needed for an HMC algorithm. We assume a 1D chain with open ends, with the Hamiltonian
+
+\begin{align}
+	H
+	= - \sum_{\langle i,j\rangle,\sigma}
+	\left(
+	t\, a_{i,\sigma}^\dagger a_{j,\sigma}
+	+ \Delta\, a_{i,\sigma}^\dagger a_{j,\sigma}^\dagger
+	+ \mathrm{H.c.}
+	\right)
+	- \mu \sum_{x,\sigma} n_{x,\sigma}
+	+ U \sum_x
+	\left(n_{x,\uparrow}-\frac{1}{2}\right)
+	\left(n_{x,\downarrow}-\frac{1}{2}\right),
+\end{align}
+
+where $t$ is the hopping amplitude, $U$ is the onsite interaction, $\Delta$ is the pairing amplitude and $\mu$ is the chemical potential. To bring this into a more convenient form we gauge transform even site operators such that
+
+\begin{align}
+	a_i \to ia_i \quad \mathrm{and} \quad a_i^\dagger \to -ia_i^\dagger   .
+\end{align}
+
+Substituting this we find
+
+\begin{align}
+	H
+	= - i\sum_{\langle i,j\rangle,\sigma}
+	\left(
+	t\left( a_{i,\sigma}^\dagger a_{j,\sigma} - a_{j,\sigma}^\dagger a_{i,\sigma}  \right)
+	- \Delta \left(a_{i,\sigma}^\dagger a_{j,\sigma}^\dagger - a_{j,\sigma} a_{i,\sigma} \right)
+	\right)
+	- \mu \sum_{x,\sigma} n_{x,\sigma}
+	- U \sum_x
+	\left(n_{x,\uparrow}-\frac{1}{2}\right)
+	\left(n_{x,\downarrow}-\frac{1}{2}\right),
+\end{align}
 
 
 \section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
@@ -494,24 +652,24 @@ In this derivation we treated the non-interacting part of the Hamiltonian the sa
 		 &\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
 		\begin{bmatrix}
 			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
-			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right)
+			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{A} }}{4}\right)
 		\end{bmatrix}
 		 \right)  
 		 \mathrm{Pf} \left(
 		 \begin{bmatrix}
-		 	\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B}^{(t)} }}{4}\right) & -\mathbb{I}\\
-		 	\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{B}^{(t)} }}{4}\right)
+		 	\sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{B}^{(t)} }}{4}\right) & -\mathbb{I}\\
+		 	\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{B}^{(t)} }}{4}\right)
 		 \end{bmatrix}
 		 \right) \nonumber \\
 		 &\quad\quad \times 
 		 \mathrm{Pf} \left(
 		 	\begin{bmatrix}
-		 		\mathrm{tanh}\left(\frac{e^{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
-		 		\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
-		 		-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
-		 		\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(2)}} }{2} \right) &   &  \vdots \\
+		 		\mathrm{tanh}\left(\frac{{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
+		 		\mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
+		 		-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
+		 		\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(2)}} }{2} \right) &   &  \vdots \\
 		 		\vdots &   &   &   & \ddots & \vdots \\
-		 		\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}}}{2} \right) \\
+		 		\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(N_\tau)}}}{2} \right) \\
 		 	\end{bmatrix}
 		 \right),
 	\end{align}
@@ -539,18 +697,18 @@ In this derivation we treated the non-interacting part of the Hamiltonian the sa
 		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi^2}{4U\Delta_{\tau} }\right)2^{2N}\left(-1\right)^{NN_{\tau} }\nonumber \\
 		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\eta} \right)\eta\left(\boldsymbol{B}_{\eta}^{(t)} \right)\right)\mathrm{Pf} \left(
 		\begin{bmatrix}
-			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\eta}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(1)}_{\eta} } }{2} \right) &   &  \vdots \\
+			\mathrm{tanh}\left(\frac{{\boldsymbol{A}_{\eta}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(1)}_{\eta} } }{2} \right) &   &  \vdots \\
 			\vdots &   &   \ddots & \vdots \\
-			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\boldsymbol{B}^{(N_\tau)}_{\eta} }}{2} \right) \\
+			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(N_\tau)}_{\eta} }}{2} \right) \\
 		\end{bmatrix}
 		\right) \nonumber \\
 		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\gamma} \right)\eta\left(\pm\boldsymbol{B}_{\gamma}^{(t)} \right)\right)\mathrm{Pf} \left(
 		\begin{bmatrix}
-			\mathrm{tanh}\left(\frac{e^{\boldsymbol{A}_{\gamma}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{e^{\pm\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
+			\mathrm{tanh}\left(\frac{{\boldsymbol{A}_{\gamma}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
+			\mathbb{I} & \mathrm{tanh}\left(\frac{{\pm\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
 			\vdots &   &   \ddots & \vdots \\
-			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{e^{\pm\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
+			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{{\pm\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
 		\end{bmatrix}
 		\right),
 	\end{align}
@@ -887,7 +1045,7 @@ with
 	\boldsymbol{G}
 	&= \frac{\mathbb{I} - \boldsymbol{K}}{\mathbb{I} + \boldsymbol{K}} = \mathrm{tanh} \left(\frac{\boldsymbol{K}}{2} \right) , \\[4pt]
 	\boldsymbol{K}
-	&= e^{\boldsymbol{A}}, \\[4pt]
+	&= e^{-\boldsymbol{A}}, \\[4pt]
 	\eta(\boldsymbol{A} )
 	&= (-1)^N \,\mathrm{Pf}\!\left(
 	\begin{bmatrix}
@@ -1087,7 +1245,7 @@ So up to $\mathcal{O} \left(\Delta_{x}^{2} \right)$ the relation holds with $\bo
 	with the initial condition $\boldsymbol{K}\left(0\right) = 1$. This is solved by
 	
 	\begin{align}
-		\boldsymbol{K}\left(1\right) = \boldsymbol{K} = e^{\boldsymbol{A} }.
+		\boldsymbol{K}\left(1\right) = \boldsymbol{K} = e^{-\boldsymbol{A} }.
 	\end{align}
 	
 	From this one easily finds
