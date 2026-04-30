@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/MacPorts 2026.78235_0) (preloaded format=pdflatex 2026.3.12)  27 APR 2026 15:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/MacPorts 2026.78235_0) (preloaded format=pdflatex 2026.3.12)  30 APR 2026 16:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -181,56 +181,71 @@ Overfull \hbox (23.074pt too wide) detected at line 539
  []
 
 [9] [10] [11] [12]
-Overfull \hbox (12.87332pt too wide) detected at line 718
+Overfull \hbox (72.48727pt too wide) detected at line 718
 []
  []
 
-[13] [14]
-Overfull \hbox (29.04129pt too wide) detected at line 836
+
+Overfull \hbox (23.09773pt too wide) detected at line 735
+[]
+ []
+
+[13]
+Overfull \hbox (62.99324pt too wide) detected at line 798
+[]
+ []
+
+[14]
+Overfull \hbox (24.78127pt too wide) detected at line 827
 []
  []
 
 [15] [16]
-Overfull \hbox (61.26389pt too wide) detected at line 963
+Overfull \hbox (29.04129pt too wide) detected at line 935
 []
  []
 
 [17] [18]
-Overfull \hbox (64.41075pt too wide) detected at line 1029
+Overfull \hbox (61.26389pt too wide) detected at line 1062
+[]
+ []
+
+[19] [20]
+Overfull \hbox (64.41075pt too wide) detected at line 1128
 []
  []
 
 
-Overfull \hbox (67.89783pt too wide) detected at line 1072
+Overfull \hbox (67.89783pt too wide) detected at line 1171
 []
  []
 
-[19]
-Overfull \hbox (14.83458pt too wide) detected at line 1079
+[21]
+Overfull \hbox (14.83458pt too wide) detected at line 1178
 []
  []
 
-[20] [21] [22]
-Overfull \hbox (25.70076pt too wide) detected at line 1272
-[]
- []
-
-
-Overfull \hbox (15.8518pt too wide) detected at line 1286
+[22] [23] [24]
+Overfull \hbox (25.70076pt too wide) detected at line 1371
 []
  []
 
 
-Overfull \hbox (4.29274pt too wide) detected at line 1324
+Overfull \hbox (15.8518pt too wide) detected at line 1385
 []
  []
 
-[23]
-Overfull \hbox (28.93106pt too wide) detected at line 1388
+
+Overfull \hbox (4.29274pt too wide) detected at line 1423
 []
  []
 
-[24] [25] [26] (./main.aux)
+[25]
+Overfull \hbox (28.93106pt too wide) detected at line 1487
+[]
+ []
+
+[26] [27] [28] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -272,10 +287,10 @@ onts/pk/ljfour/public/cm/dpi600/cmmi10.pk> </opt/local/share/texmf-texlive/font
 s/pk/ljfour/public/cm/dpi600/cmr10.pk> </opt/local/share/texmf-texlive/fonts/pk
 /ljfour/public/cm/dpi600/cmbx10.pk> </Users/thomashauschild/.texlive2026/texmf-
 var/fonts/pk/ljfour/public/cm/cmbx12.720pk>
-Output written on main.pdf (26 pages, 211488 bytes).
+Output written on main.pdf (28 pages, 226385 bytes).
 PDF statistics:
- 641 PDF objects out of 1000 (max. 8388607)
- 155 compressed objects within 2 object streams
+ 670 PDF objects out of 1000 (max. 8388607)
+ 159 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
