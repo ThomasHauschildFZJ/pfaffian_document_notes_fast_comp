@@ -742,7 +742,7 @@ We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permut
  \end{align} 
  \subsection{Gradient}
  
- For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W = \pm \sqrt{M}$, where $M = \mathbb{I} + B_1 ... B_{2N_{\tau} }$. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
+ For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W = \pm \sqrt{\mathrm{det}\left(  M \right)}$, where $M = \mathbb{I} + B_1 ... B_{2N_{\tau} }$. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
  
  \begin{align}
  	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(W[\phi]\right) }  \right)  = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }   
@@ -753,7 +753,7 @@ We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permut
  \begin{align}
  	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(-\mathrm{log}\left(|W|\right) \right) &= 
  	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(- \mathrm{log} \left(|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1B_2...B_{2N_\tau} \right) }|\right) \right)\\  
- 	&= -\frac{1}{2}\frac{1}{|W[\phi]|}\mathrm{Re}\left(   \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \mathrm{det}\left(\mathbb{I} + B_1...B_{2N_\tau}\right)\right) \\
+ 	&= -\frac{1}{2}\frac{1}{|W[\phi]|^{2} }\mathrm{Re}\left(   \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \mathrm{det}\left(\mathbb{I} + B_1...B_{2N_\tau}\right)\right) \\
  	&= -\frac{1}{2} \mathrm{Re} \left( \mathrm{Tr} \left\{M^{-1}\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_1...B_{2N_\tau}\right)  \right\}\right)\\
  	&= -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{M^{-1}B_{1}...\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)...B_{2N_\tau}   \right\} \right)\\
  	&=    -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)B_{2k+1} ...B_{2N_\tau}M^{-1}B_{1}...B_{2k-2}    \right\} \right)
@@ -786,15 +786,15 @@ We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permut
 where we defined $s^{t}_{x}= \mathrm{sin} \left(2\xi \phi^{t}_{x} \right) $ and $c^{t}_{x}= \mathrm{cos} \left(2\xi \phi^{t}_{x} \right)$. Here $l$-indices refer to a spatial lattice site and $f$-indices $\in \left\{1,2\right\} $ refer to the block matrices (refers to types of Majoranas). Then we can calculate the derivative
 
 \begin{align}
-	\left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} = -2\xi \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{t}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]    .
+	\left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} = -2\xi \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{k}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]    .
 \end{align}
 
 Next we look at the product (with Einstein sum convention)
 
 \begin{align}
-	\mathcal{K}_{(l,f)(l',f')} \cdot \left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} &= -2\xi  \mathcal{K}_{(l,f)(l',f')} \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{t}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]\\
-	&= -2\xi \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{t}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{t}_{x} \delta_{f''2} 
-	+\mathcal{K}_{(l,f)(x,1)}c^{t}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{t}_{x} \delta_{f''1} \right)  
+	\mathcal{K}_{(l,f)(l',f')} \cdot \left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} &= -2\xi  \mathcal{K}_{(l,f)(l',f')} \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{k}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]\\
+	&= -2\xi \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{k}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{k}_{x} \delta_{f''2} 
+	+\mathcal{K}_{(l,f)(x,1)}c^{k}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{k}_{x} \delta_{f''1} \right)  
 \end{align}
 
 With this we are able to calculate the whole gradient:
@@ -802,20 +802,20 @@ With this we are able to calculate the whole gradient:
 
 \begin{align}
 	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }&\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) = -\frac{1}{2}\mathrm{Re}\left(  \mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \left(\mathcal{K} B_{2k}\right) \underbrace{\mathcal{K} B_{2k+2}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}}_{:=R^{k} } \right\}\right) \nonumber \\
-	&= \mathrm{Re}\left(\xi \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{t}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{t}_{x} \delta_{f''2} 
-	+\mathcal{K}_{(l,f)(x,1)}c^{t}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{t}_{x} \delta_{f''1} \right)  R^{k}_{(l'',f'')(l,f)}\right)\nonumber \\
-	&= \mathrm{Re}\left(\xi \left(\mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,1)(l,f)}s^{t}_{x} + \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,2)(l,f)}s^{t}_{x} + \mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,2)(l,f)}c^{t}_{x} - \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,1)(l,f)}c^{t}_{x} \right)\right)\nonumber\\
-	&= \mathrm{Re}\left(\xi \left[ \left(R\mathcal{K}\right)_{(x,1)(x,1)} s^{t}_{x}  + \left(R\mathcal{K}\right)_{(x,2)(x,2)} s^{t}_{x} + \left(R\mathcal{K}\right)_{(x,2)(x,1)} c^{t}_{x} - \left(R\mathcal{K}\right)_{(x,1)(x,2)} c^{t}_{x}       \right]\right)\nonumber \\
+	&= \mathrm{Re}\left(\xi \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{k}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{k}_{x} \delta_{f''2} 
+	+\mathcal{K}_{(l,f)(x,1)}c^{k}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{k}_{x} \delta_{f''1} \right)  R^{k}_{(l'',f'')(l,f)}\right)\nonumber \\
+	&= \mathrm{Re}\left(\xi \left(\mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,1)(l,f)}s^{k}_{x} + \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,2)(l,f)}s^{k}_{x} + \mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,2)(l,f)}c^{k}_{x} - \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,1)(l,f)}c^{k}_{x} \right)\right)\nonumber\\
+	&= \mathrm{Re}\left(\xi \left[ \left(R\mathcal{K}\right)_{(x,1)(x,1)} s^{k}_{x}  + \left(R\mathcal{K}\right)_{(x,2)(x,2)} s^{k}_{x} + \left(R\mathcal{K}\right)_{(x,2)(x,1)} c^{k}_{x} - \left(R\mathcal{K}\right)_{(x,1)(x,2)} c^{k}_{x}       \right]\right)\nonumber \\
 	&= \mathrm{Re}\left(\xi \mathrm{Tr}_{f}\left\{\begin{bmatrix}
-		D\left(s^{t} \right) & D\left(c^{t} \right) \\
-		-D\left(c^{t} \right) & D\left(s^{t} \right) 
+		D\left(s^{k} \right) & D\left(c^{k} \right) \\
+		-D\left(c^{k} \right) & D\left(s^{k} \right) 
 	\end{bmatrix}\begin{bmatrix}
 		\left(R\mathcal{K}\right)_{(1,1)}  & \left(R\mathcal{K}\right)_{(1,2)} \\
 		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
 	\end{bmatrix}  \right\}_{x,x} \right)  \nonumber \\
 	&= \mathrm{Re}\left(\xi \mathrm{Tr}_{f}\left\{ \underbrace{\begin{bmatrix}
-		D\left(s^{t} \right) & D\left(c^{t} \right) \\
-		-D\left(c^{t} \right) & D\left(s^{t} \right) 
+		D\left(s^{k} \right) & D\left(c^{k} \right) \\
+		-D\left(c^{k} \right) & D\left(s^{k} \right) 
 	\end{bmatrix} B_{2k}^{-1}}_{= J} B_{2k} \begin{bmatrix}
 		\left(R\mathcal{K}\right)_{(1,1)}  & \left(R\mathcal{K}\right)_{(1,2)} \\
 		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
@@ -829,20 +829,24 @@ With this we are able to calculate the whole gradient:
 where $\mathrm{Tr} _{f}$ is to be understood as a trace over the block matrices only. After performing the trace there are only spacial indices left. Let us take a closer look at the result. After re substituting $R^{k}$ we find
 
 \begin{align}
-	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) &= \xi \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
+	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) &= \mathrm{Re} \left[\xi \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
 		0 & +\mathbb{I} \\
 		-\mathbb{I} & 0 \\
-	\end{bmatrix}   \underbrace{B_{2k} \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}}_{:=\mathcal{B}(k)}M^{-1}\underbrace{\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}}_{:= \mathcal{A}(k)}  \right\}_{x,x}  \\
-	&= \xi \mathrm{Tr} _{f} \left\{   \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)   \begin{bmatrix}
+	\end{bmatrix}   \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}\right\}_{x,x} \right] \\
+	&= \mathrm{Re} \left[\xi \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
 		0 & +\mathbb{I} \\
 		-\mathbb{I} & 0 \\
-	\end{bmatrix} \right\}_{x,x}\\
-	&= \xi  \left(\mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{1,2} - \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{2,1}  \right)_{x,x}  
+	\end{bmatrix}   \underbrace{ \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}}_{:=\mathcal{B}(k+1)}M^{-1}\underbrace{\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}B_{2k}}_{:= \mathcal{A}(k)}  \right\}_{x,x} \right] \\
+	&=  \mathrm{Re}\left(  \xi \mathrm{Tr} _{f} \left\{  \begin{bmatrix}
+		0 & +\mathbb{I} \\
+		-\mathbb{I} & 0 \\
+	\end{bmatrix} \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)    \right\}_{x,x}\right)\\
+	&= \mathrm{Re}\left(  \xi  \left(\mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{2,1} - \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{1,2}  \right)_{x,x}  \right)
 \end{align} 
 
 
 
-This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction.
+Here we used the fact that $J$ and $B_{2k}$ commute with one another and the cyclicity of the trace (careful, this is not really rigorous because it is not the full trace, however, it can be shown to be true by defining the x-projection operator and promoting the trace to a full trace and then use cyclicity). This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction. It should be noted here however, that the definitions of $\mathcal{A}(k)$ and $\mathcal{B}(k)$ are slightly different from Finns notes.
 
 \section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
 
