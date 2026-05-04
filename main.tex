@@ -499,6 +499,85 @@ Plugging this into the weight we find the \textit{caterpillar}:
 This expression is only of time complexity $\mathcal{O}\left(N_\tau N^3\right)$ and is therefore an improvement to the previous expression. However, it should be noted, that this expression is unstable if calculated numerically, while the other formula does not show this instability.
 
 
+\section{Correlators for PfQMC}
+
+To run a useful pfQMC alorithm we need a way to calculate observables for a given auxiliary field configuration. Due to Wicks theorem most observables can be calculated from the correlators $\left< \gamma_{i}(\tau) \gamma_j(0)\right>$. Here $\tau$ labels imaginary time, and $i,j$ label the lattice site as well as the Majorana operator type (real and imaginary parts). Observables can then be build from these correlators. If for example you are interested in the Dirac fermion density $c_{i}^{\dagger}c_{i}$ by plugging in the Majorana base $c_{i}=\frac{1}{2}\left(\gamma_{1i}  + i \gamma_{2i} \right)$ you can find
+
+\begin{align}
+	\left<c_{i}^{\dagger}c_{i}\right> = \left< \frac{1}{2}\left(1 - i\gamma_{1i}\gamma_{2i}  \right)  \right> = \frac{1}{2} - i\frac{1}{2}  \left< \gamma_{1i}\gamma_{2i} \right>.
+\end{align}  
+
+
+For a higher correlators you can use a version of Wicks theorem
+
+\begin{align}
+	\left< \gamma_{a}\gamma_{b}\gamma_{c}\gamma_{d}\right> = \left< \gamma_{a}\gamma_{b}\right>\left< \gamma_{c}\gamma_{d}  \right> - \left< \gamma_{a}\gamma_{c}\right>\left< \gamma_{b}\gamma_{d}  \right> + \left< \gamma_{a}\gamma_{d}\right>\left< \gamma_{b}\gamma_{c}  \right>. 
+\end{align}
+You simply need to first remove all pairs of equal operators by use of $\gamma_i^{2} = 1$, and then form all possible contractions. For each contraction keep track of the sign by counting the commutations. Odd numbered correlators vanish.  What remains is to find an analytical expression for the two body correlator, which is what we do next. We start out with
+
+\begin{align}
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1} \mathrm{Tr}\left\{ \gamma_{i}(\tau) \gamma_{j}(0) e^{-\beta \boldsymbol{H} }  \right\}  \nonumber\\
+	&= Z^{-1} \mathrm{Tr}\left\{ e^{\tau\boldsymbol{H}}\gamma_{i}e^{-\tau\boldsymbol{H}  } \gamma_{j}e^{-\beta \boldsymbol{H} }  \right\} \nonumber \\
+	&= Z^{-1}\mathrm{Tr}\left\{ \gamma_{i}e^{-\tau\boldsymbol{H}  } \gamma_{j}e^{-\left(\beta - \tau\right) \boldsymbol{H} } \right\}  \nonumber \\
+	&\approx Z^{-1} \mathrm{Tr}\left\{ \gamma_{i}\left[\prod_{t=1}^{l-1} e^{-\Delta_\tau \boldsymbol{H_{0} } }e^{-\Delta_\tau \boldsymbol{H_{1} }}\right]\gamma_{j}\left[\prod_{t=l}^{N_{\tau} } e^{-\Delta_\tau \boldsymbol{H_{0} } }e^{-\Delta_\tau \boldsymbol{H_{1} }}\right]   \right\}. 
+\end{align}
+
+Here we substituted the Heisenberg picture operators, and used the cyclic property of traces. In the last step we used a Suzuki Trotter decomposition of second order (not third like in the improved correlator). We also defined $N_{\tau} = \frac{\beta}{\Delta_{\tau}} $ and $l = \frac{\beta - \tau}{\Delta_{\tau} } $. Next we perform the now familiar Hubbard Stratanovic transformation. 
+
+\begin{align}
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)  e^{-S_{B} } \mathrm{Tr}\left\{ \gamma_{i}\underbrace{e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{1}\boldsymbol{\gamma} } }}_{:=\boldsymbol{U} _{1} }  ... e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{l-1}\boldsymbol{\gamma} } } \gamma_{j} e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{l}\boldsymbol{\gamma} } }...e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{N_{\tau} }\boldsymbol{\gamma} } }    \right\} 
+\end{align} 
+
+From the Heisenberg equation of motion we know
+
+\begin{align}
+	\boldsymbol{U}^{-1}_{p}\gamma_{i}\boldsymbol{U}_{p} = \sum_{m}^{ }\left[e^{-\boldsymbol{A_{p} } }\right]_{im} \gamma_{m} := \sum_{m}^{ } \left[\boldsymbol{B}_{p}\right]_{im} \gamma_{m}  
+\end{align}
+
+Therefore one finds
+
+\begin{align}
+	\gamma_{i}\boldsymbol{U}^{k} = \boldsymbol{U}^{}_{k}\boldsymbol{U}_{k}^{-1} \gamma_{i}\boldsymbol{U}_{k} = \sum_{m}^{ } \left[\boldsymbol{B}_{k}\right]_{im}  \boldsymbol{U}_{k} \gamma_{m}    
+\end{align}
+Applying this identity to move the two Majorana singe particle operator next to one another one finds
+
+\begin{align}
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}  \right]_{im} \mathrm{Tr}\left\{ \boldsymbol{U}_{1}...\boldsymbol{U}_{l-1}\gamma_{m}\gamma_{j}\boldsymbol{U}_{l}...\boldsymbol{U}_{N_{\tau} }   \right\} \nonumber \\
+	&=    Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}  \right]_{im} \mathrm{Tr}\left\{ \gamma_{m}\gamma_{j}\boldsymbol{U}_{l}...\boldsymbol{U}_{N_{\tau} }\boldsymbol{U}_{1}...\boldsymbol{U}_{l-1}   \right\} \nonumber \\
+\end{align}
+
+In appendix XXX (ADD THIS, it is also in paper but without derivation) we show
+
+\begin{align}
+	\mathrm{Tr}\left\{ \gamma_{m}\gamma_{j}\boldsymbol{U}_{\pi(1)}...\boldsymbol{U}_{\pi(N)}   \right\} = W\left[ \phi \right]  \left[\frac{\left(\mathbb{I} - \boldsymbol{B}_{\pi(1)}...\boldsymbol{B}_{\pi(N)}\right) }{ \left(\mathbb{I} + \boldsymbol{B}_{\pi(1)}...\boldsymbol{B}_{\pi(N)}\right)^{-1}  }\right]_{mj}  = W\left[ \phi \right] \left[2\left(\mathbb{I} + \boldsymbol{B}_{\pi(1)}...\boldsymbol{B}_{\pi(N)}\right)^{-1}   - \mathbb{I}\right]_{mj} ,
+\end{align}
+which is the greens function for this particular operator string. By using this we find
+
+\begin{align}
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right] \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}  \right]_{im}  \left[2\left(\mathbb{I} + \boldsymbol{B}_{l}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \right)^{-1}   - \mathbb{I}\right] _{mj} \nonumber \\
+	&= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right]  \underbrace{\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} 2\left(\mathbb{I} + \boldsymbol{B}_{l}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \right)^{-1}   - \mathbb{I}\right]_{mj}}_{:= \boldsymbol{C} _{mj} }  \nonumber \\
+\end{align}
+The object $\boldsymbol{C}_{mj} $ is what actually needs to be measured. It is possible to rewrite this object in a more convenient form:
+
+\begin{align}
+	\boldsymbol{C} &= \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}\left(2\left(\mathbb{I} + \boldsymbol{B}_{l}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}  \right)^{-1} - \mathbb{I}\right) \nonumber \\
+	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \left(2 \left(\boldsymbol{B}_{l}...\boldsymbol{B}_{N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \right)\boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_l^{-1}         \right)^{-1} - \mathbb{I}\right) \nonumber \\
+	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \left(2\boldsymbol{B}_{l}...\boldsymbol{B}_{N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \right)^{-1} \boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_l^{-1} - \mathbb{I}\right) \nonumber \\
+	&= \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \left(2\boldsymbol{B}_{l}...\boldsymbol{B}_{N_\tau} \boldsymbol{M} ^{-1}  \boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_l^{-1} - \mathbb{I}\right) \nonumber \\
+	& = \boldsymbol{B}_{1}...\boldsymbol{B}_{N_{\tau} }2\boldsymbol{M^{-1}}\boldsymbol{B}_{N_\tau}^{-1} ...\boldsymbol{B}_{l}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \nonumber \\
+	&= 2\boldsymbol{M}^{-1}\boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \boldsymbol{B}_{N_\tau}^{-1} ...\boldsymbol{B}_{l}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \nonumber \\
+	&= 2\boldsymbol{M^{-1}}\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} - \boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \nonumber \\
+	&= \left(2\boldsymbol{M}^{-1} - \mathbb{I}\right)\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1} \nonumber \\
+	&= \boldsymbol{G}\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}     
+\end{align}
+Therefore the the correlator is given by
+
+\begin{align}
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[\phi\right] \left[\boldsymbol{G}\boldsymbol{B}_{1}...\boldsymbol{B}_{l-1}  \right]_{ij} 
+\end{align}
+
+
+
 \section{pfQMC for the spin-1/2 Kitaev chain}
 
 In this section we will apply the previous work to the spin-1/2 Kitaev chain and derive all the quantities needed for an HMC algorithm. We assume a 1D chain with open ends, with the Hamiltonian
@@ -742,13 +821,13 @@ We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permut
  \end{align} 
  \subsection{Gradient}
  
- For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W = \pm \sqrt{\mathrm{det}\left(  M \right)}$, where $M = \mathbb{I} + B_1 ... B_{2N_{\tau} }$. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
+ For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W^{\sigma}  = \pm \sqrt{\mathrm{det}\left(  M^{\sigma}  \right)}$, where $M^{\sigma}  = \mathbb{I} + B^{\sigma} _1 ... B^{\sigma} _{2N_{\tau} }$. From now on we drop the spin index, because the calculation is exactly the same for both sectors. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
  
  \begin{align}
  	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(W[\phi]\right) }  \right)  = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }   
  \end{align}
  
- and the absolute value of the weight is $|W[\phi]| = +\sqrt{\mathrm{det} \left(\mathbb{I} + B_1 ... B_{2N_\tau} \right) }$. So it suffices to take the derivative of the square root of the determinant as opposed to the more complicated weight involving pfaffians. We then have
+ and the absolute value of the weight is $|W[\phi]| = \left|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1 ... B_{2N_\tau} \right) }\right|$. So it suffices to take the derivative of the square root of the determinant as opposed to the more complicated weight involving pfaffians. We then have
  
  \begin{align}
  	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(-\mathrm{log}\left(|W|\right) \right) &= 
@@ -826,13 +905,13 @@ With this we are able to calculate the whole gradient:
 	\end{bmatrix} B_{2k}R\mathcal{K} \right\}_{x,x}\right),
 \end{align}
 
-where $\mathrm{Tr} _{f}$ is to be understood as a trace over the block matrices only. After performing the trace there are only spacial indices left. Let us take a closer look at the result. After re substituting $R^{k}$ we find
+where $\mathrm{Tr} _{f}$ is to be understood as a trace over the block matrices only. After performing the trace there are only spacial indices left. Let us take a closer look at the result. After resubstituting $R^{k}$ we find
 
 \begin{align}
 	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) &= \mathrm{Re} \left[\xi \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
 		0 & +\mathbb{I} \\
 		-\mathbb{I} & 0 \\
-	\end{bmatrix}   \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}\right\}_{x,x} \right] \\
+	\end{bmatrix}    B_{2k} \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}\right\}_{x,x} \right] \\
 	&= \mathrm{Re} \left[\xi \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
 		0 & +\mathbb{I} \\
 		-\mathbb{I} & 0 \\
@@ -840,13 +919,20 @@ where $\mathrm{Tr} _{f}$ is to be understood as a trace over the block matrices 
 	&=  \mathrm{Re}\left(  \xi \mathrm{Tr} _{f} \left\{  \begin{bmatrix}
 		0 & +\mathbb{I} \\
 		-\mathbb{I} & 0 \\
-	\end{bmatrix} \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)    \right\}_{x,x}\right)\\
-	&= \mathrm{Re}\left(  \xi  \left(\mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{2,1} - \mathcal{B}\left(k\right)M^{-1} \mathcal{A}\left(k-1\right)_{1,2}  \right)_{x,x}  \right)
+	\end{bmatrix} \mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)    \right\}_{x,x}\right)\\
+	&= \mathrm{Re}\left(  \xi  \left(\left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)\right]_{2,1} - \left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)_{1,2}\right]  \right)_{x,x}  \right)
 \end{align} 
 
 
 
-Here we used the fact that $J$ and $B_{2k}$ commute with one another and the cyclicity of the trace (careful, this is not really rigorous because it is not the full trace, however, it can be shown to be true by defining the x-projection operator and promoting the trace to a full trace and then use cyclicity). This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction. It should be noted here however, that the definitions of $\mathcal{A}(k)$ and $\mathcal{B}(k)$ are slightly different from Finns notes.
+Here we used the fact that $J$ and $B_{2k}$ commute with one another and the cyclicity of the trace (careful, this is not really rigorous because it is not the full trace, however, it can be shown to be true by defining the x-projection operator and promoting the trace to a full trace and then use cyclicity). Finally, the gradient of the action can be calculated as
+
+\begin{align}
+	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) &= \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }  \nonumber \\
+	&= \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) + 2\mathrm{Re}\left(  \xi  \left(\left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)\right]_{2,1} - \left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)_{1,2}\right]  \right)_{x,x}  \right)
+\end{align}
+Note that this is not quite general, because we assumed $M^{\sigma}$ to be equal to one another, which introduced the factor of two. 
+This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction. It should be noted here however, that the definitions of $\mathcal{A}(k)$ and $\mathcal{B}(k)$ are slightly different from Finns notes.
 
 \section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
 

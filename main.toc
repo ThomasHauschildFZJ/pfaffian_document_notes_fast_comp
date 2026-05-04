@@ -1,9 +1,10 @@
 \contentsline {section}{\numberline {1}Deriving the Majorana Pfaffian from the Partition Function}{1}{}%
 \contentsline {subsection}{\numberline {1.1}Reducing time complexity with the caterpillar}{6}{}%
-\contentsline {section}{\numberline {2}pfQMC for the spin-1/2 Kitaev chain}{9}{}%
-\contentsline {subsection}{\numberline {2.1}Gradient}{13}{}%
-\contentsline {section}{\numberline {3}Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}{16}{}%
-\contentsline {section}{\numberline {A}Factorization of the expression for Block Diagonal matrices }{19}{}%
-\contentsline {section}{\numberline {B}Integrating out the non-interacting part of the Hamiltonian }{20}{}%
-\contentsline {section}{\numberline {C}Calculation of large matrices }{22}{}%
-\contentsline {section}{\numberline {D}Deriving the Gaussian Form of the Matrix elements }{24}{}%
+\contentsline {section}{\numberline {2}Correlators for PfQMC}{9}{}%
+\contentsline {section}{\numberline {3}pfQMC for the spin-1/2 Kitaev chain}{11}{}%
+\contentsline {subsection}{\numberline {3.1}Gradient}{15}{}%
+\contentsline {section}{\numberline {4}Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}{18}{}%
+\contentsline {section}{\numberline {A}Factorization of the expression for Block Diagonal matrices }{22}{}%
+\contentsline {section}{\numberline {B}Integrating out the non-interacting part of the Hamiltonian }{23}{}%
+\contentsline {section}{\numberline {C}Calculation of large matrices }{25}{}%
+\contentsline {section}{\numberline {D}Deriving the Gaussian Form of the Matrix elements }{27}{}%
