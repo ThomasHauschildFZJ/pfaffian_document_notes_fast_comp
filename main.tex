@@ -525,10 +525,10 @@ You simply need to first remove all pairs of equal operators by use of $\gamma_i
 Here we substituted the Heisenberg picture operators, and used the cyclic property of traces. In the last step we used a Suzuki Trotter decomposition of second order (not third like in the improved correlator). We also defined $N_{\tau} = \frac{\beta}{\Delta_{\tau}} $ and $l = \frac{\tau}{\Delta_{\tau} } $. Next we perform the now familiar Hubbard Stratanovic transformation. 
 
 \begin{align}
-	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)  e^{-S_{B} } \mathrm{Tr}\left\{ \gamma_{i}\underbrace{e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{1}\boldsymbol{\gamma} } }}_{:=\boldsymbol{U} _{1} }  ... e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{2l}\boldsymbol{\gamma} } } \gamma_{j} e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{2l+1}\boldsymbol{\gamma} } }...e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{N_{\tau} }\boldsymbol{\gamma} } }    \right\} 
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)  e^{-S_{B} } \mathrm{Tr}\left\{ \gamma_{i}\underbrace{e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{1}\boldsymbol{\gamma} } }}_{:=\boldsymbol{U} _{1} }  ... e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{2l}\boldsymbol{\gamma} } } \gamma_{j} e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{2l+1}\boldsymbol{\gamma} } }...e^{-\frac{1}{4}\boldsymbol{\gamma}^{\mathrm{T}} \boldsymbol{A_{2N_{\tau} }\boldsymbol{\gamma} } }    \right\} 
 \end{align} 
 
-From the Heisenberg equation of motion we know
+From the Heisenberg equation of motion we know (also see pfaffian paper)
 
 \begin{align}
 	\boldsymbol{U}^{-1}_{p}\gamma_{i}\boldsymbol{U}_{p} = \sum_{m}^{ }\left[e^{-\boldsymbol{A_{p} } }\right]_{im} \gamma_{m} := \sum_{m}^{ } \left[\boldsymbol{B}_{p}\right]_{im} \gamma_{m}  
@@ -539,11 +539,11 @@ Therefore one finds
 \begin{align}
 	\gamma_{i}\boldsymbol{U}^{k} = \boldsymbol{U}^{}_{k}\boldsymbol{U}_{k}^{-1} \gamma_{i}\boldsymbol{U}_{k} = \sum_{m}^{ } \left[\boldsymbol{B}_{k}\right]_{im}  \boldsymbol{U}_{k} \gamma_{m}    
 \end{align}
-Applying this identity to move the two Majorana singe particle operator next to one another one finds
+Applying this identity to move the two Majorana singe particle operators next to one another one finds
 
 \begin{align}
-	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im} \mathrm{Tr}\left\{ \boldsymbol{U}_{1}...\boldsymbol{U}_{2l}\gamma_{m}\gamma_{j}\boldsymbol{U}_{2l+1}...\boldsymbol{U}_{N_{\tau} }   \right\} \nonumber \\
-	&=    Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im} \mathrm{Tr}\left\{ \gamma_{m}\gamma_{j}\boldsymbol{U}_{2l+1}...\boldsymbol{U}_{N_{\tau} }\boldsymbol{U}_{1}...\boldsymbol{U}_{2l}   \right\} \nonumber \\
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{}^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im} \mathrm{Tr}\left\{ \boldsymbol{U}_{1}...\boldsymbol{U}_{2l}\gamma_{m}\gamma_{j}\boldsymbol{U}_{2l+1}...\boldsymbol{U}_{2N_{\tau} }   \right\} \nonumber \\
+	&=    Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im} \mathrm{Tr}\left\{ \gamma_{m}\gamma_{j}\boldsymbol{U}_{2l+1}...\boldsymbol{U}_{2N_{\tau} }\boldsymbol{U}_{1}...\boldsymbol{U}_{2l}   \right\} \nonumber \\
 \end{align}
 
 In appendix XXX (ADD THIS, it is also in paper but without derivation) we show
@@ -554,23 +554,23 @@ In appendix XXX (ADD THIS, it is also in paper but without derivation) we show
 which is the greens function for this particular operator string. By using this we find
 
 \begin{align}
-	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right] \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im}  \left[2\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \right)^{-1}   - \mathbb{I}\right] _{mj} \nonumber \\
-	&= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right]  \underbrace{\left[ 2 \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \right)^{-1}   - \mathbb{I}\right]_{mj}}_{:= \boldsymbol{C} _{mj} }  \nonumber \\
+	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right] \sum_{m}^{ }\left[ \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{im}  \left[2\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \right)^{-1}   - \mathbb{I}\right] _{mj} \nonumber \\
+	&= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[ \phi \right]  \underbrace{\left[ 2 \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}\left(\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \right)^{-1}   - \mathbb{I}\right)\right]_{mj}}_{:= \boldsymbol{C} _{mj} }  \nonumber \\
 \end{align}
 The object $\boldsymbol{C}_{mj} $ is what actually needs to be measured. It is possible to rewrite this object in a more convenient form:
 
 \begin{align}
-	\boldsymbol{C} &= \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}\left(2\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right)^{-1} - \mathbb{I}\right) \nonumber \\
-	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2 \left(\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \right)\boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1}         \right)^{-1} - \mathbb{I}\right) \nonumber \\
-	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \right)^{-1} \boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1} - \mathbb{I}\right) \nonumber \\
-	&= \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{N_\tau} \boldsymbol{M} ^{-1}  \boldsymbol{B}_{N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1} - \mathbb{I}\right) \nonumber \\
-	& = \boldsymbol{B}_{1}...\boldsymbol{B}_{N_{\tau} }2\boldsymbol{M^{-1}}\boldsymbol{B}_{N_\tau}^{-1} ...\boldsymbol{B}_{2l+1}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
-	&= 2\boldsymbol{M}^{-1}\boldsymbol{B}_{1}...\boldsymbol{B}_{N_\tau} \boldsymbol{B}_{N_\tau}^{-1} ...\boldsymbol{B}_{2l+1}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
+	\boldsymbol{C} &= \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}\left(2\left(\mathbb{I} + \boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_{\tau} }\boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right)^{-1} - \mathbb{I}\right) \nonumber \\
+	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2 \left(\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{2N_\tau} \right)\boldsymbol{B}_{2N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1}         \right)^{-1} - \mathbb{I}\right) \nonumber \\
+	&=    \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_\tau}\left(\mathbb{I} + \boldsymbol{B}_{1}...\boldsymbol{B}_{2N_\tau} \right)^{-1} \boldsymbol{B}_{2N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1} - \mathbb{I}\right) \nonumber \\
+	&= \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \left(2\boldsymbol{B}_{2l+1}...\boldsymbol{B}_{2N_\tau} \boldsymbol{M} ^{-1}  \boldsymbol{B}_{2N_\tau}^{-1}...\boldsymbol{B}_{2l+1}^{-1} - \mathbb{I}\right) \nonumber \\
+	& = \boldsymbol{B}_{1}...\boldsymbol{B}_{2N_{\tau} }2\boldsymbol{M^{-1}}\boldsymbol{B}_{2N_\tau}^{-1} ...\boldsymbol{B}_{2l+1}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
+	&= 2\boldsymbol{M}^{-1}\boldsymbol{B}_{1}...\boldsymbol{B}_{2N_\tau} \boldsymbol{B}_{2N_\tau}^{-1} ...\boldsymbol{B}_{2l+1}^{-1} -   \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
 	&= 2\boldsymbol{M^{-1}}\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} - \boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
 	&= \left(2\boldsymbol{M}^{-1} - \mathbb{I}\right)\boldsymbol{B}_{1}...\boldsymbol{B}_{2l} \nonumber \\
 	&= \boldsymbol{G}\boldsymbol{B}_{1}...\boldsymbol{B}_{2l}     
 \end{align}
-Therefore the the correlator is given by
+Here we used that $\left[ \boldsymbol{M}, \boldsymbol{B}_{1}...\boldsymbol{B}_{2N_\tau}   \right] = 0 $. The correlator is then given by
 
 \begin{align}
 	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[\phi\right] \left[\boldsymbol{G}\boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{ij} 
