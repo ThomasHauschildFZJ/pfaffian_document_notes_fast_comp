@@ -13,8 +13,12 @@
 	
 	\tableofcontents
 	
-\section{Deriving the Majorana Pfaffian from the Partition Function}
-	
+
+\section{Pfaffian Weights for PfQMC}
+
+We start out by deriving the weights in the Majorana basis and subsequently find an improvement of the time complexity by introducing the $caterpillar$.
+
+\subsection{Deriving the Pfaffian Weights from the Partition Function}
 	Here, we derive the pfaffian formulation of the path integral. We roughly follow the derivation given in PFAFFIAN PAPER. Usually, after doing a Suzuki-Trotter approximation, which splits the exponential into $N_\tau = \beta / \Delta_\tau$ imaginary time slices and then performing a Hubbard-Stratanovich transformation of some sort for each factor, one ends up with a partition function of the form
 	
 	\begin{align}
@@ -498,6 +502,127 @@ Plugging this into the weight we find the \textit{caterpillar}:
 
 This expression is only of time complexity $\mathcal{O}\left(N_\tau N^3\right)$ and is therefore an improvement to the previous expression. However, it should be noted, that this expression is unstable if calculated numerically, while the other formula does not show this instability.
 
+\section{Gradient for PfQMC with HMC}
+
+For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W^{\sigma}  = \pm \sqrt{\mathrm{det}\left(  M  \right)}$, where $M  = \mathbb{I} + B _1 ... B _{2N_{\tau} }$. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight. This is what makes it possible to work with the root of the determinant instead dealing with pfaffians:
+
+\begin{align}
+	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(W[\phi]\right) }  \right)  = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }   
+\end{align}
+
+The absolute value of the weight is $|W[\phi]| = \left|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1 ... B_{2N_\tau} \right) }\right|$. We then have
+
+\begin{align}
+	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(-\mathrm{log}\left(|W|\right) \right) &= 
+	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(- \mathrm{log} \left(|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1B_2...B_{2N_\tau} \right) }|\right) \right)\\  
+	&= -\frac{1}{2}\frac{1}{|W[\phi]|^{2} }\mathrm{Re}\left(   \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \mathrm{det}\left(\mathbb{I} + B_1...B_{2N_\tau}\right)\right) \\
+	&= -\frac{1}{2} \mathrm{Re} \left( \mathrm{Tr} \left\{M^{-1}\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_1...B_{2N_\tau}\right)  \right\}\right)\\
+	&= -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{M^{-1}B_{1}...\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)...B_{2N_\tau}   \right\} \right)\\
+	&=    -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)B_{2k+1} ...B_{2N_\tau}M^{-1}B_{1}...B_{2k-2}    \right\} \right)
+\end{align}
+
+At this point we need the specific forms of the matrices. Because we usually split our system into interacting and non-interacting part, where only the interacting part depends on the auxiliary fields we will assume that all $B_t$ with odd indices are independant of the auxiliary field. Then
+
+\begin{align}
+	B_{2t-1} = e^{-A_{2t-1}} := \mathcal{K}
+\end{align}
+For the even matrices we will make the assumption that the interaction is of the form
+
+\begin{align}
+	A_{2t} = r \underbrace{\begin{bmatrix}
+			0 & 1 \\
+			-1 & 0
+	\end{bmatrix}}_{:=J}  \otimes\,\, \mathrm{diag}\left(\phi_{1}^{t}, \phi_{2}^{t},...,\phi_{N}^{t}\right)   ,
+\end{align}
+
+where $r$ is some complex constant. This might seem arbitrary at first, but it will turn out this is usually the from if the HS transform was used for an onsite interaction. By using the property $J^{2} = -\mathbb{I}$ on can show (for a detailed derivation look at the Kitaev chain section)
+
+\begin{align}
+	\boldsymbol{B}_{2t} = e^{-A_{2t}} = \mathbb{I} \otimes \mathrm{diag}\left(\mathrm{cos}\left(r\phi_{1}^{t} \right),...,\mathrm{cos}\left(r\phi_{N}^{t} \right)      \right) 
+	- J \otimes \mathrm{diag}\left(\mathrm{sin}\left(r\phi_{1}^{t} \right),...,\mathrm{sin}\left(r\phi_{N}^{t} \right)      \right)     
+\end{align} 
+
+
+
+
+
+We see that this matrix can be split up into 2x2 block matrices. When we work with indices it will turn out convenient to write matrix indices as spatial indices and block matrix indices. For $B_{2t}$ we can then write:
+
+\begin{align}
+	\left[ B_{2t}  \right]_{(l',f')(l'',f'')} = \delta_{l'l''}\left(c^{t}_{l'}\left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}  \right) - s^{t}_{l'}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right)   \right)   
+\end{align}
+
+where we defined $s^{t}_{x}= \mathrm{sin} \left(r \phi^{t}_{x} \right) $ and $c^{t}_{x}= \mathrm{cos} \left(r \phi^{t}_{x} \right)$. Here $l$-indices refer to a spatial lattice site and $f$-indices $\in \left\{1,2\right\} $ refer to the block matrices (refers to types of Majoranas). Then we can calculate the derivative
+
+\begin{align}
+	\left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} = -r \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{k}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]    .
+\end{align}
+
+Next we look at the product (with Einstein sum convention)
+
+\begin{align}
+	\mathcal{K}_{(l,f)(l',f')} \cdot \left[ \frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} } B_{2k}  \right]_{(l',f')(l'',f'')} &= -r  \mathcal{K}_{(l,f)(l',f')} \delta_{l'x}\delta_{l''x}\left[ s^{k}_{x} \left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}\right) + c^{k}_{x}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right) \right]\\
+	&= -r \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{k}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{k}_{x} \delta_{f''2} 
+	+\mathcal{K}_{(l,f)(x,1)}c^{k}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{k}_{x} \delta_{f''1} \right)  
+\end{align}
+
+With this we are able to calculate the whole gradient:
+
+
+\begin{align}
+	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }&\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) = -\frac{1}{2}\mathrm{Re}\left(  \mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \left(\mathcal{K} B_{2k}\right) \underbrace{\mathcal{K} B_{2k+2}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}}_{:=R^{k} } \right\}\right) \nonumber \\
+	&= \frac{1}{2} \mathrm{Re}\left(r \, \delta_{l''x}\left(\mathcal{K}_{(l,f)(x,1)}s^{k}_{x} \delta_{f''1} + \mathcal{K}_{(l,f)(x,2)}s^{k}_{x} \delta_{f''2} 
+	+\mathcal{K}_{(l,f)(x,1)}c^{k}_{x} \delta_{f''2} - \mathcal{K}_{(l,f)(x,2)}c^{k}_{x} \delta_{f''1} \right)  R^{k}_{(l'',f'')(l,f)}\right)\nonumber \\
+	&= \frac{1}{2} \mathrm{Re}\left(r \left(\mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,1)(l,f)}s^{k}_{x} + \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,2)(l,f)}s^{k}_{x} + \mathcal{K}_{(l,f)(x,1)}R^{k}_{(x,2)(l,f)}c^{k}_{x} - \mathcal{K}_{(l,f)(x,2)}R^{k}_{(x,1)(l,f)}c^{k}_{x} \right)\right)\nonumber\\
+	&= \frac{1}{2} \mathrm{Re}\left(r \left[ \left(R\mathcal{K}\right)_{(x,1)(x,1)} s^{k}_{x}  + \left(R\mathcal{K}\right)_{(x,2)(x,2)} s^{k}_{x} + \left(R\mathcal{K}\right)_{(x,2)(x,1)} c^{k}_{x} - \left(R\mathcal{K}\right)_{(x,1)(x,2)} c^{k}_{x}       \right]\right)\nonumber \\
+	&= \frac{1}{2} \mathrm{Re}\left(r \, \mathrm{Tr}_{f}\left\{\begin{bmatrix}
+		D\left(s^{k} \right) & D\left(c^{k} \right) \\
+		-D\left(c^{k} \right) & D\left(s^{k} \right) 
+	\end{bmatrix}\begin{bmatrix}
+		\left(R\mathcal{K}\right)_{(1,1)}  & \left(R\mathcal{K}\right)_{(1,2)} \\
+		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
+	\end{bmatrix}  \right\}_{x,x} \right)  \nonumber \\
+	&= \frac{1}{2} \mathrm{Re}\left(r \, \mathrm{Tr}_{f}\left\{ \underbrace{\begin{bmatrix}
+			D\left(s^{k} \right) & D\left(c^{k} \right) \\
+			-D\left(c^{k} \right) & D\left(s^{k} \right) 
+		\end{bmatrix} B_{2k}^{-1}}_{= J} B_{2k} \begin{bmatrix}
+		\left(R\mathcal{K}\right)_{(1,1)}  & \left(R\mathcal{K}\right)_{(1,2)} \\
+		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
+	\end{bmatrix}  \right\} _{x,x}\right) \nonumber \\
+	&= \frac{1}{2} \mathrm{Re}\left(r \,\mathrm{Tr}_{f}\left\{ \begin{bmatrix}
+		0 & \mathbb{I} \\
+		-\mathbb{I} & 0
+	\end{bmatrix} B_{2k}R\mathcal{K} \right\}_{x,x}\right),
+\end{align}
+
+where $\mathrm{Tr} _{f}$ is to be understood as a trace over the block matrices only. The result can be written in a cleaner way. After resubstituting $R^{k}$ we find
+
+\begin{align}
+	\frac{\mathrm{d} }{\mathrm{d}\phi^{k}_{x} }\left(-\mathrm{log} \left(|W[\phi]|\right)   \right) &= \frac{1}{2} \mathrm{Re} \left[r \, \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
+		0 & +\mathbb{I} \\
+		-\mathbb{I} & 0 \\
+	\end{bmatrix}    B_{2k} \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}M^{-1}\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}\right\}_{x,x} \right] \\
+	&= \frac{1}{2}\mathrm{Re} \left[r\, \mathrm{Tr} _{f} \left\{ \begin{bmatrix}
+		0 & +\mathbb{I} \\
+		-\mathbb{I} & 0 \\
+	\end{bmatrix}   \underbrace{ \mathcal{K} B_{2k+2}\mathcal{K} B_{2k + 4}...\mathcal{K} B_{2N_\tau}}_{:=\mathcal{B}(k+1)}M^{-1}\underbrace{\mathcal{K} B_{2}...\mathcal{K} B_{2k-2}\mathcal{K}B_{2k}}_{:= \mathcal{A}(k)}  \right\}_{x,x} \right] \\
+	&= \frac{1}{2} \mathrm{Re}\left(  r\, \mathrm{Tr} _{f} \left\{  \begin{bmatrix}
+		0 & +\mathbb{I} \\
+		-\mathbb{I} & 0 \\
+	\end{bmatrix} \mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)    \right\}_{x,x}\right)\\
+	&= \frac{1}{2}\mathrm{Re}\left(  r\,  \left(\left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)\right]_{2,1} - \left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)_{1,2}\right]  \right)_{x,x}  \right)
+\end{align} 
+
+
+
+Here we used the fact that $J$ and $B_{2k}$ commute with one another and the cyclicity of the trace (careful, this is not really rigorous because it is not the full trace, however, it can be shown to be true by defining the x-projection operator and promoting the trace to a full trace and then use cyclicity). Finally, the gradient of the action can be calculated as
+
+\begin{align}
+	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) &= \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }  \nonumber \\
+	&= \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) + \frac{1}{2} \mathrm{Re}\left(  r\,  \left(\left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)\right]_{2,1} - \left[\mathcal{B}\left(k+1\right)M^{-1} \mathcal{A}\left(k\right)\right]_{1,2}  \right)_{x,x}  \right)
+\end{align}
+This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction. It should be noted here however, that the definitions of $\mathcal{A}(k)$ and $\mathcal{B}(k)$ are slightly different from Finns notes.
+
 
 \section{Correlators for PfQMC}
 
@@ -574,18 +699,22 @@ Here we used that $\left[ \boldsymbol{\mathcal{M}}, \boldsymbol{B}_{1}...\boldsy
 	\left< \gamma_{i}(\tau) \gamma_j(0)\right> &= Z^{-1}\int_{ }^{ } \mathrm{D}\left(\phi\right)e^{-S_{B}} W\left[\phi\right] \left[2\boldsymbol{\mathcal{M}}^{-1} \boldsymbol{B}_{1}...\boldsymbol{B}_{2l}  \right]_{ij} 
 \end{align}
 
+Calculating these objects mught seem expensive, however in the gradient very similar objects are calculated. Therefore it is quite efficient to calculate these correlators on the fly while running the gradient routine.
+
 
 
 \section{pfQMC for the spin-1/2 Kitaev chain}
+In this section we first derive the weights for the Kitaev chain and subsequently derive the gradient for the HMC algorithm.
+\subsection{Weight for the Kitaev Chain}
 
 In this section we will apply the previous work to the spin-1/2 Kitaev chain and derive all the quantities needed for an HMC algorithm. We assume a 1D chain with open ends, with the Hamiltonian
 
 \begin{align}
 	H
-	= - \sum_{\langle i,j\rangle,\sigma}
+	= - \sum_{i,\sigma}
 	\left(
-	t\, a_{i,\sigma}^\dagger a_{j,\sigma}
-	+ \Delta\, a_{i,\sigma}^\dagger a_{j,\sigma}^\dagger
+	t\, a_{i,\sigma}^\dagger a_{i+1,\sigma}
+	+ \Delta\, a_{i,\sigma}^\dagger a_{i+1,\sigma}^\dagger
 	+ \mathrm{H.c.}
 	\right)
 	- \mu \sum_{x,\sigma} n_{x,\sigma}
@@ -594,31 +723,10 @@ In this section we will apply the previous work to the spin-1/2 Kitaev chain and
 	\left(n_{x,\downarrow}-\frac{1}{2}\right),
 \end{align}
 
-where $t$ is the hopping amplitude, $U$ is the onsite interaction, $\Delta$ is the pairing amplitude and $\mu$ is the chemical potential. To bring this into a more convenient form we gauge transform even site operators such that
+where $t$ is the hopping amplitude, $U$ is the onsite interaction, $\Delta$ is the pairing amplitude and $\mu$ is the chemical potential. We split each fermion into two Majroana fermions:
 
 \begin{align}
-	a_i \to ia_i \quad \mathrm{and} \quad a_i^\dagger \to -ia_i^\dagger   .
-\end{align}
-
-Substituting this we find
-
-\begin{align}
-	H
-	= - i\sum_{\langle i,j\rangle,\sigma}
-	\left(
-	t\left( a_{i,\sigma}^\dagger a_{j,\sigma} - a_{j,\sigma}^\dagger a_{i,\sigma}  \right)
-	- \Delta \left(a_{i,\sigma}^\dagger a_{j,\sigma}^\dagger - a_{j,\sigma} a_{i,\sigma} \right)
-	\right)
-	- \mu \sum_{x,\sigma} n_{x,\sigma}
-	+ U \sum_x
-	\left(n_{x,\uparrow}-\frac{1}{2}\right)
-	\left(n_{x,\downarrow}-\frac{1}{2}\right),
-\end{align}
-
-Now we split each fermion into two Majroana fermions:
-
-\begin{align}
-	a_i = \frac{1}{2}\left(\eta_i + i \gamma_i\right), \quad \quad a_i^\dagger = \frac{1}{2}\left(\eta_i -i \gamma_i\right)
+	a_i = \frac{1}{2}\left(\eta_i + i \gamma_i\right), \quad \quad a_i^\dagger = \frac{1}{2}\left(\eta_i - i \gamma_i\right)
 \end{align}
 The corresponding commutation relations are those of the Clifford algebra:
 
@@ -628,7 +736,7 @@ The corresponding commutation relations are those of the Clifford algebra:
 After dropping constant terms this leads to
 
 \begin{align}
-	H = -\frac{i}{2}\sum_{<i,j>,\sigma}^{ } \left[\left(t - \Delta\right)  \left(\eta_{i,\sigma}\eta_{j,\sigma} \right)  + \left(t + \Delta\right)  \left(\gamma_{i,\sigma}\gamma_{j,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma} - \frac{U}{4}\sum_{i}^{ } \eta_{i,\uparrow}\gamma_{i,\uparrow}\eta_{i,\downarrow}\gamma_{i,\downarrow} 
+	H = +\frac{i}{2}\sum_{i,\sigma}^{ } \left[\left(\Delta + t\right)  \gamma_{i,\sigma}\eta_{i+1,\sigma}   + \left(\Delta - t\right)  \left(\eta_{i,\sigma}\gamma_{i+1,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma} - \frac{U}{4}\sum_{i}^{ } \eta_{i,\uparrow}\gamma_{i,\uparrow}\eta_{i,\downarrow}\gamma_{i,\downarrow} 
 \end{align}
 
 Now we have multiple choices of how to rewrite and therefore decouple the modes. Namely:
@@ -643,7 +751,7 @@ Now we have multiple choices of how to rewrite and therefore decouple the modes.
 Technically there are even more splittings but they are all nonsensical. Even in the above equations, the last two lines decouple the fermion modes, however if there is a finite chemical potential the non interacting Hamiltonian will always couple these two sectors. Here, we focus on the first two equations. Our Hamiltonian then takes the form
 
 \begin{align}
-		H = \underbrace{-\frac{i}{2}\sum_{<i,j>,\sigma}^{ } \left[\left(t - \Delta\right)  \left(\eta_{i,\sigma}\eta_{j,\sigma} \right)  + \left(t + \Delta\right)  \left(\gamma_{i,\sigma}\gamma_{j,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma}}_{:= H_0} \underbrace{\mp \frac{U}{8}\sum_{i}^{ } \left(\eta_{i,\uparrow}\gamma_{i,\uparrow} \pm \eta_{i,\downarrow}\gamma_{i,\downarrow} \right)^2.}_{:=H_1}
+	H = \underbrace{+\frac{i}{2}\sum_{i,\sigma}^{ } \left[\left(\Delta + t\right)  \gamma_{i,\sigma}\eta_{i+1,\sigma}   + \left(\Delta - t\right)  \left(\eta_{i,\sigma}\gamma_{i+1,\sigma} \right) \right] - i\frac{\mu}{2}\sum_{i,\sigma}^{ }\eta_{i,\sigma}\gamma_{i,\sigma}}_{:= H_0} \underbrace{\mp \frac{U}{8}\sum_{i}^{ } \left(\eta_{i,\uparrow}\gamma_{i,\uparrow} \pm \eta_{i,\downarrow}\gamma_{i,\downarrow} \right)^2.}_{:=H_1}
 \end{align}
 
 Now we turn to the corresponding partition function and trotterize:
@@ -680,56 +788,56 @@ where we define
 Note, the slight abuse of notation. We have gone from $H_i$ being bilinear Majorana operators to $\boldsymbol{H_i}$ being regular matrices which are multiplied by Majorana operator vectors. For the non-interacting Hamiltonian we can find
 
 \begin{align}
-	 \boldsymbol{H}_0 &=\begin{bmatrix}
-	 	\boldsymbol{H}_0^{\uparrow\uparrow} & 0  \\
-	 	0 & \boldsymbol{H}_0^{\downarrow\downarrow}  
-	 \end{bmatrix} \\ \boldsymbol{H}_0^{\uparrow\uparrow}&=\boldsymbol{H}_0^{\downarrow\downarrow} =  -\frac{i}{4}{\renewcommand{\arraystretch}{1.2}
-	 \setlength{\arraycolsep}{5pt}
-	 \left[
-	 \begin{array}{*{5}{c}|*{5}{c}}
-	 	0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  &  \\
-	 	-\Delta^{-} & 0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  \\
-	 	& -\Delta^{-} & 0 & \ddots &  &  &  & \ddots &  &  \\
-	 	&  & \ddots & \ddots & \phantom{-}\Delta^{-} &  &  &  & \ddots &  \\
-	 	&  &  & -\Delta^{-} & 0 &  &  &  &  & \mu \\
-	 	\hline
-	 	-\mu &  &  &  &  & 0 & \phantom{-}\Delta^{+} &  &  &  \\
-	 	& -\mu &  &  &  & -\Delta^{+} & 0 & \phantom{-}\Delta^{+} &  &  \\
-	 	&  & \ddots &  &  &  & -\Delta^{+} & 0 & \ddots &  \\
-	 	&  &  & \ddots &  &  &  & \ddots & \ddots & \phantom{-}\Delta^{+} \\
-	 	&  &  &  & -\mu &  &  &  & -\Delta^{+} & 0
-	 \end{array}
-	 \right]},
+	\boldsymbol{H}_0 &=\begin{bmatrix}
+		\boldsymbol{H}_0^{\uparrow\uparrow} & 0  \\
+		0 & \boldsymbol{H}_0^{\downarrow\downarrow}  
+	\end{bmatrix} \\ \boldsymbol{H}_0^{\uparrow\uparrow}&=\boldsymbol{H}_0^{\downarrow\downarrow} =  \frac{i}{4}{\renewcommand{\arraystretch}{1.2}
+		\setlength{\arraycolsep}{5pt}
+		\left[
+		\begin{array}{*{5}{c}|*{5}{c}}
+			 & \phantom{-} &  &  &  & -\mu & \Delta^{-}  &  &  &  \\
+			 &  & \phantom{-} &  &  & -\Delta^{+} & -\mu & \Delta^{-} &  &  \\
+			&  &  &  &  &  & -\Delta^{+} & -\mu & \ddots &  \\
+			&  &  &  & \phantom{-} &  &  & \ddots & \ddots & \Delta^{-} \\
+			&  &  &  &  &  &  &  & \Delta^{+} & -\mu \\
+			\hline
+			\mu & \Delta^{+}  &  &  &  &  &  &  &  &  \\
+			-\Delta^{-}& \mu & \Delta^{+} &  &  &  & &  &  &  \\
+			&-\Delta^{-}  & \mu & \ddots &  &  &  &  &  &  \\
+			&  & \ddots  & \ddots & \Delta^{+} &  &  &  &  &  \\
+			&  &  & -\Delta^{-} & \mu &  &  &  & & 
+		\end{array}
+		\right]},
 \end{align}
 
 
-where we set $\Delta^{\mp} = \left(t \mp \Delta \right)$. We notice that both the non-interaction Hamiltonian as well as the interaction part are block diagonal. The coupling between the two different spin parts has been removed. Therefore as shown in the appendix, the partition function can be rewritten as
+where we set $\Delta^{\mp} = \left(\Delta \mp t \right)$. We notice that both the non-interaction Hamiltonian as well as the interaction part are block diagonal. The coupling between the two different spin parts has been removed. Therefore as shown in the appendix, the partition function can be rewritten as
 
 \begin{align}
 	Z = \int_{ }^{ } \mathcal{D}\left(\phi\right) \exp \left( {-\frac{2\phi^{2} }{\Delta_\tau U } }  \right) &\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\left(\boldsymbol{\theta}_{t}^{\uparrow}\right)^{T}\boldsymbol{A}^{\uparrow\uparrow}_{2t-1}\boldsymbol{\theta}_{t}^{\uparrow}   \right)\exp \left( -\frac{1}{4}\left(\boldsymbol{\theta}_{t}^{\uparrow}\right)^{T}\boldsymbol{A}^{\uparrow\uparrow}_{2t}\boldsymbol{\theta}_{t}^{\uparrow}   \right)   \right\}\nonumber \\
 	\times &\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\left(\boldsymbol{\theta}_{t}^{\downarrow}\right)^{T}\boldsymbol{A}^{\downarrow\downarrow}_{2t-1}\boldsymbol{\theta}_{t}^{\downarrow}   \right)\exp \left( -\frac{1}{4}\left(\boldsymbol{\theta}_{t}^{\downarrow}\right)^{T}\boldsymbol{A}^{\downarrow\downarrow}_{2t}\boldsymbol{\theta}_{t}^{\downarrow}   \right)   \right\} \\
-	 = \int_{ }^{ } \mathcal{D}\left(\phi\right) \exp \left( {-\frac{2\phi^{2} }{\Delta_\tau U } }  \right) &W^{\uparrow} \left[ \phi \right]  W^{\downarrow}\left[ \phi \right]   
+	= \int_{ }^{ } \mathcal{D}\left(\phi\right) \exp \left( {-\frac{2\phi^{2} }{\Delta_\tau U } }  \right) &W^{\uparrow} \left[ \phi \right]  W^{\downarrow}\left[ \phi \right]   
 \end{align}
 
 where we identify
 
 \begin{align}
 	\boldsymbol{A}_{2t-1}^{\uparrow\uparrow} &= \boldsymbol{A}^{\downarrow\downarrow}_{2t-1} = 4\Delta_\tau \boldsymbol{H}_0^{\uparrow\uparrow}\\ 
-	&= -i\Delta_\tau  {\renewcommand{\arraystretch}{1.2}
+	&=   i\Delta_\tau{\renewcommand{\arraystretch}{1.2}
 		\setlength{\arraycolsep}{5pt}
 		\left[
 		\begin{array}{*{5}{c}|*{5}{c}}
-			0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  &  \\
-			-\Delta^{-} & 0 & \phantom{-}\Delta^{-} &  &  &  & \mu &  &  &  \\
-			& -\Delta^{-} & 0 & \ddots &  &  &  & \ddots &  &  \\
-			&  & \ddots & \ddots & \phantom{-}\Delta^{-} &  &  &  & \ddots &  \\
-			&  &  & -\Delta^{-} & 0 &  &  &  &  & \mu \\
+			& \phantom{-} &  &  &  & -\mu & \Delta^{-}  &  &  &  \\
+			&  & \phantom{-} &  &  & -\Delta^{+} & -\mu & \Delta^{-} &  &  \\
+			&  &  &  &  &  & -\Delta^{+} & -\mu & \ddots &  \\
+			&  &  &  & \phantom{-} &  &  & \ddots & \ddots & \Delta^{-} \\
+			&  &  &  &  &  &  &  & \Delta^{+} & -\mu \\
 			\hline
-			-\mu &  &  &  &  & 0 & \phantom{-}\Delta^{+} &  &  &  \\
-			& -\mu &  &  &  & -\Delta^{+} & 0 & \phantom{-}\Delta^{+} &  &  \\
-			&  & \ddots &  &  &  & -\Delta^{+} & 0 & \ddots &  \\
-			&  &  & \ddots &  &  &  & \ddots & \ddots & \phantom{-}\Delta^{+} \\
-			&  &  &  & -\mu &  &  &  & -\Delta^{+} & 0
+			\mu & \Delta^{+}  &  &  &  &  &  &  &  &  \\
+			-\Delta^{-}& \mu & \Delta^{+} &  &  &  & &  &  &  \\
+			&-\Delta^{-}  & \mu & \ddots &  &  &  &  &  &  \\
+			&  & \ddots  & \ddots & \Delta^{+} &  &  &  &  &  \\
+			&  &  & -\Delta^{-} & \mu &  &  &  & & 
 		\end{array}
 		\right]}
 \end{align}
@@ -789,8 +897,8 @@ which we can use for
 		\sqrt 2 \mathrm{sinh} \left(\frac{\boldsymbol{A}_{2t}^{\sigma\sigma}  }{4} \right) & -\mathbb{I} \\
 		\mathbb{I} & \sqrt 2 \mathrm{sinh} \left(\frac{\boldsymbol{A}_{2t}^{\sigma\sigma}  }{4} \right)
 	\end{bmatrix} \right) = \left(-1\right)^{N} \mathrm{Pf} \left(\begin{bmatrix}
-	\sqrt 2 \boldsymbol{J} \otimes \boldsymbol{D}\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right) & - \mathbb{I} \\
-	\mathbb{I} & \sqrt 2 \boldsymbol{J} \otimes \boldsymbol{D}\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right)
+		\sqrt 2 \boldsymbol{J} \otimes \boldsymbol{D}\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right) & - \mathbb{I} \\
+		\mathbb{I} & \sqrt 2 \boldsymbol{J} \otimes \boldsymbol{D}\left(\mathrm{sin} \left(\frac{1}{2}\xi\right)\phi^{t} \right)
 	\end{bmatrix} \right).
 \end{align}
 
@@ -803,62 +911,64 @@ We define $s_i = \mathrm{sin } \left(\frac{1}{2}\xi\phi^{t}_i\right)$. By permut
 		+1 & 0 & 0 & \sqrt 2 s_i \\
 		0 & +1 & -\sqrt 2 s_i & 0
 	\end{bmatrix} \right)  = \left(-1\right)^{N} \prod_{i= 1}^{N} \mathrm{Pf} \left( \begin{bmatrix}
-	0 & \sqrt 2 s_i & -1 & 0 \\
-	-\sqrt 2 s_i & 0 & 0 & -1 \\
-	+1 & 0 & 0 & \sqrt 2 s_i \\
-	0 & +1 & -\sqrt 2 s_i & 0
+		0 & \sqrt 2 s_i & -1 & 0 \\
+		-\sqrt 2 s_i & 0 & 0 & -1 \\
+		+1 & 0 & 0 & \sqrt 2 s_i \\
+		0 & +1 & -\sqrt 2 s_i & 0
 	\end{bmatrix} \right)  \\&=\left(-1\right)^{N} \prod_{i=1}^{N}\left(2\mathrm{sin}^{2}  \left(\frac{1}{2}\xi \phi^{t}_i\right) - 1\right) 
 	=  \prod_{i=1}^{N} \mathrm{cos} \left(\xi \phi_i^{t} \right) ,
 \end{align}
- which yields an analytic expression for the first factor in the weight. Next we would like to find an analytic expression for $\boldsymbol{G}_{2t}$. By using similar steps we find
- 
- \begin{align}
- 	\boldsymbol{G}_{2t}&= \mathrm{tanh} \left(\frac{A_{2t} }{2} \right) = \left[ J \otimes D\left(\mathrm{sin} \left(\xi\phi^{t} \right) \right)  \right]\left[ \mathbb{I} \otimes D\left(\mathrm{cos} \left(\xi \phi^{t} \right) \right)  \right]^{-1} \\
- 	& = \left(J\cdot \mathbb{I}^{-1} \right) \otimes D\left(\mathrm{sin} \left(\xi \phi^{t} \right)\right)\cdot D\left(\frac{1}{\mathrm{cos} \left(\xi \phi^{t} \right) } \right) \\
- 	&= J \otimes D\left(\mathrm{tan} \left(\xi \phi^{t} \right) \right) .
- \end{align} 
- \subsection{Gradient}
- 
- For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W^{\sigma}  = \pm \sqrt{\mathrm{det}\left(  M^{\sigma}  \right)}$, where $M^{\sigma}  = \mathbb{I} + B^{\sigma} _1 ... B^{\sigma} _{2N_{\tau} }$. From now on we drop the spin index, because the calculation is exactly the same for both sectors. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
- 
- \begin{align}
- 	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(W[\phi]\right) }  \right)  = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }   
- \end{align}
- 
- and the absolute value of the weight is $|W[\phi]| = \left|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1 ... B_{2N_\tau} \right) }\right|$. So it suffices to take the derivative of the square root of the determinant as opposed to the more complicated weight involving pfaffians. We then have
- 
- \begin{align}
- 	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(-\mathrm{log}\left(|W|\right) \right) &= 
- 	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(- \mathrm{log} \left(|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1B_2...B_{2N_\tau} \right) }|\right) \right)\\  
- 	&= -\frac{1}{2}\frac{1}{|W[\phi]|^{2} }\mathrm{Re}\left(   \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \mathrm{det}\left(\mathbb{I} + B_1...B_{2N_\tau}\right)\right) \\
- 	&= -\frac{1}{2} \mathrm{Re} \left( \mathrm{Tr} \left\{M^{-1}\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_1...B_{2N_\tau}\right)  \right\}\right)\\
- 	&= -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{M^{-1}B_{1}...\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)...B_{2N_\tau}   \right\} \right)\\
- 	&=    -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)B_{2k+1} ...B_{2N_\tau}M^{-1}B_{1}...B_{2k-2}    \right\} \right)
- \end{align}
- 
- At this point we need the specific forms of the matrices. We have
- 
- \begin{align}
- 	B_{2t-1} = e^{-A_{2t-1}} := \mathcal{K}
- \end{align}
- 
- which is independent of the auxiliary field $\phi$ and we have
- 
- \begin{align}
- 	B_{2t} = e^{-A_{2t}}
- 	= \mathbb{I} \otimes D\left(
- 	\cos\left(2\xi \phi_1^t\right), \ldots, \cos\left(2\xi \phi_N^t\right)
- 	\right)
- 	- J \otimes D\left(
- 	\sin\left(2\xi \phi_1^t\right), \ldots, \sin\left(2\xi \phi_N^t\right)
- 	\right).    
- \end{align}
- 
- We see that this matrix can be split up into 2x2 block matrices. When we work with indices it will turn out convenient to write matrix indices as spatial indices and block matrix indices. For $B_{2t}$ we can then write:
- 
- \begin{align}
- 	\left[ B_{2t}  \right]_{(l',f')(l'',f'')} = \delta_{l'l''}\left(c^{t}_{l'}\left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}  \right) - s^{t}_{l'}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right)   \right)   
- \end{align}
+which yields an analytic expression for the first factor in the weight. Next we would like to find an analytic expression for $\boldsymbol{G}_{2t}$. By using similar steps we find
+
+\begin{align}
+	\boldsymbol{G}_{2t}&= \mathrm{tanh} \left(\frac{A_{2t} }{2} \right) = \left[ J \otimes D\left(\mathrm{sin} \left(\xi\phi^{t} \right) \right)  \right]\left[ \mathbb{I} \otimes D\left(\mathrm{cos} \left(\xi \phi^{t} \right) \right)  \right]^{-1} \\
+	& = \left(J\cdot \mathbb{I}^{-1} \right) \otimes D\left(\mathrm{sin} \left(\xi \phi^{t} \right)\right)\cdot D\left(\frac{1}{\mathrm{cos} \left(\xi \phi^{t} \right) } \right) \\
+	&= J \otimes D\left(\mathrm{tan} \left(\xi \phi^{t} \right) \right) .
+\end{align} 
+\subsection{Gradient for the Kitaev Chain}
+
+We already showed a general derivation of the gradient. Here we will actually rederive it from zero (This derivation was actually done first). If you have read the general derivation you will see that the exact same steps are taken. A much faster way would be to use the general formula and identify $r = 2\xi$. Here we use a real HS-trafo, which leads to the weights of both spin sectors being equal. Therefore we can simply multiply the gradient of one spin sector by a factor of two. Follwoing htese steps you find the same result as the we find in the text below.\\\\
+
+For HMC we require the real part of the gradient of the action. One possibility is to take the gradient of the caterpillar and work with its real part. However, there is a more efficient version which relies on the fact, that $W^{\sigma}  = \pm \sqrt{\mathrm{det}\left(  M^{\sigma}  \right)}$, where $M^{\sigma}  = \mathbb{I} + B^{\sigma} _1 ... B^{\sigma} _{2N_{\tau} }$. From now on we drop the spin index, because the calculation is exactly the same for both sectors. We only need the real part of the gradient of the action, which is the same as taking the derivative of the absolute value of the weight:
+
+\begin{align}
+	\mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} } S[\phi] \right) = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(W[\phi]\right) }  \right)  = \mathrm{Re} \left(\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }  S_B[\phi] \right) - \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{t} }\mathrm{log\left(|W[\phi]|\right) }   
+\end{align}
+
+and the absolute value of the weight is $|W[\phi]| = \left|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1 ... B_{2N_\tau} \right) }\right|$. So it suffices to take the derivative of the square root of the determinant as opposed to the more complicated weight involving pfaffians. We then have
+
+\begin{align}
+	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(-\mathrm{log}\left(|W|\right) \right) &= 
+	\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k} } \left(- \mathrm{log} \left(|\sqrt{\mathrm{det} \left(\mathbb{I} + B_1B_2...B_{2N_\tau} \right) }|\right) \right)\\  
+	&= -\frac{1}{2}\frac{1}{|W[\phi]|^{2} }\mathrm{Re}\left(   \frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}} \mathrm{det}\left(\mathbb{I} + B_1...B_{2N_\tau}\right)\right) \\
+	&= -\frac{1}{2} \mathrm{Re} \left( \mathrm{Tr} \left\{M^{-1}\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_1...B_{2N_\tau}\right)  \right\}\right)\\
+	&= -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{M^{-1}B_{1}...\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)...B_{2N_\tau}   \right\} \right)\\
+	&=    -\frac{1}{2}\mathrm{Re} \left(\mathrm{Tr} \left\{\frac{\mathrm{d} }{\mathrm{d}\phi_{x}^{k}}\left(B_{2k-1}B_{2k}\right)B_{2k+1} ...B_{2N_\tau}M^{-1}B_{1}...B_{2k-2}    \right\} \right)
+\end{align}
+
+At this point we need the specific forms of the matrices. We have
+
+\begin{align}
+	B_{2t-1} = e^{-A_{2t-1}} := \mathcal{K}
+\end{align}
+
+which is independent of the auxiliary field $\phi$ and we have
+
+\begin{align}
+	B_{2t} = e^{-A_{2t}}
+	= \mathbb{I} \otimes D\left(
+	\cos\left(2\xi \phi_1^t\right), \ldots, \cos\left(2\xi \phi_N^t\right)
+	\right)
+	- J \otimes D\left(
+	\sin\left(2\xi \phi_1^t\right), \ldots, \sin\left(2\xi \phi_N^t\right)
+	\right).    
+\end{align}
+
+We see that this matrix can be split up into 2x2 block matrices. When we work with indices it will turn out convenient to write matrix indices as spatial indices and block matrix indices. For $B_{2t}$ we can then write:
+
+\begin{align}
+	\left[ B_{2t}  \right]_{(l',f')(l'',f'')} = \delta_{l'l''}\left(c^{t}_{l'}\left(\delta_{f'1}\delta_{f''1} + \delta_{f'2}\delta_{f''2}  \right) - s^{t}_{l'}\left(\delta_{f'1}\delta_{f''2} - \delta_{f'2}\delta_{f''1}  \right)   \right)   
+\end{align}
 
 where we defined $s^{t}_{x}= \mathrm{sin} \left(2\xi \phi^{t}_{x} \right) $ and $c^{t}_{x}= \mathrm{cos} \left(2\xi \phi^{t}_{x} \right)$. Here $l$-indices refer to a spatial lattice site and $f$-indices $\in \left\{1,2\right\} $ refer to the block matrices (refers to types of Majoranas). Then we can calculate the derivative
 
@@ -891,9 +1001,9 @@ With this we are able to calculate the whole gradient:
 		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
 	\end{bmatrix}  \right\}_{x,x} \right)  \nonumber \\
 	&= \mathrm{Re}\left(\xi \mathrm{Tr}_{f}\left\{ \underbrace{\begin{bmatrix}
-		D\left(s^{k} \right) & D\left(c^{k} \right) \\
-		-D\left(c^{k} \right) & D\left(s^{k} \right) 
-	\end{bmatrix} B_{2k}^{-1}}_{= J} B_{2k} \begin{bmatrix}
+			D\left(s^{k} \right) & D\left(c^{k} \right) \\
+			-D\left(c^{k} \right) & D\left(s^{k} \right) 
+		\end{bmatrix} B_{2k}^{-1}}_{= J} B_{2k} \begin{bmatrix}
 		\left(R\mathcal{K}\right)_{(1,1)}  & \left(R\mathcal{K}\right)_{(1,2)} \\
 		\left(R\mathcal{K}\right)_{(2,1)} & \left(R\mathcal{K}\right)_{(2,2)}
 	\end{bmatrix}  \right\} _{x,x}\right) \nonumber \\
@@ -933,186 +1043,11 @@ Note that this is not quite general, because we assumed $M^{\sigma}$ to be equal
 This result is very similar to the result one finds in DQMC, where one usually assumes a diagonal interaction. It should be noted here however, that the definitions of $\mathcal{A}(k)$ and $\mathcal{B}(k)$ are slightly different from Finns notes.
 
 
-\section{Applying the Pfaffian Formualtion to the Hubbard Model with a super conducting term}
 
-	In this section we apply the above presented method to a Hubbard Hamiltonian with a superconduction nearest neighbor term. The Hamiltonian takes the from:
-	
-	\begin{align}
-	H = -\sum_{\braket{i,j},\sigma}^{ } \left(t a_{i\sigma}^\dagger a_{j \sigma} + \Delta a^\dagger_{i \sigma}a^\dagger_{j \sigma} + \mathrm{H.c.}  \right) + U \sum_{x}^{ }\left(n_{x\uparrow} - \frac{1}{2} \right)\left(n_{x\downarrow} - \frac{1}{2} \right) 
-	\end{align}
-	
-	
-	Then we split each Dirac fermion into two Majorana fermions by using:
-	
-	\begin{align}
-		a_{i\sigma} &= \frac{1}{2} \left(\eta_{i\sigma} + i \gamma_{i\sigma}\right)\\
-		a_{i\sigma}^\dagger &= \frac{1}{2} \left(\eta_{i\sigma}- i \gamma_{i \sigma}\right)
-	\end{align}
-	
-	(Note that this definition is slightly different from the paper from which I took the Hamiltonian. The prefactors are different so the new operators obey the Clifford algebra.) We assume a biparte lattice and gauge transform one sublattice by $a_{i\sigma} \rightarrow ia_{i\sigma}$. Then we substitute the Majorana basis and find:
-	
-	\begin{align}
-		H = -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -\frac{U}{4}  \sum_{x}^{ }\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
-	\end{align}
-	
-	We need to rewrite the quartic term in a way more suitable for our purposes. To do so we look at
-	
-	\begin{align}
-		\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 = \left(\eta_{x\uparrow} \eta_{x\downarrow}\right)^2 + \left(\gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = 2 \pm 2\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} 
-	\end{align}
-	
-	Which leads to
-	
-	\begin{align}
-		\eta_{x\uparrow}\eta_{x\downarrow}\gamma_{x\uparrow}\gamma_{x\downarrow} = \frac{1}{2} \left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 - 1= -\frac{1}{2}\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2  + 1  
-	\end{align}
-	Substituting this and dropping the constant leads to
-	
-	\begin{align}
-		H &= -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) -\frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} + \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2\\
-		&= -\frac{i}{2}  \sum_{\braket{i,j}\sigma}^{ }\left(\left(t + \Delta\right)\gamma_{i\sigma}\gamma_{j\sigma}  + \left(t - \Delta\right)\eta_{i\sigma}\eta_{j\sigma} \right) +\frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} - \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2 := H_K + H_U
-	\end{align}
-	
-	After having brought the Hamiltonian into this convenient form we are interested in the partition function
-	
-	
-	\begin{align}
-		Z &= \mathrm{Tr}\left\{e^{-\beta H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H}\right\} = \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} e^{-\Delta_\tau H_U}\right\} + \mathcal{O}\left(\Delta_\tau^2\right)\nonumber \\
-		&=  \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \exp\left({\pm\Delta_\tau \frac{U}{4}  \sum_{x}^{ }\left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right)^2}\right)\right\} + \mathcal{O}\left(\Delta_\tau^2\right)
-	\end{align}
-	
-	Then we perform a Hubbard Stratonovich transformation in each quartic factor:
-	
-	\begin{align}
-		Z &= \mathrm{ Tr} \left\{\prod_{t = 1}^{N_\tau}e^{-\Delta_\tau H_K} \prod_{x} \int_{ }^{ } \mathrm{d}\phi_{tx} e^{\pm\frac{\phi^2_{tx}}{U\Delta_\tau}}\exp \left( - i \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)    \right\} \nonumber \\
-		&= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi_{tx}}{U\Delta_\tau}  \right) \underbrace{\mathrm{Tr} \left\{\prod_{t=1}^{N_\tau}\exp \left( -\Delta_\tau H_K \right) \exp \left( - i \sum_{x}^{ } \phi_{tx} \left(\eta_{x\uparrow} \eta_{x\downarrow} \pm \gamma_{x\uparrow} \gamma_{x\downarrow}\right) \right)  \right\} }_{:= W[\phi]}
-	\end{align}
-	
-	
-	
-	Now we need to rewrite $W[\phi]$ in terms of bilinear matrix expressions. We define the $4N$-dimensional Majorana operator vector
-	
-	\begin{align}
-	\boldsymbol{\xi} = \left(\eta_{1\uparrow}, \eta_{2\uparrow}, \dots,\eta_{N\uparrow},\eta_{1\downarrow}, \eta_{2\downarrow},\dots, \eta_{N\downarrow}, \gamma_{1\uparrow}, \gamma_{2\uparrow},\dots, \gamma_{N,\uparrow}, \gamma_{1\downarrow}, \gamma_{2\downarrow}, \dots, \gamma_{N\downarrow}\right)^\mathrm{T}   
-	\end{align}
-	
-	Then we can rewrite the weight as
-	
-	\begin{align}
-		W[\phi] = \mathrm{Tr}  \left\{\prod_{t=1}^{N_\tau}\exp \left( -\frac{1}{4}\boldsymbol{\xi}^\mathrm{T} \boldsymbol{A}\boldsymbol{\xi}  \right) \exp \left( -\frac{1}{4} \boldsymbol{\xi}^\mathrm{T} \boldsymbol{B^{(t)}}\boldsymbol{\xi}  \right)\right\}, 
-	\end{align}
-	
-	
-	where we defined
-	
-	\begin{align}
-	A &= -i\Delta_{\tau}
-	\begin{pmatrix}
-		\left(t - \Delta\right)\boldsymbol{T} & 0 & 0 & 0\\
-		0 & \left(t - \Delta\right)\boldsymbol{T} & 0 & 0\\
-		0 & 0 & \left(t + \Delta\right)\boldsymbol{T} & 0\\
-		0 & 0 & 0 & \left(t + \Delta\right)\boldsymbol{T}
-	\end{pmatrix},
-	\hspace{1.0cm}
-	\boldsymbol{B}^{(t)} =  2 i
-	\begin{pmatrix}
-		0 & \boldsymbol{B}_\phi^{(t)} & 0 & 0\\
-		-\boldsymbol{B}_\phi^{(t)} & 0 & 0 & 0\\
-		0 & 0 & 0 & \pm\boldsymbol{B}_\phi^{(t)}\\
-		0 & 0 & \mp\boldsymbol{B}_\phi^{(t)} & 0
-	\end{pmatrix}
-	\end{align}
-	
-	
 
-	with
-	
-	\begin{align}
-	\boldsymbol{T}_{ij} &=
-	\begin{cases}
-		+1, & \text{if } i<j \text{ and } i,j\,\mathrm{n.n.},\\
-		-1, & \text{if } i>j \text{ and } i,j\,\mathrm{n.n.},\\
-		0, & \text{otherwise},
-	\end{cases}
-	\qquad
-	\boldsymbol{B}_\phi^{(t)} = \operatorname{diag}\left(\phi_1^{(t)}, \phi_2^{(t)}, \dots, \phi_N^{(t)}\right).
-	\end{align}
-	
-	
-	Now $W[\phi]$ is in the form that we require and we can rewrite the partition function as
-	
-	\begin{align}
-		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi^2}{\Delta_\tau U}\right)\left(-1\right)^{NN_\tau} 2^{2N}\nonumber \\
-		 &\quad \quad\times\prod_{t=1}^{N_\tau} \mathrm{Pf} \left(
-		\begin{bmatrix}
-			\sqrt 2 \mathrm{sinh}\left(\frac{e^{\boldsymbol{A} }}{4}\right) & -\mathbb{I}\\
-			\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{A} }}{4}\right)
-		\end{bmatrix}
-		 \right)  
-		 \mathrm{Pf} \left(
-		 \begin{bmatrix}
-		 	\sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{B}^{(t)} }}{4}\right) & -\mathbb{I}\\
-		 	\mathbb{I} &  \sqrt 2 \mathrm{sinh}\left(\frac{{\boldsymbol{B}^{(t)} }}{4}\right)
-		 \end{bmatrix}
-		 \right) \nonumber \\
-		 &\quad\quad \times 
-		 \mathrm{Pf} \left(
-		 	\begin{bmatrix}
-		 		\mathrm{tanh}\left(\frac{{\boldsymbol{A} }}{2} \right)    & -\mathbb{I} & \mathbb{I} & -\mathbb{I} & \dots &  -\mathbb{I} \\
-		 		\mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(1)}} }{2} \right) & -\mathbb{I} & \mathbb{I} &   &  \vdots \\
-		 		-\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{A}} }{2} \right) & -\mathbb{I} &   & \vdots \\
-		 		\mathbb{I} & -\mathbb{I} & \mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(2)}} }{2} \right) &   &  \vdots \\
-		 		\vdots &   &   &   & \ddots & \vdots \\
-		 		\mathbb{I} & \dots  & \dots  & \dots  & \dots & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(N_\tau)}}}{2} \right) \\
-		 	\end{bmatrix}
-		 \right),
-	\end{align}
-	
-	
-	Which branch you choose depends on the sign of $U$.
-	
-	
-	We se that the matrices $\boldsymbol{A}$ and $\boldsymbol{B}^{(t)}$ are block diagonal with
-	
-	\begin{align}
-	\boldsymbol{A} = \begin{bmatrix}
-		\boldsymbol{A}_{\eta}& 0 \\
-		0 & \boldsymbol{A}_{\gamma}  
-	\end{bmatrix} \quad\quad\quad \boldsymbol{B}^{(t)}= \begin{bmatrix}
-		\boldsymbol{B}^{(t)}_{\eta}& 0 \\
-		0 & \boldsymbol{B}^{(t)}_{\gamma} 
-	\end{bmatrix}
-	\end{align}
-	
-	
-	In appendix \ref{blocks} we derive that in this case the result can be factorized. Applying this we find
-	
-	\begin{align}
-		Z &= \int_{ }^{ } \mathcal{D}\left(\phi\right)\exp \left( \pm\frac{\phi^2}{4U\Delta_{\tau} }\right)2^{2N}\left(-1\right)^{NN_{\tau} }\nonumber \\
-		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\eta} \right)\eta\left(\boldsymbol{B}_{\eta}^{(t)} \right)\right)\mathrm{Pf} \left(
-		\begin{bmatrix}
-			\mathrm{tanh}\left(\frac{{\boldsymbol{A}_{\eta}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(1)}_{\eta} } }{2} \right) &   &  \vdots \\
-			\vdots &   &   \ddots & \vdots \\
-			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{{\boldsymbol{B}^{(N_\tau)}_{\eta} }}{2} \right) \\
-		\end{bmatrix}
-		\right) \nonumber \\
-		&\quad\quad\times \left(\prod_{t=1}^{N_{\tau}}\eta \left(\boldsymbol{A}_{\gamma} \right)\eta\left(\pm\boldsymbol{B}_{\gamma}^{(t)} \right)\right)\mathrm{Pf} \left(
-		\begin{bmatrix}
-			\mathrm{tanh}\left(\frac{{\boldsymbol{A}_{\gamma}  }}{2} \right)    & -\mathbb{I} &  \dots &  -\mathbb{I} \\
-			\mathbb{I} & \mathrm{tanh}\left(\frac{{\pm\boldsymbol{B}^{(1)}_{\gamma} } }{2} \right) &   &  \vdots \\
-			\vdots &   &   \ddots & \vdots \\
-			\mathbb{I} & \dots   & \dots & \mathrm{tanh}\left(\frac{{\pm\boldsymbol{B}^{(N_\tau)}_{\gamma} }}{2} \right) \\
-		\end{bmatrix}
-		\right),
-	\end{align}
-	
-	where the signs are again correlated. One should notice that here unfortunately the notations slightly clash, as the Majorana operators and the coefficient of the Gaussian are both labeled by $\eta$. It is noted, that whenever $\eta$ is written with an argument, we mean the coefficient of the Gaussian.
-	
-	
-	
-	
-	
+
+
+
 	
 	
 \appendix
